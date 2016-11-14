@@ -10,6 +10,13 @@
 include_once "Controller.class.php";
 
 class UserController extends Controller {
+    public function getUser($conn, $userID) {
+        $userResult = $this->select($conn, "user", "*", "UserNo LIKE '$userID'", true);
+        $userDetailResult = $this->select($conn, "userdetails", "*", "UserDetailNo LIKE '" . $userResult["UserDetailNo"] . "'", true);
+
+        return new User($userDetailResult["UserTypeNo"], $userDetailResult["FullName"], $userDetailResult["IC"], $userDetailResult["ContactNo"], $userDetailResult["Email"], $userResult["Username"], $userResult["Password"]);
+    }
+
     /**
      * register new user
      *
@@ -31,6 +38,32 @@ class UserController extends Controller {
         $userNo = $this->insert($conn, "user", $userAttr, $userValues);
 
         return $userNo;
+    }
+
+    /*
+    public function login($conn, $username, $password) {
+        $result = $this->select($conn, "user", "*", "username LIKE '$username' AND password LIKE '$password'", true);
+
+        if(isset($result)) {
+            $_SESSION["user"] = serialize($this->getUser($conn, $result["UserNo"]));
+            $_SESSION["logged_in"] = true;
+
+            return true;
+        } else {
+            $this->logout();
+            return false;
+        }
+    }
+    */
+
+    public function login($conn, $username, $password) {
+    }
+
+    public function logout() {
+        unset($_SESSION["user"]);
+        unset($_SESSION["logged_in"]);
+
+        echo "logged out";
     }
 }
 ?>

@@ -18,7 +18,7 @@ class Controller {
      * @param bool $single -> true = select single record from table, false = select multi record from table (default is false)
      * @return array|mixed|null -> if there are no record, it will return null, else it will return array of associations
      */
-    public function select($conn, $attr, $table, $where=null, $single=false) {
+    public function select($conn, $table, $attr, $where=null, $single=false) {
         if(isset($where))
             $sql = "SELECT $attr FROM $table WHERE $where";
         else

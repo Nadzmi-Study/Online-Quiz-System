@@ -24,7 +24,7 @@ if(isset($_POST["register"])) {
 
         $userNo = $userController->registerUser($conn, $newUser);
 
-        echo "New user id: $userNo";
+        header("Location: ../login");
     } else
         header("Location: ../register");
 } else
