@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Register</title>
+    </head>
+    <body>
+        <form action="register.php" method="post">
+            <input type="text" name="name" placeholder="Full Name" />
+            <input type="email" name="email" placeholder="E-Mail" />
+            <input type="text" name="username" placeholder="Username" />
+            <input type="password" name="password" placeholder="Password" />
+            <input type="password" name="re-password" placeholder="Re-Password" />
+            <input type="submit" name="register" value="Register" />
+        </form>
+    <a href="../login">Login</a>
+    </body>
 </html>
