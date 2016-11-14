@@ -6,7 +6,14 @@
     </head>
     <body>
         <form action="register.php" method="post">
+            <select name="userType">
+                <option value="0">Select user type</option>
+                <option value="1">Student</option>
+                <option value="2">Lecturer</option>
+            </select>
             <input type="text" name="name" placeholder="Full Name" />
+            <input type="text" name="ic" placeholder="I/C No.">
+            <input type="text" name="contact" placeholder="Contact No.">
             <input type="email" name="email" placeholder="E-Mail" />
             <input type="text" name="username" placeholder="Username" />
             <input type="password" name="password" placeholder="Password" />

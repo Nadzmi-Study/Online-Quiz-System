@@ -7,6 +7,8 @@
  * Time: 12:09 AM
  */
 
+include_once "Controller.class.php";
+
 class QuizController extends Controller {
 
 }
