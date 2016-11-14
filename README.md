@@ -1,2 +1,2 @@
-# Online-Quiz-System
-SE Project
+# Online Quiz System
+`SE Project`
