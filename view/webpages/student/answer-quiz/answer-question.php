@@ -5,7 +5,45 @@
  * Author: seladanghijau
  * Date: 8/11/2016
  * Time: 12:21 AM
- */ ?>
+ */
+function displayQuestion()
+{
+    for($i=1; $i<10; $i++)
+    {
+        echo "<div class=\"container-fluid\">
+                   <div class=\"row\">
+                       <div class=\"col-md-1\">
+                           <div class=\"checkbox\">
+                               <label><input type=\"checkbox\" value=\"\"></label>
+                           </div>
+                       </div>
+                       <div class=\"col-md-11\">
+                           <h4>Question Description</h4>
+                       </div>
+                   </div>
+                   <div class=\"row\">
+                       <div class=\"col-md-1\"></div>
+                       <div class=\"col-md-5\">
+                           <div class=\"radio\">
+                               <label><input type=\"radio\" name=\"answerA\">A</label>
+                           </div>
+                           <div class=\"radio\">
+                               <label><input type=\"radio\" name=\"answerB\">B</label>
+                           </div>
+                       </div>
+                       <div class=\"col-md-6\">
+                           <div class=\"radio\">
+                               <label><input type=\"radio\" name=\"answerC\">C</label>
+                           </div>
+                           <div class=\"radio\">
+                               <label><input type=\"radio\" name=\"answerD\">D</label>
+                           </div>
+                       </div>
+                   </div>
+               </div>";
+    }
+}
+?>
 
 
 <!DOCTYPE html>
@@ -25,78 +63,19 @@
 <body>
  <div class="container-fluid">
      <div class="row">
-       <div class="col-md-2"></div>
-       <div class="col-md-8">
+       <div class="col-md-3"></div>
+       <div class="col-md-6">
            <form action="" method="post">
                <h5>Time: </h5>
+               <?php
+                    displayQuestion();
+               ?>
                <div class="container-fluid">
-                   <div class="row">
-                       <div class="col-md-1">
-                           <div class="checkbox">
-                               <label><input type="checkbox" value=""></label>
-                           </div>
-                       </div>
-                       <div class="col-md-11">
-                           <h4>Question Description</h4>
-                       </div>
-                   </div>
-                   <div class="row">
-                       <div class="col-md-1"></div>
-                       <div class="col-md-5">
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">A</label>
-                           </div>
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">B</label>
-                           </div>
-                       </div>
-                       <div class="col-md-6">
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">C</label>
-                           </div>
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">D</label>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               <div class="container-fluid">
-                   <div class="row">
-                       <div class="col-md-1">
-                           <div class="checkbox">
-                               <label><input type="checkbox" value=""></label>
-                           </div>
-                       </div>
-                       <div class="col-md-11">
-                           <h4>Question Description</h4>
-                       </div>
-                   </div>
-                   <div class="row">
-                       <div class="col-md-1"></div>
-                       <div class="col-md-5">
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">A</label>
-                           </div>
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">B</label>
-                           </div>
-                       </div>
-                       <div class="col-md-6">
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">C</label>
-                           </div>
-                           <div class="radio">
-                               <label><input type="radio" name="optradio">D</label>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               <div>
                    <input type="submit" name="submit-question" value="Submit Answer" class="btn btn-success"/>
                </div>
            </form>
        </div>
-         <div class="col-md-2"></div>
+         <div class="col-md-3"></div>
      </div>
  </div>
 </body>
