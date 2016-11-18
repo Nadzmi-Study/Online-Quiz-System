@@ -7,13 +7,13 @@
  * Time: 12:05 AM
  */
 
-include "../../../includes/global.inc.php";
+include_once "../../includes/global.inc.php";
 
 if(isset($_POST["login"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $result = $userController->login($conn, $username, $password);
+    $result = $userManager->login($conn, $username, $password);
 
     if($result)
         echo "Logged in";

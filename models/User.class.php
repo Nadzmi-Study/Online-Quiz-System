@@ -8,10 +8,21 @@
  */
 
 class User {
-    private $userType;
-    private $name, $ic, $contact, $email;
-    private $username, $password;
+    private $userType; // string
+    private $name, $ic, $contact, $email; // string
+    private $username, $password; // string
 
+    /**
+     * User constructor.
+     *
+     * @param string $userType
+     * @param string $name
+     * @param string $ic
+     * @param string $contact
+     * @param string $email
+     * @param string $username
+     * @param string $password
+     */
     public function __construct($userType, $name, $ic, $contact, $email, $username, $password) {
         $this->userType = $userType;
         $this->name = $name;
