@@ -18,7 +18,6 @@ class UserManager extends Manager {
      * @param string $password
      */
     public function login($conn, $username, $password) {
-
     }
 
     /**

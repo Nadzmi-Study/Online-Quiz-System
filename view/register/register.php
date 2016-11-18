@@ -7,7 +7,7 @@
  * Time: 12:06 AM
  */
 
-include "../../includes/global.inc.php";
+include_once "../../includes/global.inc.php";
 
 if(isset($_POST["register"])) {
     $userType = $_POST["userType"];
@@ -22,7 +22,7 @@ if(isset($_POST["register"])) {
     if(($password == $rePassword) || ($userType == 0)) {
         $newUser = new User($userType, $name, $ic, $contact, $email, $username, $password);
 
-        $userNo = $userController->registerUser($conn, $newUser);
+        // call usermanager to register user here
 
         header("Location: ../login");
     } else

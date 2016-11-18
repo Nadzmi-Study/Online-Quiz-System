@@ -19,7 +19,7 @@ class UserController {
      * register new user
      *
      * @param $conn -> Connection variables (passed in the global include file)
-     * @param User $newUser -> new user object model
+     * @param User $newUser -> new user object models
      * @return int|string -> return the id of new user
      */
     public function registerUser($conn, User $newUser) {

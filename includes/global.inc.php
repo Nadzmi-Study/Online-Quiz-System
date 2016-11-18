@@ -7,24 +7,28 @@
  * Time: 12:08 AM
  */
 
-include_once "conn.inc.php";
-include_once "../model/User.class.php";
-include_once "../model/Quiz.class.php";
-include_once "../model/Question.class.php";
-include_once "../model/Answer.class.php";
-include_once "../model/Subject.class.php";
-include_once "../model/UserType.class.php";
-include_once "../controller/UserController.class.php";
-include_once "../controller/QuizController.class.php";
-include_once "../controller/StatisticController.class.php";
-include_once "../manager/QuizManager.class.php";
-include_once "../manager/StatisticManager.class.php";
-include_once "../manager/UserManager.class.php";
+require_once "conn.inc.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\models\\User.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\models\\Quiz.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\models\\Question.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\models\\Answer.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\models\\Subject.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\models\\UserType.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\controllers\\UserController.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\controllers\\QuizController.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\controllers\\StatisticController.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\managers\\QuizManager.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\managers\\StatisticManager.class.php";
+require_once "C:\\xampp\\htdocs\\Online-Quiz-System\\managers\\UserManager.class.php";
 
 session_start(); // start session
 
 // initialize controllers
+$userManager = new UserManager();
+$quizManager = new QuizManager();
+$statisticManager = new StatisticManager();
 $userController = new UserController();
 $quizController = new QuizController();
+$statisticController = new StatisticController();
 ?>
 

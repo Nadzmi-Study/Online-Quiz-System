@@ -7,6 +7,8 @@
  * Time: 12:12 AM
  */
 
+include_once "../includes/global.inc.php";
+
 header("Location: login");
 ?>
 
