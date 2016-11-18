@@ -9,5 +9,5 @@
 
 class UserTypeController extends Controller
 {
-
+    public function getUserType($conn){}
 }
