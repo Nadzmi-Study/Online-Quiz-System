@@ -7,9 +7,11 @@
  * Time: 12:09 AM
  */
 
-include_once "Controller.class.php";
+class QuizController {
+    public function registerQuiz(Quiz $quiz) {}
 
-class QuizController extends Controller {
+    public function registerQuestion(Question $question) {}
 
+    public function requestQuestionList($conn, $quizID) {}
 }
 ?>

@@ -10,33 +10,33 @@ function displayQuestion()
 {
     for($i=1; $i<10; $i++)
     {
-        echo "<div class=\"container-fluid\">
-                   <div class=\"row\">
-                       <div class=\"col-md-1\">
-                           <div class=\"checkbox\">
-                               <label><input type=\"checkbox\" value=\"\"></label>
+        echo "<div class='container-fluid'>
+                   <div class='row'>
+                       <div class='col-md-1'>
+                           <div class='checkbox'>
+                               <label><input type='checkbox' value=''></label>
                            </div>
                        </div>
-                       <div class=\"col-md-11\">
+                       <div class='col-md-11'>
                            <h4>Question Description</h4>
                        </div>
                    </div>
-                   <div class=\"row\">
-                       <div class=\"col-md-1\"></div>
-                       <div class=\"col-md-5\">
-                           <div class=\"radio\">
-                               <label><input type=\"radio\" name=\"answerA\">A</label>
+                   <div class='row'>
+                       <div class='col-md-1'></div>
+                       <div class='col-md-5'>
+                           <div class='radio'>
+                               <label><input type='radio' name='answer$i' value='a$i' />A</label>
                            </div>
-                           <div class=\"radio\">
-                               <label><input type=\"radio\" name=\"answerB\">B</label>
+                           <div class='radio'>
+                               <label><input type='radio' name='answer$i'  value='b$i' />B</label>
                            </div>
                        </div>
-                       <div class=\"col-md-6\">
-                           <div class=\"radio\">
-                               <label><input type=\"radio\" name=\"answerC\">C</label>
+                       <div class='col-md-6'>
+                           <div class='radio'>
+                               <label><input type='radio' name='answer$i'  value='c$i' />C</label>
                            </div>
-                           <div class=\"radio\">
-                               <label><input type=\"radio\" name=\"answerD\">D</label>
+                           <div class='radio'>
+                               <label><input type='radio' name='answer$i'  value='d$i' />D</label>
                            </div>
                        </div>
                    </div>
@@ -67,9 +67,7 @@ function displayQuestion()
        <div class="col-md-6">
            <form action="" method="post">
                <h5>Time: </h5>
-               <?php
-                    displayQuestion();
-               ?>
+               <?php displayQuestion(); ?>
                <div class="container-fluid">
                    <input type="submit" name="submit-question" value="Submit Answer" class="btn btn-success"/>
                </div>

@@ -3,10 +3,17 @@
 /**
  * Created by PhpStorm.*/
 class Subject{
-    private $subjectNo;
-    private $subjectCode, $subjectDesc;
+    private $subjectNo; // int
+    private $subjectCode, $subjectDesc; // string
 
-    public function __construct($subjectNo, $subjectCode, $subjectDesc){
+    /**
+     * Subject constructor.
+     *
+     * @param int $subjectNo
+     * @param string $subjectCode
+     * @param string $subjectDesc
+     */
+    public function __construct($subjectCode, $subjectDesc, $subjectNo){
         $this->subjectNo = $subjectNo;
         $this->subjectCode = $subjectCode;
         $this->subjectDesc = $subjectDesc;

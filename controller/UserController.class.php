@@ -7,9 +7,7 @@
  * Time: 12:08 AM
  */
 
-include_once "Controller.class.php";
-
-class UserController extends Controller {
+class UserController {
     public function getUser($conn, $userID) {
         $userResult = $this->select($conn, "user", "*", "UserNo LIKE '$userID'", true);
         $userDetailResult = $this->select($conn, "userdetails", "*", "UserDetailNo LIKE '" . $userResult["UserDetailNo"] . "'", true);

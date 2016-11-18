@@ -7,7 +7,7 @@
  * Time: 12:06 AM
  */
 
-include "../../../includes/global.inc.php";
+include "../../includes/global.inc.php";
 
 if(isset($_POST["register"])) {
     $userType = $_POST["userType"];

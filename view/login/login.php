@@ -7,7 +7,7 @@
  * Time: 12:05 AM
  */
 
-include "../../../includes/global.inc.php";
+include "../../includes/global.inc.php";
 
 if(isset($_POST["login"])) {
     $username = $_POST["username"];
