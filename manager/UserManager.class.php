@@ -7,7 +7,7 @@
  * Time: 2:39 PM
  */
 
-include_once "Manager.php";
+include_once "Manager.class.php";
 
 class UserManager extends Manager {
     /**

@@ -8,10 +8,18 @@
  */
 
 include_once "conn.inc.php";
-include_once realpath($_SERVER["DOCUMENT_ROOT"]) . "/Online-Quiz-System/model/User.class.php";
-include_once realpath($_SERVER["DOCUMENT_ROOT"]) . "/Online-Quiz-System/model/Quiz.class.php";
-include_once realpath($_SERVER["DOCUMENT_ROOT"]) . "/Online-Quiz-System/controller/UserController.class.php";
-include_once realpath($_SERVER["DOCUMENT_ROOT"]) . "/Online-Quiz-System/controller/QuizController.class.php";
+include_once "../model/User.class.php";
+include_once "../model/Quiz.class.php";
+include_once "../model/Question.class.php";
+include_once "../model/Answer.class.php";
+include_once "../model/Subject.class.php";
+include_once "../model/UserType.class.php";
+include_once "../controller/UserController.class.php";
+include_once "../controller/QuizController.class.php";
+include_once "../controller/StatisticController.class.php";
+include_once "../manager/QuizManager.class.php";
+include_once "../manager/StatisticManager.class.php";
+include_once "../manager/UserManager.class.php";
 
 session_start(); // start session
 

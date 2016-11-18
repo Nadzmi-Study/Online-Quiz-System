@@ -8,7 +8,7 @@
  * Time: 12:07 AM
  */
 
-include_once "Question.php";
+include_once "Question.class.php";
 
 class Quiz {
     private $no; // int

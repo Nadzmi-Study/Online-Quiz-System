@@ -23,45 +23,6 @@ class UserController {
      * @return int|string -> return the id of new user
      */
     public function registerUser($conn, User $newUser) {
-        $date = date("Y-m-d");
-
-        // insert into userdetails first
-        $userDetailAttr = "FullName, IC, Email, UserTypeNo, ContactNo, DateCreated";
-        $userDetailValues = "'" . $newUser->getName() ."', '" . $newUser->getIC() ."', '" . $newUser->getEmail() ."', '" . $newUser->getUserType() ."', '" . $newUser->getContact() ."', '$date'";
-        $userDetailNo = $this->insert($conn, "userdetails", $userDetailAttr, $userDetailValues);
-
-        // insert into user
-        $userAttr = "Username, Password, UserDetailNo, DateCreated";
-        $userValues = "'" . $newUser->getUsername() ."', '" . $newUser->getPassword() ."', '$userDetailNo', '$date'";
-        $userNo = $this->insert($conn, "user", $userAttr, $userValues);
-
-        return $userNo;
-    }
-
-    /*
-    public function login($conn, $username, $password) {
-        $result = $this->select($conn, "user", "*", "username LIKE '$username' AND password LIKE '$password'", true);
-
-        if(isset($result)) {
-            $_SESSION["user"] = serialize($this->getUser($conn, $result["UserNo"]));
-            $_SESSION["logged_in"] = true;
-
-            return true;
-        } else {
-            $this->logout();
-            return false;
-        }
-    }
-    */
-
-    public function login($conn, $username, $password) {
-    }
-
-    public function logout() {
-        unset($_SESSION["user"]);
-        unset($_SESSION["logged_in"]);
-
-        echo "logged out";
     }
 }
 ?>

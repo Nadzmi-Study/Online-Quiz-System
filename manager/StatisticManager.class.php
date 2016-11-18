@@ -7,7 +7,7 @@
  * Time: 2:40 PM
  */
 
-include_once "Manager.php";
+include_once "Manager.class.php";
 
 class StatisticManager extends Manager {
     /**
