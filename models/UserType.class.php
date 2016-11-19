@@ -4,7 +4,7 @@ class UserType
     private $userTypeNo;
     private $userTypeDesc;
 
-    public function __construct($userTypeNo, $userTypeDesc){
+    public function __construct($userTypeNo=0, $userTypeDesc=""){
         $this->userTypeNo = $userTypeNo;
         $this->userTypeDesc = $userTypeDesc;
     }

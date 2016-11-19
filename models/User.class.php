@@ -15,8 +15,9 @@ class User {
      * @param string $email
      * @param string $username
      * @param string $password
+     * @param int $userNo
      */
-    public function __construct($userType, $name, $ic, $contact, $email, $username, $password, $userNo) {
+    public function __construct($userType="", $name="", $ic="", $contact="", $email="", $username="", $password="", $userNo=0) {
         $this->userType = $userType;
         $this->name = $name;
         $this->ic = $ic;

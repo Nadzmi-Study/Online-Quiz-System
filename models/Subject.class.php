@@ -10,7 +10,7 @@ class Subject{
      * @param string $subjectCode
      * @param string $subjectDesc
      */
-    public function __construct($subjectCode, $subjectDesc, $subjectNo){
+    public function __construct($subjectCode=0, $subjectDesc="", $subjectNo=""){
         $this->subjectNo = $subjectNo;
         $this->subjectCode = $subjectCode;
         $this->subjectDesc = $subjectDesc;
