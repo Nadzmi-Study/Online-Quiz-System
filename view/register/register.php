@@ -24,6 +24,7 @@ if(isset($_POST["register"])) {
 
         // call usermanager to register user here
 
+
         header("Location: ../login");
     } else
         header("Location: ../register");

@@ -36,10 +36,34 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/Online-Quiz-System/view/student/answer-quiz/index.php">Answer Quiz</a></li>
-            <li><a href="/Online-Quiz-System/view/student/view-quiz/index.php">View Result</a></li>
         </ul>
     </div>
 </nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">List of quiz</h3>
+                </div>
+                <div class="panel-body">
+                    <table style="width:100%">
+                        <tr>
+                            <th>Quiz Title</th>
+                            <th>Date Answer</th>
+                        </tr>
+                        <tr>
+                            <td><a href="">Quiz 1</a></td>
+                            <td>2016-11-12</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
 </body>
 </html>
 
