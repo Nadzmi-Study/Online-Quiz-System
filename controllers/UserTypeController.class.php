@@ -7,7 +7,7 @@
  * Time: 11:18 PM
  */
 
-class UserTypeController extends Controller
+class UserTypeController
 {
     public function getUserType($conn){}
 }

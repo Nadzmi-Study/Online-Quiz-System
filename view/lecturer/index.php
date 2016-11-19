@@ -27,10 +27,10 @@
             <a class="navbar-brand" href="#">Lecturer Page</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="/Online-Quiz-System/view/lecturer/create-quiz/index.html">Create Quiz</a></li>
-            <li><a href="/Online-Quiz-System/view/lecturer/delete-quiz/index.html">Delete Quiz</a></li>
-            <li><a href="/Online-Quiz-System/view/lecturer/update-quiz/index.html">Update Quiz</a></li>
-            <li><a href="/Online-Quiz-System/view/lecturer/view-quiz/index.html">View Quiz</a></li>
+            <li><a href="../../view/lecturer/create-quiz/index.html">Create Quiz</a></li>
+            <li><a href="../../view/lecturer/delete-quiz/index.html">Delete Quiz</a></li>
+            <li><a href="../../view/lecturer/update-quiz/index.html">Update Quiz</a></li>
+            <li><a href="../../view/lecturer/view-quiz/index.html">View Quiz</a></li>
         </ul>
     </div>
 </nav>

@@ -15,8 +15,11 @@ if(isset($_POST["login"])) {
 
     $result = $userManager->login($conn, $username, $password);
 
-    if($result)
-        echo "Logged in";
+    if(isset($result))
+        if($result)
+            echo "Logged in";
+        else
+            echo "Not logged in";
     else
         echo "Not logged in";
 } else
