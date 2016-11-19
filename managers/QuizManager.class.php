@@ -4,7 +4,12 @@ require_once "Manager.class.php";
 class QuizManager extends Manager {
     private $QC; // quiz controller
 
-    public function __construct(QuizController $QC) {
+    /**
+     * QuizManager constructor.
+     *
+     * @param QuizController|null $QC
+     */
+    public function __construct(QuizController $QC=null) {
         $this->QC = $QC;
     }
 

@@ -4,7 +4,12 @@ require_once "Manager.class.php";
 class StatisticManager extends Manager {
     private $SC; // statistic controller
 
-    public function __construct(StatisticController $SC) {
+    /**
+     * StatisticManager constructor.
+     *
+     * @param StatisticController|null $SC
+     */
+    public function __construct(StatisticController $SC=null) {
         $this->SC = $SC;
     }
 

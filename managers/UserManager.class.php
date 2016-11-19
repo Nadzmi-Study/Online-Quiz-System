@@ -13,8 +13,13 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/UserCo
 class UserManager extends Manager {
     private $UC; // user controller
 
-    public function __construct(UserController $UC) {
-        $this->UC =  $UC;
+    /**
+     * UserManager constructor.
+     *
+     * @param UserController|null $UC
+     */
+    public function __construct(UserController $UC=null) {
+        $this->UC = $UC;
     }
 
     /**
@@ -35,7 +40,7 @@ class UserManager extends Manager {
 
         if(isset($userNo)) {
             $_SESSION["logged_in"] = true;
-            $_SESSION["user"] = serialize($this->UC->getUser($conn, $userNo));
+            $_SESSION["user"] = serialize($this->getUser($conn, $userNo));
 
             return true;
         } else {
@@ -72,7 +77,7 @@ class UserManager extends Manager {
         $userData = $this->UC->getUser($conn, $userID);
 
         if(isset($userData))
-            return new User($userData["UserType"], $userData["Name"], $userData["IC"], $userData["Contact"], $userData["Email"], $userData["Username"], $userData["Password"], $userData["UserNo"]);
+            return new User($userData["UserType"], $userData["FullName"], $userData["IC"], $userData["Contact"], $userData["Email"], $userData["Username"], $userData["Password"], $userData["UserNo"]);
         else
             return null;
     }
@@ -80,10 +85,7 @@ class UserManager extends Manager {
     public function getUserID($conn, $loginData) {
         $result = $this->UC->getUserID($conn, $loginData);
 
-        if(isset($result))
-            return $result["UserNo"];
-        else
-            return null;
+        if(isset($result))return $result["UserNo"];
     }
 }
 ?>

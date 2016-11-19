@@ -1,5 +1,5 @@
 <?php
-require_once "../../../includes/global.inc.php";
+// require_once "../../../includes/global.inc.php";
 ?>
 
 <!DOCTYPE html>

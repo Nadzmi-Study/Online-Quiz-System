@@ -13,7 +13,7 @@ class Question {
      * @param Answer[] $answers
      * @param int $no
      */
-    public function __construct($description, $answers, $no) {
+    public function __construct($description="", $answers=array(), $no=0) {
         $this->description = $description;
         $this->answers = $answers;
         $this->no = $no;

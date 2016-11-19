@@ -7,13 +7,19 @@ if(isset($_POST["login"])) {
 
     $result = $userManager->login($conn, $username, $password);
 
-    if(isset($result))
-        if($result)
-            echo "Logged in";
-        else
-            echo "Not logged in";
-    else
-        echo "Not logged in";
+    if(isset($result)) {
+        $user = unserialize($_SESSION["user"]);
+
+        switch ($user->getUserType()) {
+            case "Student":
+                header("Location: ../student");
+                break;
+            case "Lecturer":
+                header("Location: ../lecturer");
+                break;
+        }
+    } else
+        header("Location: ../login");
 } else
     header("Location: ../login");
 ?>

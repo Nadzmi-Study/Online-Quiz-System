@@ -12,7 +12,7 @@ class Answer {
      * @param boolean $trueAnswer
      * @param boolean $studentAnswer
      */
-    public function __construct($no, $description, $trueAnswer, $studentAnswer) {
+    public function __construct($no=0, $description="", $trueAnswer=false, $studentAnswer=false) {
         $this->no = $no;
         $this->description = $description;
         $this->trueAnswer = $trueAnswer;

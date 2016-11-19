@@ -30,5 +30,12 @@ $userManager = new UserManager($userController);
 $userTypeManager = new UserTyperManager($userTypeController);
 $quizManager = new QuizManager($quizController);
 $statisticManager = new StatisticManager($statisticController);
+
+// refresh user session
+if(isset($_SESSION["logged_in"]))
+    if($_SESSION["logged_in"]) {
+        $user = unserialize($_SESSION["user"]);
+        $_SESSION["user"] = serialize($userManager->getUser($conn, $user->getUserNo()));
+    }
 ?>
 

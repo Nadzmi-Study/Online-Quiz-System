@@ -19,7 +19,7 @@ class Quiz {
      * @param Question[] $questions
      * @param double $score
      */
-    public function __construct($title, $subject, $time, $dateCreated, $no, $questions, $score) {
+    public function __construct($title="", $subject="", $time=null, $dateCreated=null, $no=0, $questions=array(), $score=0.0) {
         $this->title = $title;
         $this->subject = $subject;
         $this->time = $time;
