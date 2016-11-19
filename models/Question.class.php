@@ -1,12 +1,4 @@
 <?php
-/**
- * Created using PhpStorm.
- * Project: Online-Quiz-System
- * Author: seladanghijau
- * Date: 8/11/2016
- * Time: 3:28 PM
- */
-
 include_once "Answer.class.php";
 
 class Question {

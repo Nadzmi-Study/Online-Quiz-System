@@ -1,12 +1,4 @@
 <?php
-/**
- * Created using PhpStorm.
- * Project: Online-Quiz-System
- * Author: seladanghijau
- * Date: 8/11/2016
- * Time: 2:39 PM
- */
-
 require_once "Manager.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/UserController.class.php";
 

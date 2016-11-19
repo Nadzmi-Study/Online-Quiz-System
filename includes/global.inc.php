@@ -1,12 +1,4 @@
 <?php
-/**
- * Created using PhpStorm.
- * Project: OnlineQuizSystem
- * Author: seladanghijau
- * Date: 8/11/2016
- * Time: 12:08 AM
- */
-
 require_once "conn.inc.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/models/User.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/models/Quiz.class.php";
