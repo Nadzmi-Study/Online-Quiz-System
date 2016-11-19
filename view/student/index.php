@@ -24,6 +24,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="/Online-Quiz-System/view/student/answer-quiz/index.php">Answer Quiz</a></li>
+                    <li><a href="../logout">Logout</a></li>
                 </ul>
             </div>
         </nav>

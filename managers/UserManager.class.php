@@ -55,6 +55,7 @@ class UserManager extends Manager {
     public function logout() {
         unset($_SESSION["logged_in"]);
         unset($_SESSION["user"]);
+        session_destroy();
     }
 
     /**

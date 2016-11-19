@@ -25,6 +25,7 @@ require_once "../../includes/global.inc.php";
                     <li><a href="../../view/lecturer/create-quiz/index.html">Create Quiz</a></li>
                     <li><a href="../../view/lecturer/delete-quiz/index.html">Delete Quiz</a></li>
                     <li><a href="../../view/lecturer/update-quiz/index.html">Update Quiz</a></li>
+                    <li><a href="../logout">Logout</a></li>
                 </ul>
             </div>
         </nav>
