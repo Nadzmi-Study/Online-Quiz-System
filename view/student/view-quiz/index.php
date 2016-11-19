@@ -26,12 +26,14 @@
                 <div class="panel-heading">Panel heading</div>
                 <table class="table">
                     <tr>
-                        <th>Quiz</th>
-                        <th>Subject Code</th>
+                        <th>Quiz Description</th>
+                        <th>Your Answer</th>
+                        <th>True Answer</th>
                     </tr>
                     <tr>
-                        <td><a href="quizDetails.html">Test 1</a></td>
-                        <td>CS230</td>
+                        <td>Description of question</td>
+                        <td>A</td>
+                        <td>B</td>
                     </tr>
                 </table>
             </div>

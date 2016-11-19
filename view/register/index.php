@@ -36,7 +36,7 @@ if(isset($_POST["register"])) {
     <body>
         <form action="" method="post">
             <select name="userType">
-                <?php displayUserType($conn, $userTypeManager); ?>
+                <?php displayUserType($conn, $userTypeManager); ?> <!-- display the dropdown menu based on the list of user types -->
             </select>
             <input type="text" name="name" placeholder="Full Name" />
             <input type="text" name="ic" placeholder="I/C No.">
@@ -53,7 +53,7 @@ if(isset($_POST["register"])) {
 
 <?php
 function displayUserType($conn, $userTypeManager) { // display drop-down menu for user type
-    $userTypes = $userTypeManager->getUserType($conn);
+    $userTypes = $userTypeManager->getUserType($conn); // get list of user types
 
     // display the dropdown menu
     echo "<option value='0'>Select user type</option>";

@@ -24,10 +24,35 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/Online-Quiz-System/view/student/answer-quiz/index.php">Answer Quiz</a></li>
-            <li><a href="/Online-Quiz-System/view/student/view-quiz/index.php">View Result</a></li>
         </ul>
     </div>
 </nav>
+<header></header>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Panel heading</div>
+                    <table class="table">
+                        <tr>
+                            <th>Quiz</th>
+                            <th>Subject Code</th>
+                        </tr>
+                        <tr>
+                            <td><a href="view-quiz/">Test 1</a></td>
+                            <td>CS230</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+<footer></footer>
 </body>
 </html>
 
