@@ -23,15 +23,6 @@ class UserController {
      * @return int|string -> return the id of new user
      */
     public function registerUser($conn, User $newUser) {
-       //$name = $newUser.getName();
-       //$ic = $newUser.getIC();
-       //$email = $newUser.getEmail();
-       //$userType =  $newUser.getUserType();
-       //$contact = $newUser.getContact();
-       //$username = $newUser.getUsername();
-       //$password =  $newUser.getPassword();
-
-       echo "At here!!";
     }
 }
 ?>

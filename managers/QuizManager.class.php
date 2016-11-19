@@ -7,9 +7,15 @@
  * Time: 2:40 PM
  */
 
-include_once "Manager.class.php";
+require_once "Manager.class.php";
 
 class QuizManager extends Manager {
+    private $QC; // quiz controller
+
+    public function __construct(QuizController $QC) {
+        $this->QC = $QC;
+    }
+
     /**
      * @param string $quizID
      * @return Question[]
@@ -22,7 +28,7 @@ class QuizManager extends Manager {
      * @param Quiz $quiz
      * @return boolean
      */
-    public function checkQuizDesc($quiz) {}
+    public function checkQuizDesc(Quiz $quiz) {}
 
     /**
      * check question description during quiz registration

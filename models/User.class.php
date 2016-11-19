@@ -8,6 +8,7 @@
  */
 
 class User {
+    private $userNo; // int
     private $userType; // string
     private $name, $ic, $contact, $email; // string
     private $username, $password; // string
@@ -23,7 +24,7 @@ class User {
      * @param string $username
      * @param string $password
      */
-    public function __construct($userType, $name, $ic, $contact, $email, $username, $password) {
+    public function __construct($userType, $name, $ic, $contact, $email, $username, $password, $userNo) {
         $this->userType = $userType;
         $this->name = $name;
         $this->ic = $ic;
@@ -31,6 +32,7 @@ class User {
         $this->email = $email;
         $this->username = $username;
         $this->password = $password;
+        $this->userNo = $userNo;
     }
 
     // getter
@@ -41,6 +43,7 @@ class User {
     public function getEmail() { return $this->email; }
     public function getUsername() { return $this->username; }
     public function getPassword() { return $this->password; }
+    public function getUserNo() { return $this->userNo; }
 
     // setter
     public function setUserType($userType) { $this->userType = $userType; }
@@ -50,5 +53,6 @@ class User {
     public function setEmail($email) { $this->email = $email; }
     public function setUsername($username) { $this->username = $username; }
     public function setPassword($password) { $this->password = $password; }
+    public function setUserNo($userNo) { $this->userNo = $userNo;}
 }
 ?>

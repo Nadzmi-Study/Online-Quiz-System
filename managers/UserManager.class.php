@@ -34,10 +34,6 @@ class UserManager extends Manager {
      * @param User $user
      * @return boolean
      */
-
-    public function registerUser($conn,User $user) {
-        $userCtrl = new UserController();
-        $userCtrl.$this->registerUser($conn, $user);
-    }
+    public function registerUser(User $user) {}
 }
 ?>
