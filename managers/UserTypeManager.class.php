@@ -19,9 +19,5 @@ class UserTyperManager extends Manager{
      * @param $conn
      * @return UserType
      */
-    public function getUserType($conn){
-        $result = $this->UTC->getUserType($conn);;
-
-        return new UserType($result["UserTypeNo"], $result["UserTypeDesc"]);
-    }
+    public function getUserType($conn) {}
 }

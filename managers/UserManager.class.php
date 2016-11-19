@@ -8,7 +8,6 @@
  */
 
 require_once "Manager.class.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/UserController.class.php";
 
 class UserManager extends Manager {
     private $UC; // user controller
@@ -61,10 +60,28 @@ class UserManager extends Manager {
     /**
      * register new user
      *
+     * @param $conn
      * @param User $user
-     * @return boolean
+     * @return array
      */
-    public function registerUser(User $user) {}
+    public function registerUser($conn, User $user) {
+        $newUserData = array(
+            "FullName" => $user->getName(),
+            "IC" => $user->getIC(),
+            "Email" => $user->getEmail(),
+            "UserType" => $user->getUserType(),
+            "Contact" => $user->getContact(),
+            "Username" => $user->getUsername(),
+            "Password" => $user->getPassword()
+        );
+
+        $result = $this->UC->registerUser($conn, $newUserData);
+
+        if(isset($result))
+            return $result;
+        else
+            return null;
+    }
 
     /**
      * get user object by id
@@ -82,10 +99,18 @@ class UserManager extends Manager {
             return null;
     }
 
+    /**
+     * get user id
+     *
+     * @param $conn
+     * @param array $loginData -> ("Username", "Password")
+     * @return int
+     */
     public function getUserID($conn, $loginData) {
         $result = $this->UC->getUserID($conn, $loginData);
 
-        if(isset($result))return $result["UserNo"];
+        if(isset($result))
+            return $result["UserNo"];
     }
 }
 ?>
