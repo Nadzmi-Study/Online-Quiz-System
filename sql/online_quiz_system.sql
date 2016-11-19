@@ -107,7 +107,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_User_GetAll` ()  NO SQL
 BEGIN
- SELECT usr.Username AS "Name",usr.Password AS "Password",ud.FullName AS "FullName", ud.IC AS "IC", ud.Email AS "Email", ud.ContactNo AS "Contact", ut.UserTypeDesc AS "UserType", ud.DateCreated AS "CreatedDate", ud.DateModified AS "ModifiedDate"
+ SELECT usr.Username AS "Username",usr.Password AS "Password",ud.FullName AS "FullName", ud.IC AS "IC", ud.Email AS "Email", ud.ContactNo AS "Contact", ut.UserTypeDesc AS "UserType", ud.DateCreated AS "CreatedDate", ud.DateModified AS "ModifiedDate"
  FROM user usr, userdetails ud, lookupusertype ut
  WHERE ud.UserDetailNo = usr.UserDetailNo
  AND ud.UserTypeNo = ut.UserTypeNo
@@ -117,7 +117,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_User_GetByID` (IN `id` INT)  NO SQL
 BEGIN
- SELECT usr.Username AS "Name",usr.Password AS "Password",ud.FullName AS "FullName", ud.IC AS "IC", ud.Email AS "Email", ud.ContactNo AS "Contact", ut.UserTypeDesc AS "UserType", ud.DateCreated AS "CreatedDate", ud.DateModified AS "ModifiedDate"
+ SELECT usr.UserNo As "UserNo",usr.Username AS "Username",usr.Password AS "Password",ud.FullName AS "FullName", ud.IC AS "IC", ud.Email AS "Email", ud.ContactNo AS "Contact", ut.UserTypeDesc AS "UserType", ud.DateCreated AS "CreatedDate", ud.DateModified AS "ModifiedDate"
  FROM user usr, userdetails ud, lookupusertype ut
  WHERE ud.UserDetailNo = usr.UserDetailNo
  AND ud.UserTypeNo = ut.UserTypeNo
@@ -125,7 +125,15 @@ BEGIN
  AND ud.UserDetailNo = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_User_Insert` (IN `fullname` VARCHAR(255), IN `ic` VARCHAR(14), IN `email` VARCHAR(255), IN `userType` INT(1), IN `contactNo` VARCHAR(14), IN `username` VARCHAR(255), IN `userpassword` VARCHAR(255), OUT `userNo` INT)  BEGIN       
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_User_GetByUsernamePassword` (IN `in_username` VARCHAR(100), IN `in_password` VARCHAR(100))  NO SQL
+BEGIN
+	SELECT UserNo
+    FROM user
+    WHERE Username = in_username
+    AND Password = in_password;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_User_Insert` (IN `fullname` VARCHAR(255), IN `ic` VARCHAR(14), IN `email` VARCHAR(255), IN `userType` INT, IN `contactNo` VARCHAR(14), IN `username` VARCHAR(255), IN `userpassword` VARCHAR(255), OUT `userNo` INT)  BEGIN       
       INSERT INTO userdetails 
       VALUES (null,fullname,ic,email,userType,contactNo,CURRENT_DATE,null);
       
@@ -299,8 +307,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`UserNo`, `Username`, `Password`, `UserDetailNo`, `Active`, `DateCreated`, `DateModified`) VALUES
 (7, 'alif', 'pass', 7, 1, '2016-11-16', '2016-11-16'),
-(8, 'test', 'pass', 8, 1, '2016-11-17', '2016-11-17'),
-(9, 'DibaAisyah', 'Pass', 9, 1, '2016-11-17', '2016-11-17');
+(8, 'test', 'pass', 8, 1, '2016-11-17', '2016-11-17');
 
 -- --------------------------------------------------------
 
@@ -325,8 +332,7 @@ CREATE TABLE `userdetails` (
 
 INSERT INTO `userdetails` (`UserDetailNo`, `FullName`, `IC`, `Email`, `UserTypeNo`, `ContactNo`, `DateCreated`, `DateModified`) VALUES
 (7, 'Alif Zulkafli', '940105105037', 'alifzulkafli94@gmail.com', 2, '0112223333', '2016-11-16', '2016-11-16'),
-(8, 'Tester Name', '000', 'test', 1, '091', '2016-11-17', NULL),
-(9, 'Adibah Aisyah', '000000112222', 'Diba@email.com', 2, '1112223333', '2016-11-17', '2016-11-17');
+(8, 'Tester Name', '000', 'test', 1, '091', '2016-11-17', NULL);
 
 --
 -- Indexes for dumped tables
@@ -418,12 +424,12 @@ ALTER TABLE `studentquiz`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `UserNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `userdetails`
 --
 ALTER TABLE `userdetails`
-  MODIFY `UserDetailNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `UserDetailNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
