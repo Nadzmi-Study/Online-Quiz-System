@@ -13,11 +13,11 @@ class UserController {
 
         $conn->query($sql);
         $conn->next_result();
-        $query2 = $conn->query($sql2);
+        $query = $conn->query($sql2);
         $conn->next_result();
 
-        if(isset($query2))
-            $result = $query2->fetch_assoc();
+        if(isset($query))
+            $result = $query->fetch_assoc();
         else
             $result = null;
 

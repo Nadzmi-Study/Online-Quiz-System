@@ -1,7 +1,6 @@
 <?php
 include_once "../../includes/global.inc.php";
 
-
 if(isset($_POST["register"])) {
     // get all data from form
     $userType = $_POST["userType"];
@@ -37,9 +36,7 @@ if(isset($_POST["register"])) {
     <body>
         <form action="" method="post">
             <select name="userType">
-                <option value='0'>Select user type</option>
-                <option value='1'>Student</option>
-                <option value='2'>Lecturer</option>
+                <?php displayUserType($conn, $userTypeManager); ?>
             </select>
             <input type="text" name="name" placeholder="Full Name" />
             <input type="text" name="ic" placeholder="I/C No.">
@@ -55,15 +52,13 @@ if(isset($_POST["register"])) {
 </html>
 
 <?php
-// sample function to display drop-down menu
-function displayUserType($conn, $userTypeManager) {
-    // get object of userTypes from UserTypeManager
-    $userTypes[] = array();
+function displayUserType($conn, $userTypeManager) { // display drop-down menu for user type
+    $userTypes = $userTypeManager->getUserType($conn);
 
     // display the dropdown menu
     echo "<option value='0'>Select user type</option>";
     foreach($userTypes as $type) {
-        echo "<option value='" . $type->getUserTypeNo() . "'>" . $type->getUserTypeDesc() . "</option>";
+        echo "<option value='" . $type['UserTypeNo'] . "'>" . $type['UserTypeDesc'] . "</option>";
     }
 }
 ?>

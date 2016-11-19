@@ -1,15 +1,23 @@
 <?php
 class UserTypeController
 {
-    public function getUserType($conn){
-        $query = "CALL SP_LookupUserType_GetAll()";
-        if($row = mysqli_fetch_array($conn,$query))
-        {
-            $userTypeNo = $row['userTypeNo'];
-            $userTypeDesc = $row['userTypeDesc'];
+    public function getUserType($conn) // return the user types as associative array
+    {
+        $sql = "CALL SP_LookupUserType_GetAll()"; // prepare the sql query
+        $query = $conn->query($sql) or die(mysqli_error($conn)); // run the sql query
 
-            $userType = new UserType($userTypeNo, $userTypeDesc);
+        $userTypes = array();
+        while($row = $query->fetch_assoc()) {
+            $result = array(
+                "UserTypeNo" => $row["userTypeNo"],
+                "UserTypeDesc" => $row["userTypeDesc"]
+            );
+
+            array_push($userTypes, $result);
         }
-        return $userType;
+
+        $conn->next_result();
+        return $userTypes; // return array of user types
     }
 }
+?>
