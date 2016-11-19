@@ -1,7 +1,4 @@
 <?php
-
-/**
- * Created by PhpStorm.*/
 class Subject{
     private $subjectNo; // int
     private $subjectCode, $subjectDesc; // string
