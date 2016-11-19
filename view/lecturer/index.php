@@ -25,9 +25,36 @@ require_once "../../includes/global.inc.php";
             <li><a href="../../view/lecturer/create-quiz/index.html">Create Quiz</a></li>
             <li><a href="../../view/lecturer/delete-quiz/index.html">Delete Quiz</a></li>
             <li><a href="../../view/lecturer/update-quiz/index.html">Update Quiz</a></li>
-            <li><a href="../../view/lecturer/view-quiz/index.html">View Quiz</a></li>
         </ul>
     </div>
 </nav>
+
+
+<header></header>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Panel heading</div>
+                    <table class="table">
+                        <tr>
+                            <th>Quiz</th>
+                            <th>Subject Code</th>
+                        </tr>
+                        <tr>
+                            <td><a href="view-quiz/">Test 1</a></td>
+                            <td>CS230</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+<footer></footer>
 </body>
 </html>
