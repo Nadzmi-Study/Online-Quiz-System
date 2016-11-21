@@ -1,6 +1,11 @@
 <?php
 require_once "Manager.class.php";
 
+/**
+ * Class QuizManager
+ *
+ * @todo implement other QuizManager's methods
+ */
 class QuizManager extends Manager {
     private $QC; // quiz controller
 

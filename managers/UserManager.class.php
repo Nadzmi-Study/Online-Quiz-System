@@ -9,6 +9,11 @@
 
 require_once "Manager.class.php";
 
+/**
+ * Class UserManager
+ *
+ * @todo implement other UserManager's methods
+ */
 class UserManager extends Manager {
     private $UC; // user controller
 
@@ -112,6 +117,23 @@ class UserManager extends Manager {
 
         if(isset($result))
             return $result["UserNo"];
+        else
+            return null;
+    }
+
+    public function userRegisterCheck($userType, $name, $ic, $contact, $email, $username, $password, $rePassword) {
+        $errorMessage = "";
+
+        if(!isset($password) && !isset($rePassword) && !isset($name) && !isset($ic) && !isset($contact) && !isset($email) && !isset($username))
+            $errorMessage .= "Please complete the form.<br />";
+
+        if(($password != $rePassword))
+            $errorMessage .= "Password not matched.<br />";
+
+        if($userType == 0)
+            $errorMessage .= "Please select your 'User Type'.<br />";
+
+        return $errorMessage;
     }
 }
 ?>

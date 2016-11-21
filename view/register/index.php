@@ -1,6 +1,8 @@
 <?php
 include_once "../../includes/global.inc.php";
 
+$errorMessage = "";
+
 if(isset($_POST["register"])) {
     // get all data from form
     $userType = $_POST["userType"];
@@ -12,8 +14,10 @@ if(isset($_POST["register"])) {
     $password = $_POST["password"];
     $rePassword = $_POST["re-password"];
 
-    // check if password matched
-    if(($password == $rePassword) || ($userType == 0)) {
+    // input error check
+    // check if there is error
+    $errorMessage = $userManager->userRegisterCheck($userType, $name, $ic, $contact, $email, $username, $password, $rePassword);
+    if(empty($errorMessage)) {
         // create new User object used to register
         $newUser = new User($userType, $name, $ic, $contact, $email, $username, $password);
         $result = $userManager->registerUser($conn, $newUser); // register the user
@@ -22,8 +26,7 @@ if(isset($_POST["register"])) {
             header("Location: ../login"); // successfully registered
         else
             header("Location: ../register"); // unsuccessfully registered
-    } else
-        header("Location: ../register"); // password do not matched
+    }
 }
 ?>
 
@@ -34,6 +37,7 @@ if(isset($_POST["register"])) {
         <title>Register</title>
     </head>
     <body>
+    <?php $userManager->displayError($errorMessage); ?>
         <form action="" method="post">
             <select name="userType">
                 <?php displayUserType($conn, $userTypeManager); ?> <!-- display the dropdown menu based on the list of user types -->
@@ -52,13 +56,15 @@ if(isset($_POST["register"])) {
 </html>
 
 <?php
+// funstion declarations:
+// displayUserType as drop-down list
 function displayUserType($conn, $userTypeManager) { // display drop-down menu for user type
-    $userTypes = $userTypeManager->getUserType($conn); // get list of user types
+    $tempUserType = $userTypeManager->getUserType($conn); // get list of user types
 
     // display the dropdown menu
     echo "<option value='0'>Select user type</option>";
-    foreach($userTypes as $type) {
-        echo "<option value='" . $type['UserTypeNo'] . "'>" . $type['UserTypeDesc'] . "</option>";
+    for($x = 0 ; $x<sizeof($tempUserType) ; $x++) {
+        echo "<option value='" . $tempUserType[$x]->getUserTypeNo() . "'>" . $tempUserType[$x]->getUserTypeDesc() . "</option>";
     }
 }
 ?>

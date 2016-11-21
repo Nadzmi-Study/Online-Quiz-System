@@ -1,5 +1,10 @@
 <?php
-class StatisticController {
 
+/**
+ * Class StatisticController
+ *
+ * @todo implement statistic class
+ */
+class StatisticController {
 }
 ?>

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Class UserController
+ *
+ * @todo implement other UserController's methods
+ */
 class UserController {
     /**
      * register new user

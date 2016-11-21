@@ -10,12 +10,12 @@ class UserType
     }
 
     //getter
-    public function getUserTypeNo(){ $this->userTypeNo;}
-    public function getUserTypeDesc(){$this->userTypeDesc;}
+    public function getUserTypeNo(){ return $this->userTypeNo;}
+    public function getUserTypeDesc(){ return $this->userTypeDesc; }
 
     //setter
-    public function setUserTypeNo($userTypeNo){$this->userTypeNo = $userTypeNo;}
-    public function setUserTypeDesc($userTypeDesc){$this->userTypeDesc = $userTypeDesc;}
+    public function setUserTypeNo($userTypeNo){ $this->userTypeNo = $userTypeNo; }
+    public function setUserTypeDesc($userTypeDesc){ $this->userTypeDesc = $userTypeDesc; }
 }
 
 ?>
