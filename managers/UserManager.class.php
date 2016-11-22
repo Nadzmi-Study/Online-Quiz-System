@@ -135,23 +135,26 @@ class UserManager extends Manager {
      * @return array
      */
     public function userRegisterCheck($userType=0, $name="", $ic="", $contact="", $email="", $username="", $password="", $rePassword="") {
-        $errorMessage = "";
+        $errorMessage = "Please do the following before registration:<br />";
         $error = false;
 
         if(empty($password) || empty($rePassword) || empty($name) || empty($ic) || empty($contact) || empty($email) || !empty($username)) {
-            $errorMessage .= "Please complete the form.<br />";
+            $errorMessage .= "-> Complete the form.<br />";
             $error = true;
         }
 
         if(($password != $rePassword)) {
-            $errorMessage .= "Password not matched.<br />";
+            $errorMessage .= "-> Password not matched.<br />";
             $error = true;
         }
 
         if($userType == 0) {
-            $errorMessage .= "Please select your 'User Type'.<br />";
+            $errorMessage .= "-> Select your 'User Type'.<br />";
             $error = true;
         }
+
+        if(!$error)
+            $errorMessage .= "";
 
         $result = array(
             "error" => $error,

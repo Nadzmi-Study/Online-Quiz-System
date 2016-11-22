@@ -40,7 +40,7 @@ if(isset($_POST["register"])) {
         <title>Register</title>
     </head>
     <body>
-    <?php echo $errorMessage["message"]; ?> <!-- display error message if any. -->
+    <?php $userManager->displayError($errorMessage["message"])?> <!-- display error message if any. -->
         <form action="" method="post">
             <select name="userType">
                 <?php displayUserType($conn, $userTypeManager); ?> <!-- display the drop-down for user types -->
