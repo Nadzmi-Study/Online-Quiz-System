@@ -121,19 +121,44 @@ class UserManager extends Manager {
             return null;
     }
 
-    public function userRegisterCheck($userType, $name, $ic, $contact, $email, $username, $password, $rePassword) {
+    /**
+     * check user registration
+     *
+     * @param string $userType
+     * @param string $name
+     * @param string $ic
+     * @param string $contact
+     * @param string $email
+     * @param string $username
+     * @param string $password
+     * @param string $rePassword
+     * @return array
+     */
+    public function userRegisterCheck($userType=0, $name="", $ic="", $contact="", $email="", $username="", $password="", $rePassword="") {
         $errorMessage = "";
+        $error = false;
 
-        if(!isset($password) && !isset($rePassword) && !isset($name) && !isset($ic) && !isset($contact) && !isset($email) && !isset($username))
+        if(empty($password) || empty($rePassword) || empty($name) || empty($ic) || empty($contact) || empty($email) || !empty($username)) {
             $errorMessage .= "Please complete the form.<br />";
+            $error = true;
+        }
 
-        if(($password != $rePassword))
+        if(($password != $rePassword)) {
             $errorMessage .= "Password not matched.<br />";
+            $error = true;
+        }
 
-        if($userType == 0)
+        if($userType == 0) {
             $errorMessage .= "Please select your 'User Type'.<br />";
+            $error = true;
+        }
 
-        return $errorMessage;
+        $result = array(
+            "error" => $error,
+            "message" => $errorMessage
+        );
+
+        return $result;
     }
 }
 ?>
