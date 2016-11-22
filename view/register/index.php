@@ -1,7 +1,7 @@
 <?php
 include_once "../../includes/global.inc.php";
 
-$errorMessage = "";
+$errorMessage = ""; // error message
 
 if(isset($_POST["register"])) {
     // get all data from form
@@ -16,8 +16,8 @@ if(isset($_POST["register"])) {
 
     // input error check
     // check if there is error
-    $errorMessage = $userManager->userRegisterCheck($userType, $name, $ic, $contact, $email, $username, $password, $rePassword);
-    if(empty($errorMessage)) {
+    $error = $userManager->userRegisterCheck($userType, $name, $ic, $contact, $email, $username, $password, $rePassword);
+    if(empty($error)) {
         // create new User object used to register
         $newUser = new User($userType, $name, $ic, $contact, $email, $username, $password);
         $result = $userManager->registerUser($conn, $newUser); // register the user
@@ -37,10 +37,10 @@ if(isset($_POST["register"])) {
         <title>Register</title>
     </head>
     <body>
-    <?php $userManager->displayError($errorMessage); ?>
+    <?php $userManager->displayError($errorMessage); ?> <!-- display error message if any. -->
         <form action="" method="post">
             <select name="userType">
-                <?php displayUserType($conn, $userTypeManager); ?> <!-- display the dropdown menu based on the list of user types -->
+                <?php displayUserType($conn, $userTypeManager); ?> <!-- display the drop-down for user types -->
             </select>
             <input type="text" name="name" placeholder="Full Name" />
             <input type="text" name="ic" placeholder="I/C No.">
