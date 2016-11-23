@@ -59,7 +59,7 @@ if(isset($_POST["register"])) {
 </html>
 
 <?php
-// funstion declarations:
+// function declarations:
 // displayUserType as drop-down list
 function displayUserType($conn, $userTypeManager) { // display drop-down menu for user type
     $tempUserType = $userTypeManager->getUserType($conn); // get list of user types
