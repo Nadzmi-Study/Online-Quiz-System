@@ -48,9 +48,9 @@ $quizManager = new QuizManager($QC);
 function displayQuestion($conn, $quizManager)
 {
     $questionList = $quizManager->getQuestionByQuizId($conn, 1);
-    // $answerList = $quizManager->getAnswerByQuestionId($conn, 1);
     for($i=0; $i<sizeof($questionList); $i++)
     {
+        $answerList = $quizManager->getAnswerByQuestionId($conn, $i);
         echo "<div class='container-fluid'>
                    <div class='row'>
                        <div class='col-md-1'>
@@ -66,18 +66,18 @@ function displayQuestion($conn, $quizManager)
                        <div class='col-md-1'></div>
                        <div class='col-md-5'>
                            <div class='radio'>
-                               <label><input type='radio' name='answer$i' value='a$i' />A </label>
+                               <label><input type='radio' name='answer$i' value='".$answerList[$i]->getTrueAnswer()."' />A - ".$answerList[$i]->getDescription()."</label>
                            </div>
                            <div class='radio'>
-                               <label><input type='radio' name='answer$i'  value='b$i' />B</label>
+                               <label><input type='radio' name='answer$i'  value='".$answerList[$i+1]->getTrueAnswer()."' />B - ".$answerList[$i+1]->getDescription()."</label>
                            </div>
                        </div>
                        <div class='col-md-6'>
                            <div class='radio'>
-                               <label><input type='radio' name='answer$i'  value='c$i' />C</label>
+                               <label><input type='radio' name='answer$i'  value='".$answerList[$i+2]->getTrueAnswer()."' />C - ".$answerList[$i+2]->getDescription()."</label>
                            </div>
                            <div class='radio'>
-                               <label><input type='radio' name='answer$i'  value='d$i' />D</label>
+                               <label><input type='radio' name='answer$i'  value='".$answerList[$i+3]->getTrueAnswer()."' />D - ".$answerList[$i+3]->getDescription()."</label>
                            </div>
                        </div>
                    </div>
