@@ -1,11 +1,16 @@
 <?php
+require_once "Controller.php";
 
 /**
  * Class QuizController
  *
  * @todo implement other QuizController's methods
  */
-class QuizController {
+class QuizController extends Controller {
+    public function __construct($conn) {
+        parent::__construct($conn);
+    }
+
     /**
      * @todo inplement registerQuiz() and return the quizID
      *
@@ -23,9 +28,8 @@ class QuizController {
     /**
      * @todo implement requestQuestionList() and return array of Question object
      *
-     * @param $conn
      * @param $quizID
      */
-    public function requestQuestionList($conn, $quizID) {}
+    public function requestQuestionList($quizID) {}
 }
 ?>

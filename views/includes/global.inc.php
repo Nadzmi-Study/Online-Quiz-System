@@ -17,13 +17,14 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/UserTypeM
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/QuizManager.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/StatisticManager.class.php";
 
+
 session_start(); // start session
 
 // initialize controllers
-$userController = new UserController();
-$userTypeController = new UserTypeController();
-$quizController = new QuizController();
-$statisticController = new StatisticController();
+$userController = new UserController($conn);
+$userTypeController = new UserTypeController($conn);
+$quizController = new QuizController($conn);
+$statisticController = new StatisticController($conn);
 
 // initialize managers
 $userManager = new UserManager($userController);
@@ -35,7 +36,7 @@ $statisticManager = new StatisticManager($statisticController);
 if(isset($_SESSION["logged_in"]))
     if($_SESSION["logged_in"]) {
         $user = unserialize($_SESSION["user"]);
-        $_SESSION["user"] = serialize($userManager->getUser($conn, $user->getUserNo()));
+        $_SESSION["user"] = serialize($userManager->getUser($user->getUserNo()));
     }
 ?>
 

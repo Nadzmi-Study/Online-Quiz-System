@@ -1,5 +1,5 @@
 <?php
-include_once "../includes/global.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 
 if(isset($_SESSION["logged_in"])) {
     if($_SESSION["logged_in"]) {

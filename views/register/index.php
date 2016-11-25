@@ -1,5 +1,5 @@
 <?php
-include_once "../../includes/global.inc.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 
 $errorMessage = array(
     "error" => false,
@@ -23,7 +23,7 @@ if(isset($_POST["register"])) {
     if(!$errorMessage["error"]) {
         // create new User object used to register
         $newUser = new User($userType, $name, $ic, $contact, $email, $username, $password);
-        $result = $userManager->registerUser($conn, $newUser); // register the user
+        $result = $userManager->registerUser($newUser); // register the user
 
         if(isset($result))
             header("Location: ../login"); // successfully registered
@@ -40,10 +40,10 @@ if(isset($_POST["register"])) {
         <title>Register</title>
     </head>
     <body>
-    <?php $userManager->displayError($errorMessage["message"])?> <!-- display error message if any. -->
+        <?php $userManager->displayError($errorMessage["message"])?> <!-- display error message if any. -->
         <form action="" method="post">
             <select name="userType">
-                <?php displayUserType($conn, $userTypeManager); ?> <!-- display the drop-down for user types -->
+                <?php displayUserType($userTypeManager); ?> <!-- display the drop-down for user types -->
             </select>
             <input type="text" name="name" placeholder="Full Name" />
             <input type="text" name="ic" placeholder="I/C No.">
@@ -61,8 +61,8 @@ if(isset($_POST["register"])) {
 <?php
 // funstion declarations:
 // displayUserType as drop-down list
-function displayUserType($conn, $userTypeManager) { // display drop-down menu for user type
-    $tempUserType = $userTypeManager->getUserType($conn); // get list of user types
+function displayUserType($userTypeManager) { // display drop-down menu for user type
+    $tempUserType = $userTypeManager->getUserType(); // get list of user types
 
     // display the dropdown menu
     echo "<option value='0'>Select user type</option>";
