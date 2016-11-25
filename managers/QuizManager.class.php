@@ -22,7 +22,9 @@ class QuizManager extends Manager {
      * @param string $quizID
      * @return Question[]
      */
-    public function getQuestionList($quizID) {}
+    public function getQuestionList($quizID) {
+
+    }
 
     /**
      * check quiz description during quiz registration
