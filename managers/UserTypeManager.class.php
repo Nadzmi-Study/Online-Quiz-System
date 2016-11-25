@@ -14,16 +14,12 @@ class UserTyperManager extends Manager{
     }
 
     /**
-     * @method
      * get user type object
      *
-     * @todo get array of usertypes from UserController and return as array of objects
-     *
-     * @param $conn
      * @return array
      */
-    public function getUserType($conn) {
-        $tempUserType = $this->UTC->getUserType($conn);
+    public function getUserType() {
+        $tempUserType = $this->UTC->getUserType();
 
         $userTypeObjects = array();
         for($x = 0 ; $x<sizeof($tempUserType) ; $x++) {

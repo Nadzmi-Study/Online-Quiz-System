@@ -29,22 +29,21 @@ class UserManager extends Manager {
     /**
      * login
      *
-     * @param $conn
      * @param string $username
      * @param string $password
      * @return boolean
      */
-    public function login($conn, $username, $password) {
+    public function login($username, $password) {
         $loginData = array(
             "Username" => $username,
             "Password" => $password
         );
 
-        $userNo = $this->getUserID($conn, $loginData);
+        $userNo = $this->getUserID($loginData);
 
         if(isset($userNo)) {
             $_SESSION["logged_in"] = true;
-            $_SESSION["user"] = serialize($this->getUser($conn, $userNo));
+            $_SESSION["user"] = serialize($this->getUser($userNo));
 
             return true;
         } else {
@@ -60,17 +59,18 @@ class UserManager extends Manager {
     public function logout() {
         unset($_SESSION["logged_in"]);
         unset($_SESSION["user"]);
-        session_destroy();
+
+        if(isset($_SESSION["logged_in"]))
+            session_destroy();
     }
 
     /**
      * register new user
      *
-     * @param $conn
      * @param User $user
      * @return array
      */
-    public function registerUser($conn, User $user) {
+    public function registerUser(User $user) {
         $newUserData = array(
             "FullName" => $user->getName(),
             "IC" => $user->getIC(),
@@ -81,7 +81,7 @@ class UserManager extends Manager {
             "Password" => $user->getPassword()
         );
 
-        $result = $this->UC->registerUser($conn, $newUserData);
+        $result = $this->UC->registerUser($newUserData);
 
         if(isset($result))
             return $result;
@@ -92,12 +92,11 @@ class UserManager extends Manager {
     /**
      * get user object by id
      *
-     * @param $conn
      * @param int|string $userID
      * @return null|User
      */
-    public function getUser($conn, $userID) {
-        $userData = $this->UC->getUser($conn, $userID);
+    public function getUser($userID) {
+        $userData = $this->UC->getUser($userID);
 
         if(isset($userData))
             return new User($userData["UserType"], $userData["FullName"], $userData["IC"], $userData["Contact"], $userData["Email"], $userData["Username"], $userData["Password"], $userData["UserNo"]);
@@ -108,12 +107,11 @@ class UserManager extends Manager {
     /**
      * get user id
      *
-     * @param $conn
      * @param array $loginData -> ("Username", "Password")
      * @return int
      */
-    public function getUserID($conn, $loginData) {
-        $result = $this->UC->getUserID($conn, $loginData);
+    public function getUserID($loginData) {
+        $result = $this->UC->getUserID($loginData);
 
         if(isset($result))
             return $result["UserNo"];
@@ -121,10 +119,12 @@ class UserManager extends Manager {
             return null;
     }
 
+    // Check methods ---------------------------------------------------------------------------------------------------
+
     /**
      * check user registration
      *
-     * @param string $userType
+     * @param int $userType
      * @param string $name
      * @param string $ic
      * @param string $contact
@@ -135,10 +135,10 @@ class UserManager extends Manager {
      * @return array
      */
     public function userRegisterCheck($userType=0, $name="", $ic="", $contact="", $email="", $username="", $password="", $rePassword="") {
-        $errorMessage = "Please do the following before registration:<br />";
         $error = false;
+        $errorMessage = "Please do the following before registration:<br />";
 
-        if(empty($password) || empty($rePassword) || empty($name) || empty($ic) || empty($contact) || empty($email) || !empty($username)) {
+        if(empty($name) || empty($ic) || empty($contact) || empty($email) || empty($username) || empty($password) || empty($rePassword)) {
             $errorMessage .= "-> Complete the form.<br />";
             $error = true;
         }
@@ -155,6 +155,36 @@ class UserManager extends Manager {
 
         if(!$error)
             $errorMessage .= "";
+
+        $result = array(
+            "error" => $error,
+            "message" => $errorMessage
+        );
+
+        return $result;
+    }
+
+    /**
+     * check user login credentials
+     *
+     * @param string $username
+     * @param string $password
+     * @return array
+     */
+    public function userLoginCheck($username="", $password="") {
+        $userData = array(
+            "Username" => $username,
+            "Password" => $password
+        );
+        $userID = $this->UC->getUserID($userData);
+
+        if(!isset($userID)) {
+            $error = true;
+            $errorMessage = "Username or Password do not match.";
+        } else {
+            $error = false;
+            $errorMessage = "";
+        }
 
         $result = array(
             "error" => $error,
