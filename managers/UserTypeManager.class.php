@@ -16,8 +16,6 @@ class UserTyperManager extends Manager{
     /**
      * get user type object
      *
-     * @todo get array of usertypes from UserController and return as array of objects
-     *
      * @return array
      */
     public function getUserType() {
