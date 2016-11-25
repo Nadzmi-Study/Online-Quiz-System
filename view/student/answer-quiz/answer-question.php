@@ -1,5 +1,13 @@
 <?php
-    include_once "../../includes/global.inc.php";
+    //include_once "../../includes/global.inc.php";
+require_once "../../../controllers/QuizController.class.php";
+require_once "../../../managers/QuizManager.class.php";
+require_once "../../../models/Quiz.class.php";
+
+$conn = new mysqli("localhost","root","","online_quiz_system");
+$QC = new QuizController();
+$quizManager = new QuizManager($QC);
+
 ?>
 
 
@@ -24,7 +32,7 @@
                <div class="col-md-6">
                    <form action="" method="post">
                        <h5>Time: </h5>
-                       <?php displayQuestion($conn, $QuizManager); ?>
+                       <?php displayQuestion($conn, $quizManager); ?>
                        <div class="container-fluid">
                            <input type="submit" name="submit-question" value="Submit Answer" class="btn btn-success"/>
                        </div>
@@ -37,9 +45,11 @@
 </html>
 
 <?php
-function displayQuestion($conn, $QuizManager)
+function displayQuestion($conn, $quizManager)
 {
-    for($i=1; $i<10; $i++)
+    $questionList = $quizManager->getQuestionByQuizId($conn, 1);
+    // $answerList = $quizManager->getAnswerByQuestionId($conn, 1);
+    for($i=0; $i<sizeof($questionList); $i++)
     {
         echo "<div class='container-fluid'>
                    <div class='row'>
@@ -49,14 +59,14 @@ function displayQuestion($conn, $QuizManager)
                            </div>
                        </div>
                        <div class='col-md-11'>
-                           <h4>Question Description</h4>
+                           <h4>".$questionList[$i]->getDescription()."</h4>
                        </div>
                    </div>
                    <div class='row'>
                        <div class='col-md-1'></div>
                        <div class='col-md-5'>
                            <div class='radio'>
-                               <label><input type='radio' name='answer$i' value='a$i' />A</label>
+                               <label><input type='radio' name='answer$i' value='a$i' />A </label>
                            </div>
                            <div class='radio'>
                                <label><input type='radio' name='answer$i'  value='b$i' />B</label>

@@ -87,5 +87,45 @@ class QuizManager extends Manager {
      * @return Question[]
      */
     public function randomizeQuestion($questions) {}
+
+    /**
+     * randomize question
+     *
+     * @param Question[] $questions
+     * @return Question[]
+     */
+    public function getListQuiz($conn) {
+        $tempQuizList = $this->QC->getListQuiz($conn);
+
+        $quizObjects = array();
+        for($x = 0 ; $x<sizeof($tempQuizList) ; $x++) {
+            array_push($quizObjects, new Quiz($tempQuizList[$x]["QuizTitle"], $tempQuizList[$x]["SubjectDesc"], $tempQuizList[$x]["TimeConstraint"], $tempQuizList[$x]["DateCreated"], $tempQuizList[$x]["QuizNo"]));
+        }
+
+        return $quizObjects;
+    }
+
+    public function getQuestionByQuizId($conn, $quizNo)
+    {
+        $tempQuestionList = $this->QC->getQuestionByQuizId($conn, $quizNo);
+        $questionList = array();
+        for($x=0; $x<sizeof($tempQuestionList); $x++){
+            array_push($questionList, new Question($tempQuestionList[$x]["QuestionDesc"],"", $tempQuestionList[$x]["QuestionNo"]  ));
+        }
+
+        return $questionList;
+    }
+
+    public function getAnswerByQuestionId($conn, $questionNo)
+    {
+        $tempAnswerList = $this->QC->getAnswerByQuestionId($conn, $questionNo);
+        $answerList = array();
+        for($j=0; $j<sizeof($tempAnswerList); $j++)
+        {
+            array_push($answerList, new Answer($tempAnswerList[$j]["AnswerNo"], $tempAnswerList[$j]["AnswerDesc"], $tempAnswerList[$j]["TrueAnswer"]));
+        }
+
+        return $answerList;
+    }
 }
 ?>

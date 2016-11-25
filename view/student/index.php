@@ -1,5 +1,5 @@
 <?php
-// require_once "../../includes/global.inc.php";
+ //require_once "../../includes/global.inc.php";
 ?>
 
 <!DOCTYPE html>
@@ -37,17 +37,7 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">Panel heading</div>
-                            <table class="table">
-                                <tr>
-                                    <th>Quiz</th>
-                                    <th>Subject Code</th>
-                                </tr>
-                                <tr>
-                                    <td><a href="view-quiz/">Test 1</a></td>
-                                    <td>CS230</td>
-                                </tr>
-                            </table>
+                            <div class="panel-heading">Notice</div>
                         </div>
                     </div>
                     <div class="col-md-3"></div>
@@ -57,4 +47,6 @@
         <footer></footer>
     </body>
 </html>
+
+
 
