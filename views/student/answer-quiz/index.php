@@ -45,15 +45,17 @@ $quizManager = new QuizManager($QC);
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">Available Quiz</div>
-                        <table class="table">
-                            <tr>
-                                <th>Quiz No</th>
-                                <th>Quiz Title</th>
-                                <th>Subject Name</th>
-                                <th>Date Created</th>
-                            </tr>
-                            <?php displayQuiz($conn, $quizManager);?>
-                        </table>
+                        <form action="" method="get">
+                            <table class="table">
+                                <tr>
+                                    <th>Quiz No</th>
+                                    <th>Quiz Title</th>
+                                    <th>Subject Name</th>
+                                    <th>Date Created</th>
+                                </tr>
+                                <?php displayQuiz($conn, $quizManager);?>
+                            </table>
+                        </form>
                 </div>
             </div>
             <div class="col-md-2"></div>
@@ -65,6 +67,11 @@ $quizManager = new QuizManager($QC);
 </html>
 
 <?php
+if(isset($_GET['quizID']))
+{
+    echo "Should pass quizID as parameter, and send to answer-question.php";
+}
+
 function displayQuiz($conn,$quizManager)
 {
     $quizList = $quizManager->getListQuiz($conn);
@@ -74,7 +81,7 @@ function displayQuiz($conn,$quizManager)
         $number = $x+1;
         echo "<tr>     
                  <td> .$number.</td>
-                 <td>".$quizList[$x]->getTitle()."</td>
+                 <td><a href='?quizID=true'>".$quizList[$x]->getTitle()."</td>
                  <td>".$quizList[$x]->getSubject()."</td>
                  <td>".$quizList[$x]->getDateCreated()."</td>
              </tr>";
