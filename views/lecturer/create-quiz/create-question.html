@@ -15,36 +15,70 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
                     <form action="create-question.php" method="post">
-                        <div class="form-group">
-                            <label for="quesDesc">Question description:</label>
-                            <input type="textArea" class="form-control" id="quesDesc">
-                        </div>
-                        <div class="form-group">
-                            <label for="answerA">Answer choice 1:</label>
-                            <input type="text" class="form-control" id="answerA">
-                        </div>
-                        <div class="form-group">
-                            <label for="answerB">Answer choice 2:</label>
-                            <input type="text" class="form-control" id="answerB">
-                        </div>
-                        <div class="form-group">
-                            <label for="answerC">Answer choice 3:</label>
-                            <input type="text" class="form-control" id="answerC">
-                        </div>
-                        <div class="form-group">
-                            <label for="answerD">Answer choice 4:</label>
-                            <input type="text" class="form-control" id="answerD">
+                        <div class="panel panel-default">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Question Description</label>
+                                            <input class="form-control" type="text" name="questionDesc">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Answer (A)</label>
+                                            <div class="form-inline">
+                                                <input class="form-control" type="text" name="answerA">
+                                                <input type="radio" name="trueAnswer"> This is the answer
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Answer (B)</label>
+                                            <div class="form-inline">
+                                                <input class="form-control" type="text" name="answerB">
+                                                <input type="radio" name="trueAnswer"> This is the answer
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Answer (C)</label>
+                                            <div class="form-inline">
+                                                <input class="form-control" type="text" name="answerC">
+                                                <input type="radio" name="trueAnswer"> This is the answer
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Answer (D)</label>
+                                            <div class="form-inline">
+                                                <input class="form-control" type="text" name="answerD">
+                                                <input type="radio" name="trueAnswer"> This is the answer
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <input type="submit" class="btn btn-primary" name="submit_question" value="Submit question">
                         </div>
                     </form>
                 </div>
-                <div class="col-md-3"></div>
+                <div class="col-md-2"></div>
             </div>
         </div>
     </body>
 </html>
+
