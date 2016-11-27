@@ -11,14 +11,29 @@ class QuizController {
      *
      * @param Quiz $quiz
      */
-    public function registerQuiz(Quiz $quiz) {}
+    public function registerQuiz($conn, Quiz $quiz) {
+        $sql = "CALL SP_Quiz_Insert(".$quiz["Title"].",".$quiz["TimeConstraint"].",".$quiz["SubjectNo"].",".$quiz["UserNo"].")";
+        $query = $conn->query($sql);
+        $conn->next_result();
+
+        if(isset($query))
+            $result = $query->fetch_assoc();
+        else
+            $result = null;
+
+        return $result;
+    }
 
     /**
      * @todo implement registerQuestion() and return questionID
      *
      * @param Question $question
      */
-    public function registerQuestion(Question $question) {}
+    public function registerQuestion($conn, Question $question) {
+        $newQuestionData = array(
+            //insert question attribute here;
+        );
+    }
 
     /**
      * @todo implement requestQuestionList() and return array of Question object

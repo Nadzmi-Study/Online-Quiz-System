@@ -63,14 +63,27 @@ class QuizManager extends Manager {
      *
      * @param Quiz $quiz
      */
-    public function createQuiz(Quiz $quiz) {}
+    public function createQuiz($conn,Quiz $quiz, $userNo) {
+        $newQuizData = array(
+            "Title" => $quiz->getTitle(),
+            "TimeConstraint" => $quiz->getTime(),
+            "SubjectNo" => $quiz->getSubject(),
+            "UserNo" => $userNo
+        );
+
+        $result = $this->QC->registerQuiz($conn, $newQuizData);
+        if(isset($result))
+            return $result;
+        else
+            return null;
+    }
 
     /**
      * create new question
      *
      * @param Question $question
      */
-    public function createQuestion(Question $question) {}
+    public function createQuestion($conn, Question $question) {}
 
     /**
      * calculate quiz score
