@@ -63,7 +63,7 @@ class QuizManager extends Manager {
      *
      * @param Quiz $quiz
      */
-    public function createQuiz($conn,Quiz $quiz, $userNo) {
+    public function createQuiz($conn, Quiz $quiz, $userNo) {
         $newQuizData = array(
             "Title" => $quiz->getTitle(),
             "TimeConstraint" => $quiz->getTime(),
@@ -83,7 +83,29 @@ class QuizManager extends Manager {
      *
      * @param Question $question
      */
-    public function createQuestion($conn, Question $question) {}
+    public function createQuestion($conn, Question $question,$quizID) {
+        $newQuestionData = array(
+            "QuestionDesc" => $question->getDescription(),
+            "QuizID" => $quizID
+        );
+
+        $result =  $this->QC->registerQuestion($conn, $newQuestionData);
+        if(isset($result))
+            return $result;
+        else
+            return null;
+    }
+
+    public function createAnswer($conn, Answer $answer, $questionID)
+    {
+        $newAnswerData = array(
+            "AnswerDesc" => $answer->getDescription(),
+            "TrueAnswer" => $answer->getTrueAnswer(),
+            "QuestionID" => $questionID
+        );
+
+        $result = $this->QC->registerAnswer($conn, $newAnswerData);
+    }
 
     /**
      * calculate quiz score
@@ -122,8 +144,8 @@ class QuizManager extends Manager {
     {
         $tempQuestionList = $this->QC->getQuestionByQuizId($conn, $quizNo);
         $questionList = array();
-        for($x=0; $x<sizeof($tempQuestionList); $x++){
-            array_push($questionList, new Question($tempQuestionList[$x]["QuestionDesc"],"", $tempQuestionList[$x]["QuestionNo"]  ));
+        for($i=0; $i<sizeof($tempQuestionList); $i++){
+            array_push($questionList, new Question($tempQuestionList[$i]["QuestionDesc"],"", $tempQuestionList[$i]["QuestionNo"]  ));
         }
 
         return $questionList;
@@ -139,6 +161,17 @@ class QuizManager extends Manager {
         }
 
         return $answerList;
+    }
+
+    public function getSubject($conn)
+    {
+        $tempSubject = $this->QC->getSubjectList($conn);
+        $subjectList = array();
+        for($i=0; $i<sizeof($tempSubject); $i++)
+        {
+            array_push($subjectList,new Subject($tempSubject[$i]["SbjCode"], $tempSubject[$i]["SbjDesc"], $tempSubject[$i]["SbjNo"]));
+        }
+        return $subjectList;
     }
 }
 ?>

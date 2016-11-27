@@ -10,14 +10,14 @@ class Subject{
      * @param string $subjectCode
      * @param string $subjectDesc
      */
-    public function __construct($subjectCode=0, $subjectDesc="", $subjectNo=""){
+    public function __construct($subjectCode="", $subjectDesc="", $subjectNo=0){
         $this->subjectNo = $subjectNo;
         $this->subjectCode = $subjectCode;
         $this->subjectDesc = $subjectDesc;
     }
 
     //getter
-    public function getSubjectId(){return $this->subjectNo;}
+    public function getSubjectNo(){return $this->subjectNo;}
     public function getSubjectCode(){return  $this->subjectCode;}
     public function getSubjectDesc(){return $this->subjectDesc;}
 

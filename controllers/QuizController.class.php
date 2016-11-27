@@ -30,9 +30,28 @@ class QuizController {
      * @param Question $question
      */
     public function registerQuestion($conn, Question $question) {
-        $newQuestionData = array(
-            //insert question attribute here;
-        );
+        $sql = "CALL SP_Question_Insert(".$question["QuizID"].",".$question["QuestionDesc"].")";
+        $query = $conn->query($sql);
+        $conn->next_result();
+
+        if(isset($query))
+            $result = $query->fetch_assoc();
+        else
+            $result = null;
+        return $result;
+    }
+
+    public function registerAnswer($conn, Answer $answer)
+    {
+        $sql="CALL SP_Answer_Insert(".$answer["QuestionID"].",".$answer["AnswerDesc"].",".$answer["TrueAnswer"].")";
+        $query = $conn->query($sql);
+        $conn->next_result();
+
+        if(isset($query))
+            $result = $query->fetch_assoc();
+        else
+            $result = null;
+        return $result;
     }
 
     /**
@@ -107,6 +126,27 @@ class QuizController {
 
         $conn->next_result();
         return $answerList;
+    }
+
+    public function getSubjectList($conn)
+    {
+        $sql = "CALL SP_LookupSubject_GetAll";
+        $query = $conn->query($sql);
+        $conn->next_result();
+
+        $subjectList = array();
+        while($row = $query->fetch_assoc())
+        {
+            $subjectResult = array(
+                "SbjNo" => $row["SubjectNo"],
+                "SbjCode" =>$row["SubjectCode"],
+                "SbjDesc" => $row["SubjectDesc"]
+            );
+            array_push($subjectList, $subjectResult);
+        }
+
+        $conn->next_result();
+        return $subjectList;
     }
 }
 ?>
