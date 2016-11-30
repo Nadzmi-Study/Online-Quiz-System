@@ -1,11 +1,7 @@
 <?php
 require_once "Controller.php";
 
-/**
- * Class UserController
- *
- * @todo implement other UserController's methods
- */
+
 class UserController extends Controller {
     public function __construct($conn) {
         parent::__construct($conn);
@@ -35,25 +31,6 @@ class UserController extends Controller {
     }
 
     /**
-     * get array of user informations
-     *
-     * @param int|string $userID
-     * @return array|null
-     */
-    public function getUser($userID) {
-        $sql = "CALL SP_User_GetByID('$userID')";
-        $query = $this->conn->query($sql) or die($this->conn->error);
-        $this->conn->next_result();
-
-        if($query->num_rows > 0)
-            $result =  $query->fetch_assoc() or die($this->conn->error);
-        else
-            $result = null;
-
-        return $result;
-    }
-
-    /**
      * get user id
      *
      * @param array $userData -> array("Username", "Password")
@@ -68,6 +45,25 @@ class UserController extends Controller {
             $result = $query->fetch_assoc() or die($this->conn->error);
         else
             $result =  null;
+
+        return $result;
+    }
+
+    /**
+     * get array of user informations
+     *
+     * @param int|string $userID
+     * @return array|null
+     */
+    public function getUser($userID) {
+        $sql = "CALL SP_User_GetByID('$userID')";
+        $query = $this->conn->query($sql) or die($this->conn->error);
+        $this->conn->next_result();
+
+        if($query->num_rows > 0)
+            $result =  $query->fetch_assoc() or die($this->conn->error);
+        else
+            $result = null;
 
         return $result;
     }

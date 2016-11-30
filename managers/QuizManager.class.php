@@ -11,16 +11,6 @@ class QuizManager extends Manager {
         $this->QC = $QC;
     }
 
-    public function getQuestionList($quizID) {}
-
-    public function checkQuizDesc(Quiz $quiz) {}
-
-    public function checkQuestionDesc($questions) {}
-
-    public function checkAnswerDesc($answers) {}
-
-    public function checkAnswer($answeredQuestions) {}
-
     public function createQuiz(Quiz $quiz, $userNo) {
         $newQuizData = array(
             "Title" => $quiz->getTitle(),

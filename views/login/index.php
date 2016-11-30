@@ -11,7 +11,12 @@ if(isset($_POST["login"])) {
     $password = $_POST["password"];
 
     // check login credential
-    $loginCheck = $userManager->userLoginCheck($username, $password);
+    $loginCredential = array(
+        "Username" => $username,
+        "Password" => $password
+    );
+
+    $loginCheck = $userManager->userLoginCheck($loginCredential);
     if(!$loginCheck["error"]) {
         $result = $userManager->login($username, $password);
 

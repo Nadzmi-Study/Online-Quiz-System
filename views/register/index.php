@@ -19,11 +19,22 @@ if(isset($_POST["register"])) {
 
     // input error check
     // check if there is error
-    $errorMessage = $userManager->userRegisterCheck($userType, $name, $ic, $contact, $email, $username, $password, $rePassword);
+    $registerCredential = array(
+        "UserType" => $userType,
+        "Name" => $name,
+        "IC" => $ic,
+        "Contact" => $contact,
+        "Email" => $email,
+        "Username" => $username,
+        "Password" => $password,
+        "Re-Password" => $rePassword
+    );
+
+    $errorMessage = $userManager->userRegisterCheck($registerCredential);
     if(!$errorMessage["error"]) {
         // create new User object used to register
         $newUser = new User($userType, $name, $ic, $contact, $email, $username, $password);
-        $result = $userManager->registerUser($newUser); // register the user
+        $result = $userManager->register($newUser); // register the user
 
         if(isset($result))
             header("Location: ../login"); // successfully registered

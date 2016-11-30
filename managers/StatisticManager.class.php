@@ -17,12 +17,5 @@ class StatisticManager extends Manager {
     public function __construct(StatisticController $SC=null) {
         $this->SC = $SC;
     }
-
-    /**
-     * calculate and display statistics
-     *
-     * @param Quiz[] $quizes
-     */
-    public function calculateStatistic($quizes) {}
 }
 ?>
