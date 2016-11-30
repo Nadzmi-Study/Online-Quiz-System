@@ -1,7 +1,7 @@
 <?php
 require_once "Manager.class.php";
 
-class UserTyperManager extends Manager{
+class UserTypeManager extends Manager{
     private $UTC;
 
     /**

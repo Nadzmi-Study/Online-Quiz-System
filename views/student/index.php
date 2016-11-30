@@ -23,7 +23,7 @@
                     <a class="navbar-brand" href="#">Student Page</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="/Online-Quiz-System/view/student/answer-quiz/index.php">Answer Quiz</a></li>
+                    <li><a href="answer-quiz/">Answer Quiz</a></li>
                     <li><a href="../logout">Logout</a></li>
                 </ul>
             </div>

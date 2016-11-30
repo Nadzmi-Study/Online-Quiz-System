@@ -28,10 +28,11 @@
                 <a class="navbar-brand" href="#">Lecturer Page</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="..//lecturer/create-quiz/index.html">Create Quiz</a></li>
-                <li><a href="..//lecturer/delete-quiz/index.html">Delete Quiz</a></li>
-                <li><a href="..//lecturer/update-quiz/index.html">Update Quiz</a></li>
-                <li><a href="../logout">Logout</a></li>
+                <li><a href="../view-statistics">View Statistics</a></li>
+                <li><a href="../create-quiz">Create Quiz</a></li>
+                <li><a href="../delete-quiz">Delete Quiz</a></li>
+                <li><a href="../update-quiz">Update Quiz</a></li>
+                <li><a href="../../logout">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -39,7 +40,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <?php displayQuizStatistics();?>
+                <?php displayQuizStatistics(); ?>
             </div>
             <div class="col-md-2"></div>
         </div>

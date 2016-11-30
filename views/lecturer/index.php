@@ -1,5 +1,5 @@
 <?php
-//require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +23,10 @@
                     <a class="navbar-brand" href="#">Lecturer Page</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="..//lecturer/create-quiz/index.html">Create Quiz</a></li>
-                    <li><a href="..//lecturer/delete-quiz/index.html">Delete Quiz</a></li>
-                    <li><a href="..//lecturer/update-quiz/index.html">Update Quiz</a></li>
+                    <li><a href="view-statistics">View Statistics</a></li>
+                    <li><a href="../lecturer/create-quiz">Create Quiz</a></li>
+                    <li><a href="../lecturer/delete-quiz">Delete Quiz</a></li>
+                    <li><a href="../lecturer/update-quiz">Update Quiz</a></li>
                     <li><a href="../logout">Logout</a></li>
                 </ul>
             </div>

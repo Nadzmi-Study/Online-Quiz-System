@@ -5,3 +5,13 @@ $userManager->logout();
 
 header("Location: ../login");
 ?>
+
+<html>
+    <head>
+        <title>Logged Out</title>
+    </head>
+
+    <body>
+    
+    </body>
+</html>

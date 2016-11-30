@@ -61,7 +61,7 @@ if(isset($_POST["register"])) {
 <?php
 // function declarations:
 // displayUserType as drop-down list
-function displayUserType($userTypeManager) { // display drop-down menu for user type
+function displayUserType($userTypeManager) {
     $tempUserType = $userTypeManager->getUserType(); // get list of user types
 
     // display the dropdown menu

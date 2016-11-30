@@ -28,7 +28,7 @@ $statisticController = new StatisticController($conn);
 
 // initialize managers
 $userManager = new UserManager($userController);
-$userTypeManager = new UserTyperManager($userTypeController);
+$userTypeManager = new UserTypeManager($userTypeController);
 $quizManager = new QuizManager($quizController);
 $statisticManager = new StatisticManager($statisticController);
 

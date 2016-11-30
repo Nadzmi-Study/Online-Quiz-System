@@ -1,11 +1,5 @@
 <?php
-    require_once "../../../controllers/QuizController.class.php";
-    require_once "../../../managers/QuizManager.class.php";
-    require_once "../../../models/Quiz.class.php";
-
-    $conn = new mysqli("localhost","root","","online_quiz_system");
-    $QC = new QuizController();
-    $quizManager = new QuizManager($QC);
+require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +28,7 @@
                         <div class="form-group"=>
                             <label>Subject:</label>
                             <select class="form-control" name="subjectCode">
-                               <?php testSubject($conn);?>
+                               <?php displaySubject($quizManager); ?>
                             </select>
                         </div>
                         <div class="form-group">
@@ -57,29 +51,12 @@
 </html>
 
 <?php
-    function displaySubject($conn, $quizManager)
-    {
+    function displaySubject($quizManager) {
+        $subjectList = $quizManager->getSubjectList();
+
         echo "<option>Select subject</option>";
-        $subjectList = $quizManager->getSubject($conn);
-        for($i=0; $i<sizeof($subjectList); $i++)
-        {
-            echo"<option value='".$subjectList[$i]->getSubjectNo()."'>".$subjectList[$i]->getSubjectDescription()."</option>";
+        for($x = 0 ; $x<sizeof($subjectList) ; $x++) {
+            echo "<option value='" . $subjectList[$x]->getSubjectNo() . "'>" . $subjectList[$x]->getSubjectCode() . " - " . $subjectList[$x]->getSubjectDesc() . "</option>";
         }
-    }
-
-    //since there was a problem at displaySubject() above, this temp method just test the algorithm
-    function testSubject($conn)
-    {
-        echo "<option>Select subject</option>";
-        $sql = "CALL SP_LookupSubject_GetAll";
-        $query = $conn->query($sql);
-        $conn->next_result();
-
-        while($row = $query->fetch_assoc())
-        {
-            echo "<option value='".$row["SubjectNo"]."'>".$row["SubjectCode"]." - ".$row["SubjectDesc"]."</option>";
-        }
-
-        $conn->next_result();
     }
 ?>

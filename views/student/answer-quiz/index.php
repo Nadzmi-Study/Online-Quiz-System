@@ -1,12 +1,5 @@
 <?php
-//require_once "../../includes/global.inc.php";
-require_once "../../../controllers/QuizController.class.php";
-require_once "../../../managers/QuizManager.class.php";
-require_once "../../../models/Quiz.class.php";
-
-$conn = new mysqli("localhost","root","","online_quiz_system");
-$QC = new QuizController();
-$quizManager = new QuizManager($QC);
+require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +46,7 @@ $quizManager = new QuizManager($QC);
                                     <th>Subject Name</th>
                                     <th>Date Created</th>
                                 </tr>
-                                <?php displayQuiz($conn, $quizManager);?>
+                                <?php displayQuiz($quizManager); ?>
                             </table>
                         </form>
                 </div>
@@ -72,9 +65,10 @@ if(isset($_GET['quizID']))
     echo "Should pass quizID as parameter, and send to answer-question.php";
 }
 
-function displayQuiz($conn,$quizManager)
+function displayQuiz($quizManager)
 {
-    $quizList = $quizManager->getListQuiz($conn);
+    $quizList = $quizManager->getQuizList();
+
     for($x=0; $x<sizeof($quizList); $x++)
     {
 
@@ -86,6 +80,5 @@ function displayQuiz($conn,$quizManager)
                  <td>".$quizList[$x]->getDateCreated()."</td>
              </tr>";
     }
-
 }
 ?>

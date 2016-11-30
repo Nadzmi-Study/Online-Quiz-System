@@ -10,21 +10,21 @@ class Subject{
      * @param string $subjectCode
      * @param string $subjectDesc
      */
-    public function __construct($subjectCode="", $subjectDesc="", $subjectNo=0){
+    public function __construct($subjectCode="", $subjectDesc="", $subjectNo=0) {
         $this->subjectNo = $subjectNo;
         $this->subjectCode = $subjectCode;
         $this->subjectDesc = $subjectDesc;
     }
 
     //getter
-    public function getSubjectNo(){return $this->subjectNo;}
-    public function getSubjectCode(){return  $this->subjectCode;}
-    public function getSubjectDesc(){return $this->subjectDesc;}
+    public function getSubjectNo(){ return $this->subjectNo; }
+    public function getSubjectCode(){ return  $this->subjectCode; }
+    public function getSubjectDesc(){ return $this->subjectDesc; }
 
     //setter
-    public function setSubjectNo($subjectNo){$this->subjectNo = $subjectNo;}
-    public function setSubjectCode($subjectCode){$this->subjectCode = $subjectCode;}
-    public function setSubjectDesc($subjectDesc){$this->subjectDesc = $subjectDesc;}
+    public function setSubjectNo($subjectNo){ $this->subjectNo = $subjectNo; }
+    public function setSubjectCode($subjectCode){ $this->subjectCode = $subjectCode; }
+    public function setSubjectDesc($subjectDesc){ $this->subjectDesc = $subjectDesc; }
 }
 
 ?>
