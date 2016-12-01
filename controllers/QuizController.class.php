@@ -4,16 +4,18 @@
  */
 class QuizController extends Controller {
     public function registerQuiz($newQuizData) {
-        $sql = "CALL SP_Quiz_Insert(".$newQuizData["Title"].",".$newQuizData["TimeConstraint"].",".$newQuizData["SubjectNo"].",".$newQuizData["UserNo"].")";
+        $sql = "CALL SP_Quiz_Insert('".$newQuizData["Title"]."','".$newQuizData["TimeConstraint"]."','".$newQuizData["SubjectNo"]."', @QuizID,'".$newQuizData["UserNo"]."')";
+        $sql2 = "SELECT @QuizID AS QuizID";
 
-        $query = $this->conn->query($sql);
+        $this->conn->query($sql);
+        $this->conn->next_result();
+        $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
 
-        if(isset($query))
-            $result = $query->fetch_assoc();
-        else
-            $result = null;
-
+        while($row = $query->fetch_assoc())
+        {
+            $result = $row["QuizID"];
+        }
         return $result;
     }
 

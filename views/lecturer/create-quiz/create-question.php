@@ -1,46 +1,54 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 
+
 if(isset($_POST["submit_question"]))
 {
-    $quesArray = array();
-    $answerArray = array();
-    for($i=0; $i<10; $i++)
+    $title = $_SESSION['Title'];
+    $subjectCode = $_SESSION['SubjectCode'];
+    $time = $_SESSION['Time'];
+
+    $quizTemp = new Quiz($title, $subjectCode, $time);
+    //temporary: 8 is userNo which is a lecturer type
+    $quizID = $quizManager->createQuiz($quizTemp, 8);
+    if(isset($quizID))
     {
-        $quesDesc = $_POST["questionDesc($i)"];
-
-        //temporary: 1 is quizNo
-        $questionTemp = new Question($quesDesc);
-        $questionID = $quizManager->createQuestion($questionTemp, 1);
-
-        if(isset($questionID))
+        for($i=0; $i<10; $i++)
         {
-            //insert 4 answers for each question
-            $answerA = $_POST["answerA($i)"];
-            $answerTrueAnswerA = $_POST["trueAnswer($i)"];
-            $answerTemp = new Answer(0,$answerA, $answerTrueAnswerA, false );
-            $insertAnswerA = $quizManager->createAnswer($answerTemp, $questionID);
+            $quesDesc = $_POST["questionDesc($i)"];
 
-            $answerB = $_POST["answerB($i)"];
-            $answerTrueAnswerB = $_POST["trueAnswer($i)"];
-            $answerTemp = new Answer(0,$answerB, $answerTrueAnswerB, false );
-            $insertAnswerB = $quizManager->createAnswer($answerTemp, $questionID);
+            $questionTemp = new Question($quesDesc);
+            $questionID = $quizManager->createQuestion($questionTemp, $quizID);
 
-            $answerC = $_POST["answerC($i)"];
-            $answerTrueAnswerC = $_POST["trueAnswer($i)"];
-            $answerTemp = new Answer(0,$answerC, $answerTrueAnswerC, false );
-            $insertAnswerC = $quizManager->createAnswer($answerTemp, $questionID);
+            if(isset($questionID))
+            {
+                //insert 4 answers for each question
+                $answerA = $_POST["answerA($i)"];
+                $answerTrueAnswerA = $_POST["trueAnswer($i)"];
+                $answerTemp = new Answer(0,$answerA, $answerTrueAnswerA, false );
+                $insertAnswerA = $quizManager->createAnswer($answerTemp, $questionID);
 
-            $answerD = $_POST["answerD($i)"];
-            $answerTrueAnswerD = $_POST["trueAnswer($i)"];
-            $answerTemp = new Answer(0,$answerD, $answerTrueAnswerD, false );
-            $insertAnswerD = $quizManager->createAnswer($answerTemp, $questionID);
+                $answerB = $_POST["answerB($i)"];
+                $answerTrueAnswerB = $_POST["trueAnswer($i)"];
+                $answerTemp = new Answer(0,$answerB, $answerTrueAnswerB, false );
+                $insertAnswerB = $quizManager->createAnswer($answerTemp, $questionID);
 
-            if(isset($insertAnswerA) AND isset($insertAnswerB) AND isset($insertAnswerC) AND isset($insertAnswerD))
-                echo "success inserted";
+                $answerC = $_POST["answerC($i)"];
+                $answerTrueAnswerC = $_POST["trueAnswer($i)"];
+                $answerTemp = new Answer(0,$answerC, $answerTrueAnswerC, false );
+                $insertAnswerC = $quizManager->createAnswer($answerTemp, $questionID);
+
+                $answerD = $_POST["answerD($i)"];
+                $answerTrueAnswerD = $_POST["trueAnswer($i)"];
+                $answerTemp = new Answer(0,$answerD, $answerTrueAnswerD, false );
+                $insertAnswerD = $quizManager->createAnswer($answerTemp, $questionID);
+
+                if(isset($insertAnswerA) AND isset($insertAnswerB) AND isset($insertAnswerC) AND isset($insertAnswerD))
+                    echo "success inserted";
+            }
         }
-      //  echo $questionID;
     }
+
 
 
 }
