@@ -17,7 +17,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/UserTypeM
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/QuizManager.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/StatisticManager.class.php";
 
-
+//temporary path
+$tempDocumentRoot = "D:/xampp/htdocs";
 session_start(); // start session
 
 // initialize controllers

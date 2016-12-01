@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+//echo $_SERVER['DOCUMENT_ROOT'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

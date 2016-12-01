@@ -1,11 +1,11 @@
 <?php
-
 /**
  * Class QuizController
  */
 class QuizController extends Controller {
     public function registerQuiz($newQuizData) {
         $sql = "CALL SP_Quiz_Insert(".$newQuizData["Title"].",".$newQuizData["TimeConstraint"].",".$newQuizData["SubjectNo"].",".$newQuizData["UserNo"].")";
+
         $query = $this->conn->query($sql);
         $this->conn->next_result();
 
@@ -18,27 +18,35 @@ class QuizController extends Controller {
     }
 
     public function registerQuestion($newQuestionData) {
-        $sql = "CALL SP_Question_Insert(".$newQuestionData["QuizID"].",".$newQuestionData["QuestionDesc"].")";
-        $query = $this->conn->query($sql);
+        $sql = "CALL SP_Question_Insert('".$newQuestionData["QuizID"]."','".$newQuestionData["QuestionDesc"]."',@QuestionNo)";
+        $sql2 = "SELECT @QuestionNo AS QuestionNo";
+
+        $this->conn->query($sql);
+        $this->conn->next_result();
+        $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
 
-        if(isset($query))
-            $result = $query->fetch_assoc();
-        else
-            $result = null;
+        while($row = $query->fetch_assoc())
+        {
+            $result = $row["QuestionNo"];
+        }
         return $result;
     }
 
     public function registerAnswer($newAnswerData)
     {
-        $sql="CALL SP_Answer_Insert(".$newAnswerData["QuestionID"].",".$newAnswerData["AnswerDesc"].",".$newAnswerData["TrueAnswer"].")";
-        $query = $this->conn->query($sql);
+        $sql="CALL SP_Answer_Insert('".$newAnswerData["QuestionID"]."','".$newAnswerData["AnswerDesc"]."','".$newAnswerData["TrueAnswer"]."', @AnswerNo)";
+        $sql2 = "SELECT @AnswerNo AS AnswerNo";
+
+        $this->conn->query($sql);
+        $this->conn->next_result();
+        $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
 
-        if(isset($query))
-            $result = $query->fetch_assoc();
-        else
-            $result = null;
+        while($row = $query->fetch_assoc())
+        {
+            $result = $row["AnswerNo"];
+        }
         return $result;
     }
 
