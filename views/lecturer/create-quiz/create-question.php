@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 
-
+$user = unserialize($_SESSION["user"]);
 if(isset($_POST["submit_question"]))
 {
     $title = $_SESSION['Title'];
@@ -10,7 +10,7 @@ if(isset($_POST["submit_question"]))
 
     $quizTemp = new Quiz($title, $subjectCode, $time);
     //temporary: 8 is userNo which is a lecturer type
-    $quizID = $quizManager->createQuiz($quizTemp, 8);
+    $quizID = $quizManager->createQuiz($quizTemp, $user->getUserNo());
     if(isset($quizID))
     {
         for($i=0; $i<10; $i++)
@@ -42,15 +42,10 @@ if(isset($_POST["submit_question"]))
                 $answerTrueAnswerD = $_POST["trueAnswer($i)"];
                 $answerTemp = new Answer(0,$answerD, $answerTrueAnswerD, false );
                 $insertAnswerD = $quizManager->createAnswer($answerTemp, $questionID);
-
-                if(isset($insertAnswerA) AND isset($insertAnswerB) AND isset($insertAnswerC) AND isset($insertAnswerD))
-                    echo "success inserted";
             }
         }
     }
-
-
-
+    header("Location:../views/sucsess-page.html");
 }
 
 ?>

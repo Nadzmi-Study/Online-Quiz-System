@@ -61,7 +61,7 @@ class QuizManager extends Manager {
 
         $quizObjects = array();
         for($x = 0 ; $x<sizeof($tempQuizList) ; $x++) {
-            array_push($quizObjects, new Quiz($tempQuizList[$x]["Title"], $tempQuizList[$x]["SubjectNo"], $tempQuizList[$x]["TimeConstraint"], $tempQuizList[$x]["DateCreated"], $tempQuizList[$x]["QuizNo"]));
+            array_push($quizObjects, new Quiz($tempQuizList[$x]["Title"], $tempQuizList[$x]["SubjectDesc"], $tempQuizList[$x]["TimeConstraint"], $tempQuizList[$x]["DateCreated"], $tempQuizList[$x]["QuizNo"]));
         }
 
         return $quizObjects;

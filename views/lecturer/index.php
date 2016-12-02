@@ -1,5 +1,8 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+$user = unserialize($_SESSION["user"]);
+$username = $user->getName();
+$userno = $user->getUserNo();
 ?>
 
 <!DOCTYPE html>
@@ -31,5 +34,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                 </ul>
             </div>
         </nav>
+        <label><?php echo $username; echo $userno;?></label>
     </body>
 </html>

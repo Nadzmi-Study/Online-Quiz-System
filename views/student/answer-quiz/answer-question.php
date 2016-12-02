@@ -1,12 +1,13 @@
 <?php
+require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
     //include_once "../../includes/global.inc.php";
-require_once "../../../controllers/QuizController.class.php";
-require_once "../../../managers/QuizManager.class.php";
-require_once "../../../models/Quiz.class.php";
+//require_once "../../../controllers/QuizController.class.php";
+//require_once "../../../managers/QuizManager.class.php";
+//require_once "../../../models/Quiz.class.php";
 
-$conn = new mysqli("localhost","root","","online_quiz_system");
-$QC = new QuizController();
-$quizManager = new QuizManager($QC);
+//$conn = new mysqli("localhost","root","","online_quiz_system");
+//$QC = new QuizController();
+//$quizManager = new QuizManager($QC);
 
 ?>
 
@@ -30,9 +31,9 @@ $quizManager = new QuizManager($QC);
              <div class="row">
                <div class="col-md-3"></div>
                <div class="col-md-6">
-                   <form action="" method="post">
+                   <form action="success-answer.html" method="post">
                        <h5>Time: </h5>
-                       <?php displayQuestion($conn, $quizManager); ?>
+                       <?php displayQuestion($quizManager); ?>
                        <div class="container-fluid">
                            <input type="submit" name="submit-question" value="Submit Answer" class="btn btn-success"/>
                        </div>
@@ -45,13 +46,14 @@ $quizManager = new QuizManager($QC);
 </html>
 
 <?php
-function displayQuestion($conn, $quizManager)
+function displayQuestion($quizManager)
 {
     $numberOfAnswer = 0;
-    $questionList = $quizManager->getQuestionByQuizId($conn, 1);
+    //temporary: 5 is quizId
+    $questionList = $quizManager->getQuestionByQuizId(5);
     for($i=0; $i<sizeof($questionList); $i++)
     {
-        $answerList = $quizManager->getAnswerByQuestionId($conn, $i);
+        $answerList = $quizManager->getAnswerByQuestionId($i);
         echo "<div class='panel panel-default'>
                 <!-- Default panel contents -->
                 <div class='container-fluid'>

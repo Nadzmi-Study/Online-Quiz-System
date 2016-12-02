@@ -1,8 +1,13 @@
 <?php
+require_once "Controller.php";
 /**
  * Class QuizController
  */
 class QuizController extends Controller {
+    public function __construct($conn) {
+        parent::__construct($conn);
+    }
+
     public function registerQuiz($newQuizData) {
         $sql = "CALL SP_Quiz_Insert('".$newQuizData["Title"]."','".$newQuizData["TimeConstraint"]."','".$newQuizData["SubjectNo"]."', @QuizID,'".$newQuizData["UserNo"]."')";
         $sql2 = "SELECT @QuizID AS QuizID";

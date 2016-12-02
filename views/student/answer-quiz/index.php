@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +39,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">Available Quiz</div>
-                        <form action="" method="get">
+                        <form action="" method="post">
                             <table class="table">
                                 <tr>
                                     <th>Quiz No</th>
@@ -60,11 +61,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
 </html>
 
 <?php
-if(isset($_GET['quizID']))
-{
-    echo "Should pass quizID as parameter, and send to answer-question.php";
-}
-
 function displayQuiz($quizManager)
 {
     $quizList = $quizManager->getQuizList();
@@ -75,7 +71,7 @@ function displayQuiz($quizManager)
         $number = $x+1;
         echo "<tr>     
                  <td> .$number.</td>
-                 <td><a href='?quizID=true'>".$quizList[$x]->getTitle()."</td>
+                 <td><input type='button' name='quizId' value='".$quizList[$x]->getTitle()."'></td>
                  <td>".$quizList[$x]->getSubject()."</td>
                  <td>".$quizList[$x]->getDateCreated()."</td>
              </tr>";
