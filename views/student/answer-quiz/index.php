@@ -1,6 +1,9 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 
+if(isset($_POST["submit"])) {
+    $quizId = $_POST["quizId"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,17 +42,15 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">Available Quiz</div>
-                        <form action="" method="post">
-                            <table class="table">
-                                <tr>
-                                    <th>Quiz No</th>
-                                    <th>Quiz Title</th>
-                                    <th>Subject Name</th>
-                                    <th>Date Created</th>
-                                </tr>
-                                <?php displayQuiz($quizManager); ?>
-                            </table>
-                        </form>
+                    <table class="table">
+                        <tr>
+                            <th>Quiz No</th>
+                            <th>Quiz Title</th>
+                            <th>Subject Name</th>
+                            <th>Date Created</th>
+                        </tr>
+                        <?php displayQuiz($quizManager); ?>
+                    </table>
                 </div>
             </div>
             <div class="col-md-2"></div>
@@ -67,14 +68,20 @@ function displayQuiz($quizManager)
 
     for($x=0; $x<sizeof($quizList); $x++)
     {
-
         $number = $x+1;
-        echo "<tr>     
-                 <td> .$number.</td>
-                 <td><input type='button' name='quizId' value='".$quizList[$x]->getTitle()."'></td>
-                 <td>".$quizList[$x]->getSubject()."</td>
-                 <td>".$quizList[$x]->getDateCreated()."</td>
-             </tr>";
+        echo "
+            <tr>     
+                 <td>$number</td>
+                 <td>
+                     <form action='' method='post'>
+                         <input type='hidden' name='quizId' value='" . $quizList[$x]->getNo() . "' />
+                         <input type='submit' name='submit' value='" . $quizList[$x]->getTitle() . "' />
+                     </form>
+                 </td>
+                 <td>" . $quizList[$x]->getSubject() . "</td>
+                 <td>" . $quizList[$x]->getDateCreated() . "</td>
+             </tr>
+             ";
     }
 }
 ?>
