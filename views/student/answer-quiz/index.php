@@ -2,7 +2,9 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 
 if(isset($_POST["submit"])) {
-    $quizId = $_POST["quizId"];
+    $_SESSION["Temp-QuizID"] = $_POST["quizId"];
+    echo  $_SESSION["Temp-QuizID"];
+    header("Location:answer-question.php");
 }
 ?>
 
