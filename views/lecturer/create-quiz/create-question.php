@@ -24,22 +24,22 @@ if(isset($_POST["submit_question"]))
             {
                 //insert 4 answers for each question
                 $answerA = $_POST["answerA($i)"];
-                $answerTrueAnswerA = $_POST["trueAnswer($i)"];
+                $answerTrueAnswerA = $_POST["trueAnswer(A$i)"];
                 $answerTemp = new Answer(0,$answerA, $answerTrueAnswerA, false );
                 $insertAnswerA = $quizManager->createAnswer($answerTemp, $questionID);
 
                 $answerB = $_POST["answerB($i)"];
-                $answerTrueAnswerB = $_POST["trueAnswer($i)"];
+                $answerTrueAnswerB = $_POST["trueAnswer(B$i)"];
                 $answerTemp = new Answer(0,$answerB, $answerTrueAnswerB, false );
                 $insertAnswerB = $quizManager->createAnswer($answerTemp, $questionID);
 
                 $answerC = $_POST["answerC($i)"];
-                $answerTrueAnswerC = $_POST["trueAnswer($i)"];
+                $answerTrueAnswerC = $_POST["trueAnswer(C$i)"];
                 $answerTemp = new Answer(0,$answerC, $answerTrueAnswerC, false );
                 $insertAnswerC = $quizManager->createAnswer($answerTemp, $questionID);
 
                 $answerD = $_POST["answerD($i)"];
-                $answerTrueAnswerD = $_POST["trueAnswer($i)"];
+                $answerTrueAnswerD = $_POST["trueAnswer(D$i)"];
                 $answerTemp = new Answer(0,$answerD, $answerTrueAnswerD, false );
                 $insertAnswerD = $quizManager->createAnswer($answerTemp, $questionID);
             }
@@ -104,7 +104,7 @@ if(isset($_POST["submit_question"]))
                                             <label>Answer (A)</label>
                                             <div class=\"form-inline\">
                                                 <input class=\"form-control\" type=\"text\" name=\"answerA(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(".$i.")\"> This is the answer
+                                                <input type=\"radio\" name=\"trueAnswer(A".$i.")\" value='1'> This is the answer
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@ if(isset($_POST["submit_question"]))
                                             <label>Answer (B)</label>
                                             <div class=\"form-inline\">
                                                 <input class=\"form-control\" type=\"text\" name=\"answerB(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(".$i.")\"> This is the answer
+                                                <input type=\"radio\" name=\"trueAnswer(B".$i.")\" value='1'> This is the answer
                                             </div>
 
                                         </div>
@@ -125,7 +125,7 @@ if(isset($_POST["submit_question"]))
                                             <label>Answer (C)</label>
                                             <div class=\"form-inline\">
                                                 <input class=\"form-control\" type=\"text\" name=\"answerC(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(".$i.")\"> This is the answer
+                                                <input type=\"radio\" name=\"trueAnswer(C".$i.")\" value='1'> This is the answer
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +134,7 @@ if(isset($_POST["submit_question"]))
                                             <label>Answer (D)</label>
                                             <div class=\"form-inline\">
                                                 <input class=\"form-control\" type=\"text\" name=\"answerD(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(".$i.")\"> This is the answer
+                                                <input type=\"radio\" name=\"trueAnswer(D".$i.")\" value='1'> This is the answer
                                             </div>
                                         </div>
                                     </div>

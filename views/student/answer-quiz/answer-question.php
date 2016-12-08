@@ -49,11 +49,34 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
 function displayQuestion($quizManager)
 {
     $numberOfAnswer = 0;
-    //temporary: 5 is quizId
-    $questionList = $quizManager->getQuestionByQuizId(5);
+    $randomizeQuestionList  =array();
+
+    //retrieve questions from database from given quizID
+    $questionList = $quizManager->getQuestionByQuizId( $_SESSION["Temp-QuizID"]);
     for($i=0; $i<sizeof($questionList); $i++)
     {
         $answerList = $quizManager->getAnswerByQuestionId($i);
+        array_push($randomizeQuestionList, new Question(
+            $questionList[$i]->getDescription(),
+            $answerList = array(
+                "DescA" => $answerList[$numberOfAnswer]->getDescription(),
+                "ValueA" => $answerList[$numberOfAnswer]->getTrueAnswer(),
+                "DescB" => $answerList[$numberOfAnswer+1]->getDescription(),
+                "ValueB" => $answerList[$numberOfAnswer+1]->getTrueAnswer(),
+                "DescC" => $answerList[$numberOfAnswer+2]->getDescription(),
+                "ValueC" => $answerList[$numberOfAnswer+2]->getTrueAnswer(),
+                "DescD" => $answerList[$numberOfAnswer+3]->getDescription(),
+                "ValueD" => $answerList[$numberOfAnswer+3]->getTrueAnswer(),
+            )
+        ));
+        $numberOfAnswer = $numberOfAnswer +4;
+    }
+
+    //randomize question's position
+    $no = range(0,9);
+    shuffle($no);
+    foreach($no as $element)
+    {
         echo "<div class='panel panel-default'>
                 <!-- Default panel contents -->
                 <div class='container-fluid'>
@@ -64,25 +87,25 @@ function displayQuestion($quizManager)
                             </div>
                         </div>
                         <div class='col-md-11'>
-                            <h4>".$questionList[$i]->getDescription()."</h4>
+                            <h4>".$randomizeQuestionList[$element]->getDescription()."</h4>
                         </div>
                     </div>
                     <div class='row'>
                         <div class='col-md-1'></div>
                         <div class='col-md-5'>
                             <div class='radio'>
-                                <label><input type='radio' name='answer$i' value='".$answerList[$numberOfAnswer]->getTrueAnswer()."' />A - ".$answerList[$numberOfAnswer]->getDescription()."</label>
+                                <label><input type='radio' name='answer$element' value='".$randomizeQuestionList[$element]->getAnswer()["ValueA"]."' />A - ".$randomizeQuestionList[$element]->getAnswer()["DescA"]."</label>
                             </div>
                             <div class='radio'>
-                                <label><input type='radio' name='answer$i'  value='".$answerList[$numberOfAnswer+1]->getTrueAnswer()."' />B - ".$answerList[$numberOfAnswer+1]->getDescription()."</label>
+                                <label><input type='radio' name='answer$element'  value='".$randomizeQuestionList[$element]->getAnswer()["ValueB"]."' />B - ".$randomizeQuestionList[$element]->getAnswer()["DescB"]."</label>
                             </div>
                         </div>
                         <div class='col-md-6'>
                             <div class='radio'>
-                                <label><input type='radio' name='answer$i'  value='".$answerList[$numberOfAnswer+2]->getTrueAnswer()."' />C - ".$answerList[$numberOfAnswer+2]->getDescription()."</label>
+                                <label><input type='radio' name='answer$element'  value='".$randomizeQuestionList[$element]->getAnswer()["ValueC"]."' />C - ".$randomizeQuestionList[$element]->getAnswer()["DescC"]."</label>
                             </div>
                             <div class='radio'>
-                                <label><input type='radio' name='answer$i'  value='".$answerList[$numberOfAnswer+3]->getTrueAnswer()."' />D - ".$answerList[$numberOfAnswer+3]->getDescription()."</label>
+                                <label><input type='radio' name='answer$element'  value='".$randomizeQuestionList[$element]->getAnswer()["ValueD"]."' />D - ".$randomizeQuestionList[$element]->getAnswer()["DescD"]."</label>
                             </div>
                         </div>
                     </div>

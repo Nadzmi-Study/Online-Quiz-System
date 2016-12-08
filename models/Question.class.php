@@ -22,11 +22,11 @@ class Question {
     // getter
     public function getNo() { return $this->no; }
     public function getDescription() { return $this->description; }
-    public function getAnswer() { return $this->answer; }
+    public function getAnswer() { return $this->answers; }
 
     // setter
     public function setNo($no) { $this->no = $no; }
     public function setDescription($description) { $this->description = $description; }
-    public function setAnswer($answer) { $this->answer = $answer; }
+    public function setAnswer($answer) { $this->answers = $answer; }
 }
 ?>
