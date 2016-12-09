@@ -17,5 +17,9 @@ class StatisticManager extends Manager {
     public function __construct(StatisticController $SC=null) {
         $this->SC = $SC;
     }
+
+    public function getStatistic($userID) {}
+
+    public function calcStatistic($quizList) {}
 }
 ?>

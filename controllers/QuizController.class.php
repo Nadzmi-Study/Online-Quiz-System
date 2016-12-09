@@ -8,6 +8,38 @@ class QuizController extends Controller {
         parent::__construct($conn);
     }
 
+    //
+    public function retrieveQuiz($userID) {
+        $sql = "CALL SP_LecturerQuiz_GetDetails($userID);";
+        $query = $this->conn->query($sql);
+
+        $result = array();
+        while($row = $query->fetch_assoc()) {
+            $tempResult = array(
+                "LecturerName" => $row["LECTURER NAME"],
+                "QuizTitle" => $row["TITLE"],
+                "Subject" => $row["SUBJECT"],
+                "Time" => $row["TIME CONSTRAINT"],
+                "DateCreated" => $row["DATE CREATED"]
+            );
+
+            array_push($result, $tempResult);
+        }
+
+        return $result;
+    }
+
+    public function retrieveQuestion($quizID) {}
+
+    public function retrieveAnswer($questionID) {}
+
+    public function deleteQuiz($quizID) {}
+
+    public function updateQuiz(Quiz $quiz) {}
+
+    public function insertQuiz(Quiz $newQuiz) {}
+    //
+
     public function registerQuiz($newQuizData) {
         $sql = "CALL SP_Quiz_Insert('".$newQuizData["Title"]."','".$newQuizData["TimeConstraint"]."','".$newQuizData["SubjectNo"]."', @QuizID,'".$newQuizData["UserNo"]."')";
         $sql2 = "SELECT @QuizID AS QuizID";
@@ -18,9 +50,8 @@ class QuizController extends Controller {
         $this->conn->next_result();
 
         while($row = $query->fetch_assoc())
-        {
             $result = $row["QuizID"];
-        }
+
         return $result;
     }
 
@@ -56,8 +87,6 @@ class QuizController extends Controller {
         }
         return $result;
     }
-
-    public function requestQuestionList($quizID) {}
 
     public function getQuestionByQuizId($quizID)
     {

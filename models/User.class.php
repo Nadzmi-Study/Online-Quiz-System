@@ -49,3 +49,4 @@ class User {
     public function setUserNo($userNo) { $this->userNo = $userNo;}
 }
 ?>
+

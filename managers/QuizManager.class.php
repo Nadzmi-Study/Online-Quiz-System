@@ -6,10 +6,92 @@ require_once "Manager.class.php";
  */
 class QuizManager extends Manager {
     private $QC; // quiz controller
+    private $form; // form
 
     public function __construct(QuizController $QC=null) {
         $this->QC = $QC;
     }
+
+    //
+    public function getQuizList($userId) {
+        $tempQuizList = $this->QC->retrieveQuiz($userId);
+
+        $quizObjects = array();
+        for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
+            array_push($quizObjects,
+                new Quiz(
+                    $tempQuizList[$x]["QuizTitle"],
+                    $tempQuizList[$x]["Subject"],
+                    $tempQuizList[$x]["Time"],
+                    $tempQuizList[$x]["DateCreated"]));
+
+        return $quizObjects;
+    }
+
+    public function getQuestionList($quizId) {
+        $tempQuestionList = $this->QC->retrieveQuestion($quizId);
+
+        $questionObject = array();
+        for($x=0 ; $x<sizeof($tempQuestionList) ; $x++) {
+            $tempAnswerList = $this->QC->retrieveAnswer($tempQuestionList["QuestionID"]);
+
+            $answerObject = array();
+            for($a = 0 ; $a<sizeof($tempAnswerList) ; $a++)
+                array_push($answerObject,
+                    new Answer(
+                        $tempAnswerList["AnswerID"],
+                        $tempAnswerList["AnswerDesc"],
+                        $tempAnswerList["TrueAnswer"],
+                        $tempAnswerList["StudentAnswer"]));
+
+            array_push($questionObject,
+                new Question(
+                    $tempQuestionList["Description"],
+                    $answerObject,
+                    $tempQuestionList["QuestionID"]));
+        }
+
+        return $questionObject;
+    }
+
+    public function getDeleteConfirmation($confirmation, $quizID) {
+        if(!$confirmation)
+            echo "Do not delete";
+        else {
+            $result = $this->QC->deleteQuiz($quizID);
+
+            if(!$result)
+                echo "Deleted";
+            else
+                echo "Failed to delete";
+        }
+    }
+
+    public function checkQuizDesc(Quiz $quiz) {
+        if(empty($quiz->getTitle()) || empty($quiz->getTime()))
+            return false;
+        else if($quiz->getSubject() == 0)
+            return false;
+
+        return true;
+    }
+
+    public function checkQuestionDesc(Question $question) {
+        if(empty($question->getDescription()))
+            return false;
+        else if($question->getAnswer() == null)
+            return false;
+
+        return true;
+    }
+
+    public function checkAnswerDesc(Answer $answer) {
+        if(empty($answer->getDescription()) || empty($answer->getTrueAnswer()))
+            return false;
+
+        return true;
+    }
+    //
 
     public function createQuiz(Quiz $quiz, $userNo) {
         $newQuizData = array(
@@ -50,21 +132,6 @@ class QuizManager extends Manager {
         $result = $this->QC->registerAnswer($newAnswerData);
 
         return $result;
-    }
-
-    public function calculateScore(Quiz $answeredQuiz) {}
-
-    public function randomizeQuestion($questions) {}
-
-    public function getQuizList() {
-        $tempQuizList = $this->QC->retrieveQuizList();
-
-        $quizObjects = array();
-        for($x = 0 ; $x<sizeof($tempQuizList) ; $x++) {
-            array_push($quizObjects, new Quiz($tempQuizList[$x]["Title"], $tempQuizList[$x]["SubjectDesc"], $tempQuizList[$x]["TimeConstraint"], $tempQuizList[$x]["DateCreated"], $tempQuizList[$x]["QuizNo"]));
-        }
-
-        return $quizObjects;
     }
 
     public function getQuestionByQuizId($quizNo)

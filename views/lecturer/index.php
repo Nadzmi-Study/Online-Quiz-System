@@ -34,6 +34,35 @@ $userno = $user->getUserNo();
                 </ul>
             </div>
         </nav>
-        <label><?php echo $username; echo $userno;?></label>
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Quiz Title</th>
+                <th>Subject</th>
+                <th>Time</th>
+                <th>Date Created</th>
+            </tr>
+            <?php displayQuizes($quizManager); ?>
+        </table>
     </body>
 </html>
+
+<?php
+function displayQuizes($quizManager) {
+    $tempUser = unserialize($_SESSION["user"]);
+    $tempQuizes = $quizManager->getQuizList($tempUser->getUserNo());
+
+    for($x=0 ; $x<sizeof($tempQuizes) ; $x++) {
+        echo "
+            <tr>
+                <th></th> <!-- quiz no -->
+                <th>" . $tempQuizes[$x]->getTitle() . "</th> <!-- quiz title -->
+                <th>" . $tempQuizes[$x]->getSubject() . "</th> <!-- subject -->
+                <th>" . $tempQuizes[$x]->getTime() . "</th> <!-- time -->
+                <th>" . $tempQuizes[$x]->getDateCreated() . "</th> <!-- date created -->
+            </tr>
+        ";
+    }
+}
+?>
+
