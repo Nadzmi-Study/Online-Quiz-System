@@ -13,17 +13,30 @@ class QuizManager extends Manager {
     }
 
     //
-    public function getQuizList($userId) {
+    public function getQuizList($userId=null) {
         $tempQuizList = $this->QC->retrieveQuiz($userId);
 
-        $quizObjects = array();
-        for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
-            array_push($quizObjects,
-                new Quiz(
-                    $tempQuizList[$x]["QuizTitle"],
-                    $tempQuizList[$x]["Subject"],
-                    $tempQuizList[$x]["Time"],
-                    $tempQuizList[$x]["DateCreated"]));
+        $quizObjects = null;
+        if(isset($userId)) {
+            $quizObjects = array();
+            for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
+                array_push($quizObjects,
+                    new Quiz(
+                        $tempQuizList[$x]["QuizTitle"],
+                        $tempQuizList[$x]["Subject"],
+                        $tempQuizList[$x]["Time"],
+                        $tempQuizList[$x]["DateCreated"]));
+        } else {
+            $quizObjects = array();
+            for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
+                array_push($quizObjects,
+                    new Quiz(
+                        $tempQuizList[$x]["QuizTitle"],
+                        $tempQuizList[$x]["Subject"],
+                        $tempQuizList[$x]["Time"],
+                        $tempQuizList[$x]["DateCreated"],
+                        $tempQuizList[$x]["QuizNo"]));
+        }
 
         return $quizObjects;
     }

@@ -66,7 +66,7 @@ if(isset($_POST["submit"])) {
 <?php
 function displayQuiz($quizManager)
 {
-    $quizList = $quizManager->getQuizList();
+    $quizList = $quizManager->getQuizList(null);
 
     for($x=0; $x<sizeof($quizList); $x++)
     {

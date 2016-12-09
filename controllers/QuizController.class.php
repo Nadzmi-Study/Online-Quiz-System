@@ -9,21 +9,41 @@ class QuizController extends Controller {
     }
 
     //
-    public function retrieveQuiz($userID) {
-        $sql = "CALL SP_LecturerQuiz_GetDetails($userID);";
-        $query = $this->conn->query($sql);
+    public function retrieveQuiz($userID=null) {
+        $result = null;
 
-        $result = array();
-        while($row = $query->fetch_assoc()) {
-            $tempResult = array(
-                "LecturerName" => $row["LECTURER NAME"],
-                "QuizTitle" => $row["TITLE"],
-                "Subject" => $row["SUBJECT"],
-                "Time" => $row["TIME CONSTRAINT"],
-                "DateCreated" => $row["DATE CREATED"]
-            );
+        if (!isset($userID)) {
+            $sql = "CALL SP_Quiz_GetAll;";
+            $query = $this->conn->query($sql);
 
-            array_push($result, $tempResult);
+            $result = array();
+            while($row = $query->fetch_assoc()) {
+                $tempResult = array(
+                    "QuizTitle" => $row["Title"],
+                    "Subject" => $row["SubjectDesc"],
+                    "Time" => $row["TimeConstraint"],
+                    "DateCreated" => $row["DateCreated"],
+                    "QuizNo" => $row["QuizNo"]
+                );
+
+                array_push($result, $tempResult);
+            }
+        } else {
+            $sql = "CALL SP_LecturerQuiz_GetDetails($userID);";
+            $query = $this->conn->query($sql);
+
+            $result = array();
+            while($row = $query->fetch_assoc()) {
+                $tempResult = array(
+                    "LecturerName" => $row["LECTURER NAME"],
+                    "QuizTitle" => $row["TITLE"],
+                    "Subject" => $row["SUBJECT"],
+                    "Time" => $row["TIME CONSTRAINT"],
+                    "DateCreated" => $row["DATE CREATED"]
+                );
+
+                array_push($result, $tempResult);
+            }
         }
 
         return $result;
