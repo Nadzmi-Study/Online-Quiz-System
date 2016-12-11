@@ -239,10 +239,10 @@ class QuizController extends Controller {
         return $questionList;
     }
 
-    public function getAnswerByQuestionId($questionId)
+    public function getAnswerByQuizId($quizId)
     {
         //retrieve answers for particular question according to its question no
-        $sql = "CALL SP_Answer_GetAnswerByQuestionNo(".$questionId.")";
+        $sql = "CALL SP_Answer_GetAnswerByQuizNo(".$quizId.")";
         $query = $this->conn->query($sql);
         $this->conn->next_result();
 

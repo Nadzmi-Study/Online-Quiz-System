@@ -155,9 +155,9 @@ class QuizManager extends Manager {
         return $questionList;
     }
 
-    public function getAnswerByQuestionId($questionNo)
+    public function getAnswerByQuizId($quizId)
     {
-        $tempAnswerList = $this->QC->getAnswerByQuestionId($questionNo);
+        $tempAnswerList = $this->QC->getAnswerByQuizId($quizId);
         $answerList = array();
         for($j=0; $j<sizeof($tempAnswerList); $j++)
         {

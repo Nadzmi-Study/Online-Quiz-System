@@ -61,7 +61,7 @@ function displayQuestion($quizManager)
     for($i=0; $i<sizeof($questionList); $i++)
     {
       //  echo $questionList[$i]->getNo();
-        $answerList = $quizManager->getAnswerByQuestionId($_SESSION["Temp-QuizID"]);
+        $answerList = $quizManager->getAnswerByQuizId($_SESSION["Temp-QuizID"]);
         array_push($randomizeQuestionList, new Question(
             $questionList[$i]->getDescription(),
             $answerList = array(
