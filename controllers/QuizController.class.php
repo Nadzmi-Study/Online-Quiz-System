@@ -127,5 +127,24 @@ class QuizController extends Controller {
 
         return $subjectList;
     }
+
+    public function getTrueAnswer($quizId)
+    {
+        $sql = "CALL SP_Answer_GetAllTrueAnswerByQuizID(".$quizId.")";
+        $query = $this->conn->query($sql);
+        $this->conn->next_result();
+
+        $trueAnswerList = array();
+        while($row = $query->fetch_assoc()) {
+            $answerResult = array(
+                "Desc" => $row["Desc"],
+                "Answer" => $row["Answer"]
+            );
+            array_push($trueAnswerList, $answerResult);
+        }
+
+        $this->conn->next_result();
+        return $trueAnswerList;
+    }
 }
 ?>
