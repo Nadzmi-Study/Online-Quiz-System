@@ -148,7 +148,36 @@ class QuizController extends Controller {
         return true;
     }
 
-    public function insertQuiz(Quiz $newQuiz) {}
+    public function submitAnswer($studentQuizNo, $answer) {
+        $sql = "CALL SP_Student_SubmitAnswer('".$studentQuizNo."','".$answer."', @qansNo)";
+        $sql2 = "SELECT @qansNo  As QuesAnsNo";
+
+        $this->conn->query($sql);
+        $this->conn->next_result();
+        $query = $this->conn->query($sql2) or die($this->conn->error);
+        $this->conn->next_result();
+
+        while($row = $query->fetch_assoc())
+            $result = $row["QuesAnsNo"];
+
+        return $result;
+    }
+
+    public function submitQuiz($userId, $quizNo)
+    {
+        $sql = "CALL SP_Student_SubmitQuiz('".$userId."','".$quizNo."', @submitQuizNo)";
+        $sql2 = "SELECT @submitQuizNo  As SubmitQuizNo";
+
+        $this->conn->query($sql);
+        $this->conn->next_result();
+        $query = $this->conn->query($sql2) or die($this->conn->error);
+        $this->conn->next_result();
+
+        while($row = $query->fetch_assoc())
+            $result = $row["SubmitQuizNo"];
+
+        return $result;
+    }
     //
 
     public function registerQuiz($newQuizData) {
@@ -220,10 +249,10 @@ class QuizController extends Controller {
         return $questionList;
     }
 
-    public function getAnswerByQuestionId($questionId)
+    public function getAnswerByQuizId($quizId)
     {
         //retrieve answers for particular question according to its question no
-        $sql = "CALL SP_Answer_GetAnswerByQuestionNo(".$questionId.")";
+        $sql = "CALL SP_Answer_GetAnswerByQuizNo(".$quizId.")";
         $query = $this->conn->query($sql);
         $this->conn->next_result();
 
