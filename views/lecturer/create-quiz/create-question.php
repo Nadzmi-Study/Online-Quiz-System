@@ -45,7 +45,7 @@ if(isset($_POST["submit_question"]))
             }
         }
     }
-    header("Location:../views/sucsess-page.html");
+    header("Location: ../../success-page");
 }
 
 ?>
@@ -88,59 +88,60 @@ if(isset($_POST["submit_question"]))
         for($i=0; $i<10; $i++)
         {
             $no =($i+1);
-            echo "<div class=\"panel panel-default\">
-                            <div class=\"container-fluid\">
-                                <div class=\"row\">
-                                    <div class=\"col-md-12\">
-                                        <div class=\"form-group\">
-                                            <label>$no) Question Description</label>
-                                            <input class=\"form-control\" type=\"text\" name=\"questionDesc(".$i.")\">
-                                        </div>
-                                    </div>
+            echo "
+                <div class=\"panel panel-default\">
+                    <div class=\"container-fluid\">
+                        <div class=\"row\">
+                            <div class=\"col-md-12\">
+                                <div class=\"form-group\">
+                                    <label>$no) Question Description</label>
+                                    <input class=\"form-control\" type=\"text\" name=\"questionDesc(".$i.")\">
                                 </div>
-                                <div class=\"row\">
-                                    <div class=\"col-md-6\">
-                                        <div class=\"form-group\">
-                                            <label>Answer (A)</label>
-                                            <div class=\"form-inline\">
-                                                <input class=\"form-control\" type=\"text\" name=\"answerA(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(A".$i.")\" value='1'> This is the answer
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class=\"col-md-6\">
-                                        <div class=\"form-group\">
-                                            <label>Answer (B)</label>
-                                            <div class=\"form-inline\">
-                                                <input class=\"form-control\" type=\"text\" name=\"answerB(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(B".$i.")\" value='1'> This is the answer
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class=\"row\">
-                                    <div class=\"col-md-6\">
-                                        <div class=\"form-group\">
-                                            <label>Answer (C)</label>
-                                            <div class=\"form-inline\">
-                                                <input class=\"form-control\" type=\"text\" name=\"answerC(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(C".$i.")\" value='1'> This is the answer
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class=\"col-md-6\">
-                                        <div class=\"form-group\">
-                                            <label>Answer (D)</label>
-                                            <div class=\"form-inline\">
-                                                <input class=\"form-control\" type=\"text\" name=\"answerD(".$i.")\">
-                                                <input type=\"radio\" name=\"trueAnswer(D".$i.")\" value='1'> This is the answer
-                                            </div>
-                                        </div>
+                            </div>
+                        </div>
+                        <div class=\"row\">
+                            <div class=\"col-md-6\">
+                                <div class=\"form-group\">
+                                    <label>Answer (A)</label>
+                                    <div class=\"form-inline\">
+                                        <input class=\"form-control\" type=\"text\" name=\"answerA(".$i.")\">
+                                        <input type=\"radio\" name=\"trueAnswer(A".$i.")\" value='1'> This is the answer
                                     </div>
                                 </div>
                             </div>
-                        </div>";
+                            <div class=\"col-md-6\">
+                                <div class=\"form-group\">
+                                    <label>Answer (B)</label>
+                                    <div class=\"form-inline\">
+                                        <input class=\"form-control\" type=\"text\" name=\"answerB(".$i.")\">
+                                        <input type=\"radio\" name=\"trueAnswer(B".$i.")\" value='1'> This is the answer
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class=\"row\">
+                            <div class=\"col-md-6\">
+                                <div class=\"form-group\">
+                                    <label>Answer (C)</label>
+                                    <div class=\"form-inline\">
+                                        <input class=\"form-control\" type=\"text\" name=\"answerC(".$i.")\">
+                                        <input type=\"radio\" name=\"trueAnswer(C".$i.")\" value='1'> This is the answer
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=\"col-md-6\">
+                                <div class=\"form-group\">
+                                    <label>Answer (D)</label>
+                                    <div class=\"form-inline\">
+                                        <input class=\"form-control\" type=\"text\" name=\"answerD(".$i.")\">
+                                        <input type=\"radio\" name=\"trueAnswer(D".$i.")\" value='1'> This is the answer
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>";
         }
     }
 ?>

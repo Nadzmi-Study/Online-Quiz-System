@@ -15,6 +15,7 @@ class QuizController extends Controller {
         if (!isset($userID)) {
             $sql = "CALL SP_Quiz_GetAll;";
             $query = $this->conn->query($sql);
+            $this->conn->next_result();
 
             $result = array();
             while($row = $query->fetch_assoc()) {
@@ -31,6 +32,7 @@ class QuizController extends Controller {
         } else {
             $sql = "CALL SP_LecturerQuiz_GetDetails($userID);";
             $query = $this->conn->query($sql);
+            $this->conn->next_result();
 
             $result = array();
             while($row = $query->fetch_assoc()) {
@@ -51,44 +53,50 @@ class QuizController extends Controller {
     }
 
     public function retrieveQuestion($quizID) {
-        $sql = "SP_Question_GetByQuizNo($quizID);";
-        $query = $this->conn->query($sql);
+        $sql = "CALL SP_Question_GetByQuizNo($quizID);";
+        $query = $this->conn->query($sql) or die($this->conn->error);
+        $this->conn->next_result();
 
-        if($query->num_rows > 0) {
-            $result = array();
-            while($row = $query->fetch_assoc()) {
-                $tempResult = array(
-                    "QuestionNo" => $row["QuestionNo"],
-                    "QuestionDesc" => $row["QuesDesc"]
-                );
+        if($query) {
+            if($query->num_rows > 0) {
+                $result = array();
+                while($row = $query->fetch_assoc()) {
+                    $tempResult = array(
+                        "QuestionNo" => $row["QuestionNo"],
+                        "QuestionDesc" => $row["QuesDesc"]
+                    );
 
-                array_push($result, $tempResult);
-            }
+                    array_push($result, $tempResult);
+                }
 
-            return $result;
+                return $result;
+            } else
+                return null;
         } else
             return null;
     }
 
     public function retrieveAnswer($questionID) {
-        $this->conn = new mysqli();
+        $sql = "CALL SP_Answer_GetAnswerByQuestionNo($questionID);";
+        $query = $this->conn->query($sql) or die($this->conn->error);
+        $this->conn->next_result();
 
-        $sql = "SP_Answer_GetAnswerByQuestionNo($questionID);";
-        $query = $this->conn->query($sql);
+        if($query) {
+            if($query->num_rows > 0) {
+                $result = array();
+                while($row = $query->fetch_assoc()) {
+                    $tempResult = array(
+                        "AnswerNo" => $row["AnswerNo"],
+                        "AnswerDesc" => $row["AnswerDesc"],
+                        "TrueAnswer" => ($row["TrueAnswer"] == 1 ? true:false)
+                    );
 
-        if($query->num_rows > 0) {
-            $result = array();
-            while($row = $query->fetch_assoc()) {
-                $tempResult = array(
-                    "AnswerNo" => $row["AnswerNo"],
-                    "AnswerDesc" => $row["AnswerDesc"],
-                    "TrueAnswer" => ($row["TrueAnswer"] == 1 ? true:false)
-                );
+                    array_push($result, $tempResult);
+                }
 
-                array_push($result, $tempResult);
-            }
-
-            return $result;
+                return $result;
+            } else
+                return null;
         } else
             return null;
     }
@@ -96,6 +104,7 @@ class QuizController extends Controller {
     public function deleteQuiz($quizID) {
         $sql = "CALL SP_Quiz_Delete($quizID);";
         $query = $this->conn->query($sql);
+        $this->conn->next_result();
 
         if($query)
             return true;
@@ -104,11 +113,10 @@ class QuizController extends Controller {
     }
 
     public function updateQuiz(Quiz $quiz) {
-        $this->conn = new mysqli();
-
         // update quiz desc
         $sql = "SP_Quiz_Update(" . $quiz->getNo() . ", " . $quiz->getTitle() . ", " . $quiz->getTime() . ", " . $quiz->getSubject()->getSubjectNo() . ")";
         $query = $this->conn->query($sql);
+        $this->conn->next_result();
 
         // update question desc
         if($query) {
@@ -117,6 +125,7 @@ class QuizController extends Controller {
 
                 $sql = "SP_Question_Update(" . $tempQuestion->getNo() . ", " . $tempQuestion->getDescription() . ")";
                 $query = $this->conn->query($sql);
+                $this->conn->next_result();
 
                 // update answer desc
                 if($query) {
@@ -125,6 +134,7 @@ class QuizController extends Controller {
 
                         $sql = "SP_Answer_Update(" . $tempAnswer->getNo() . ", " . $tempAnswer->getDescription() . ", " . $tempAnswer->getTrueAnswer() . ")";
                         $query = $this->conn->query($sql);
+                        $this->conn->next_result();
 
                         if(!$query)
                             return false;

@@ -3,8 +3,7 @@ include_once "Question.class.php";
 
 class Quiz {
     private $no; // int
-    private $title; // string
-    private $subject; // subject
+    private $title, $subject; // string
     private $questions; // Question[]
     private $score; // double
     private $time, $dateCreated, $dateModified; // Date
@@ -13,14 +12,14 @@ class Quiz {
      * Quiz constructor.
      *
      * @param string $title
-     * @param Subject $subject
+     * @param string $subject
      * @param Date $time
      * @param Date $dateCreated
      * @param int $no
      * @param Question[] $questions
      * @param double $score
      */
-    public function __construct($title="", $subject=null, $time=null, $dateCreated=null, $no=0, $questions=array(), $score=0.0) {
+    public function __construct($title="", $subject=null, $time=null, $dateCreated=null, int $no=0, $questions=array(), $score=0.0) {
         $this->title = $title;
         $this->subject = $subject;
         $this->time = $time;
@@ -41,7 +40,7 @@ class Quiz {
     public function getDateModified() { return $this->dateModified; }
 
     // setter
-    public function setNo($no) { $this->no = $no; }
+    public function setNo(int $no) { $this->no = $no; }
     public function setTitle($title) { $this->title = $title; }
     public function setSubject($subject) { $this->subject = $subject; }
     public function setQuestion($question) { $this->questions = $question; }

@@ -14,10 +14,10 @@ class QuizManager extends Manager {
 
     //
     public function getQuizList($userId=null) {
-        $tempQuizList = $this->QC->retrieveQuiz();
-
         $quizObjects = null;
-        if(isset($userId)) {
+        if(!isset($userId)) {
+            $tempQuizList = $this->QC->retrieveQuiz();
+
             $quizObjects = array();
             for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
                 array_push($quizObjects,
@@ -28,6 +28,8 @@ class QuizManager extends Manager {
                         $tempQuizList[$x]["DateCreated"],
                         $tempQuizList[$x]["QuizNo"]));
         } else {
+            $tempQuizList = $this->QC->retrieveQuiz($userId);
+
             $quizObjects = array();
             for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
                 array_push($quizObjects,
@@ -47,22 +49,21 @@ class QuizManager extends Manager {
 
         $questionObject = array();
         for($x=0 ; $x<sizeof($tempQuestionList) ; $x++) {
-            $tempAnswerList = $this->QC->retrieveAnswer($tempQuestionList["QuestionID"]);
+            $tempAnswerList = $this->QC->retrieveAnswer($tempQuestionList[$x]["QuestionNo"]);
 
             $answerObject = array();
             for($a = 0 ; $a<sizeof($tempAnswerList) ; $a++)
                 array_push($answerObject,
                     new Answer(
-                        $tempAnswerList["AnswerID"],
-                        $tempAnswerList["AnswerDesc"],
-                        $tempAnswerList["TrueAnswer"],
-                        $tempAnswerList["StudentAnswer"]));
+                        $tempAnswerList[$a]["AnswerNo"],
+                        $tempAnswerList[$a]["AnswerDesc"],
+                        $tempAnswerList[$a]["TrueAnswer"]));
 
             array_push($questionObject,
                 new Question(
-                    $tempQuestionList["Description"],
+                    $tempQuestionList[$x]["QuestionDesc"],
                     $answerObject,
-                    $tempQuestionList["QuestionID"]));
+                    $tempQuestionList[$x]["QuestionNo"]));
         }
 
         return $questionObject;
