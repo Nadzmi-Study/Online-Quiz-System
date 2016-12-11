@@ -180,5 +180,19 @@ class QuizManager extends Manager {
 
         return $subjectList;
     }
+
+    public function getResultAnswerById($quizId)
+    {
+        $tempResultList = $this->QC->getTrueAnswer($quizId);
+        $resultList = array();
+        for($i=0; $i<sizeof($tempResultList); $i++)
+        {
+            $resultList[$i] = array(
+                "Desc" => $tempResultList[$i]["Desc"],
+                "Answer" => $tempResultList[$i]["Answer"]
+            );
+        }
+        return $resultList;
+    }
 }
 ?>
