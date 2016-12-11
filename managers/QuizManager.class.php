@@ -14,7 +14,7 @@ class QuizManager extends Manager {
 
     //
     public function getQuizList($userId=null) {
-        $tempQuizList = $this->QC->retrieveQuizList();
+        $tempQuizList = $this->QC->retrieveQuiz($userId);
 
         $quizObjects = null;
         if(isset($userId)) {
