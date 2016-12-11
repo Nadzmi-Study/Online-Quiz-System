@@ -39,7 +39,8 @@ class QuizController extends Controller {
                     "QuizTitle" => $row["TITLE"],
                     "Subject" => $row["SUBJECT"],
                     "Time" => $row["TIME CONSTRAINT"],
-                    "DateCreated" => $row["DATE CREATED"]
+                    "DateCreated" => $row["DATE CREATED"],
+                    "QuizNo" => $row["QUIZ NO"]
                 );
 
                 array_push($result, $tempResult);
@@ -49,13 +50,93 @@ class QuizController extends Controller {
         return $result;
     }
 
-    public function retrieveQuestion($quizID) {}
+    public function retrieveQuestion($quizID) {
+        $sql = "SP_Question_GetByQuizNo($quizID);";
+        $query = $this->conn->query($sql);
 
-    public function retrieveAnswer($questionID) {}
+        if($query->num_rows > 0) {
+            $result = array();
+            while($row = $query->fetch_assoc()) {
+                $tempResult = array(
+                    "QuestionNo" => $row["QuestionNo"],
+                    "QuestionDesc" => $row["QuesDesc"]
+                );
 
-    public function deleteQuiz($quizID) {}
+                array_push($result, $tempResult);
+            }
 
-    public function updateQuiz(Quiz $quiz) {}
+            return $result;
+        } else
+            return null;
+    }
+
+    public function retrieveAnswer($questionID) {
+        $this->conn = new mysqli();
+
+        $sql = "SP_Answer_GetAnswerByQuestionNo($questionID);";
+        $query = $this->conn->query($sql);
+
+        if($query->num_rows > 0) {
+            $result = array();
+            while($row = $query->fetch_assoc()) {
+                $tempResult = array(
+                    "AnswerNo" => $row["AnswerNo"],
+                    "AnswerDesc" => $row["AnswerDesc"],
+                    "TrueAnswer" => ($row["TrueAnswer"] == 1 ? true:false)
+                );
+
+                array_push($result, $tempResult);
+            }
+
+            return $result;
+        } else
+            return null;
+    }
+
+    public function deleteQuiz($quizID) {
+        $sql = "CALL SP_Quiz_Delete($quizID);";
+        $query = $this->conn->query($sql);
+
+        if($query)
+            return true;
+        else
+            return false;
+    }
+
+    public function updateQuiz(Quiz $quiz) {
+        $this->conn = new mysqli();
+
+        // update quiz desc
+        $sql = "SP_Quiz_Update(" . $quiz->getNo() . ", " . $quiz->getTitle() . ", " . $quiz->getTime() . ", " . $quiz->getSubject()->getSubjectNo() . ")";
+        $query = $this->conn->query($sql);
+
+        // update question desc
+        if($query) {
+            for($x=0 ; $x<sizeof($quiz->getQuestion()) ; $x++) {
+                $tempQuestion = $quiz->getQuestion()[$x];
+
+                $sql = "SP_Question_Update(" . $tempQuestion->getNo() . ", " . $tempQuestion->getDescription() . ")";
+                $query = $this->conn->query($sql);
+
+                // update answer desc
+                if($query) {
+                    for($y=0 ; $y<sizeof($tempQuestion->getAnswer()) ; $x++) {
+                        $tempAnswer = $tempQuestion->getAnswer()[$y];
+
+                        $sql = "SP_Answer_Update(" . $tempAnswer->getNo() . ", " . $tempAnswer->getDescription() . ", " . $tempAnswer->getTrueAnswer() . ")";
+                        $query = $this->conn->query($sql);
+
+                        if(!$query)
+                            return false;
+                    }
+                } else
+                    return false;
+            }
+        } else
+            return false;
+
+        return true;
+    }
 
     public function insertQuiz(Quiz $newQuiz) {}
     //

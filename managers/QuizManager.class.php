@@ -25,7 +25,8 @@ class QuizManager extends Manager {
                         $tempQuizList[$x]["QuizTitle"],
                         $tempQuizList[$x]["Subject"],
                         $tempQuizList[$x]["Time"],
-                        $tempQuizList[$x]["DateCreated"]));
+                        $tempQuizList[$x]["DateCreated"],
+                        $tempQuizList[$x]["QuizNo"]));
         } else {
             $quizObjects = array();
             for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
@@ -67,17 +68,13 @@ class QuizManager extends Manager {
         return $questionObject;
     }
 
-    public function getDeleteConfirmation($confirmation, $quizID) {
-        if(!$confirmation)
-            echo "Do not delete";
-        else {
-            $result = $this->QC->deleteQuiz($quizID);
+    public function getDeleteConfirmation($quizID) {
+        $delete = $this->QC->deleteQuiz($quizID);
 
-            if(!$result)
-                echo "Deleted";
-            else
-                echo "Failed to delete";
-        }
+        if($delete)
+            return true;
+        else
+            return false;
     }
 
     public function checkQuizDesc(Quiz $quiz) {

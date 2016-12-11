@@ -19,6 +19,7 @@ $userno = $user->getUserNo();
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <title>Title</title>
     </head>
+
     <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -27,23 +28,40 @@ $userno = $user->getUserNo();
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="view-statistics">View Statistics</a></li>
-                    <li><a href="../lecturer/create-quiz">Create Quiz</a></li>
-                    <li><a href="../lecturer/delete-quiz">Delete Quiz</a></li>
-                    <li><a href="../lecturer/update-quiz">Update Quiz</a></li>
+                    <li><a href="create-quiz">Create Quiz</a></li>
+                    <li><a href="delete-quiz">Delete Quiz</a></li>
+                    <li><a href="update-quiz">Update Quiz</a></li>
                     <li><a href="../logout">Logout</a></li>
                 </ul>
             </div>
         </nav>
-        <table>
-            <tr>
-                <th>No</th>
-                <th>Quiz Title</th>
-                <th>Subject</th>
-                <th>Time</th>
-                <th>Date Created</th>
-            </tr>
-            <?php displayQuizes($quizManager); ?>
-        </table>
+
+        <header></header>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">Your Quizes</div>
+                            <table class="table">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Quiz Title</th>
+                                    <th>Subject Name</th>
+                                    <th>Time Constraint</th>
+                                    <th>Date Created</th>
+                                </tr>
+                                <?php displayQuizes($quizManager); ?>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
     </body>
 </html>
 
@@ -54,13 +72,19 @@ function displayQuizes($quizManager) {
 
     for($x=0 ; $x<sizeof($tempQuizes) ; $x++) {
         echo "
-            <tr>
-                <th></th> <!-- quiz no -->
-                <th>" . $tempQuizes[$x]->getTitle() . "</th> <!-- quiz title -->
-                <th>" . $tempQuizes[$x]->getSubject() . "</th> <!-- subject -->
-                <th>" . $tempQuizes[$x]->getTime() . "</th> <!-- time -->
-                <th>" . $tempQuizes[$x]->getDateCreated() . "</th> <!-- date created -->
-            </tr>
+            <form action='view-quiz/index.php' method='post'>
+                <tr>
+                    <td>" . ($x + 1) . "</td> <!-- quiz no -->
+                    <td>" . $tempQuizes[$x]->getTitle() . "</td> <!-- quiz title -->
+                    <td>" . $tempQuizes[$x]->getSubject() . "</td> <!-- subject -->
+                    <td>" . $tempQuizes[$x]->getTime() . "</td> <!-- time -->
+                    <td>" . $tempQuizes[$x]->getDateCreated() . "</td> <!-- date created -->
+                    <td>
+                        <input type='hidden' name='quiz-no' value='" . $tempQuizes[$x]->getNo() . "' />
+                        <input type='submit' name='viewQuiz' value='View' />
+                    </td>
+                </tr>
+            </form>
         ";
     }
 }

@@ -1,5 +1,11 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+
+if(isset($_POST["viewQuiz"])) {
+    $quizNo = $_POST["quiz-no"];
+
+    $tempQuiz = $quizManager->getQuizList();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +49,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                         <div class="form-group"=>
                             <label>Subject:</label>
                             <select class="form-control" name="subjectCode">
-                               <?php displaySubject($quizManager); ?>
+                                <?php displaySubject($quizManager); ?>
                             </select>
                         </div>
                         <div class="form-group">
@@ -58,20 +64,15 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                             <input type="submit" class="btn btn-primary" name="submit_quiz" value="Create Quiz">
                         </div>
                     </form>
-                </div>
-                <div class="col-md-3"></div>
             </div>
+            <div class="col-md-3"></div>
+        </div>
         </div>
     </body>
 </html>
 
 <?php
-    function displaySubject($quizManager) {
-        $subjectList = $quizManager->getSubjectList();
+function displayQuizDesc(Quiz $quiz) {
 
-        echo "<option>Select subject</option>";
-        for($x = 0 ; $x<sizeof($subjectList) ; $x++) {
-            echo "<option value='" . $subjectList[$x]->getSubjectNo() . "'>" . $subjectList[$x]->getSubjectCode() . " - " . $subjectList[$x]->getSubjectDesc() . "</option>";
-        }
-    }
+}
 ?>

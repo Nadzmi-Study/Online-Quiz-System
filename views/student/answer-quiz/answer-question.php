@@ -1,14 +1,5 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
-    //include_once "../../includes/global.inc.php";
-//require_once "../../../controllers/QuizController.class.php";
-//require_once "../../../managers/QuizManager.class.php";
-//require_once "../../../models/Quiz.class.php";
-
-//$conn = new mysqli("localhost","root","","online_quiz_system");
-//$QC = new QuizController();
-//$quizManager = new QuizManager($QC);
-
 ?>
 
 
