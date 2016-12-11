@@ -22,9 +22,9 @@ class QuizManager extends Manager {
             for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
                 array_push($quizObjects,
                     new Quiz(
-                        $tempQuizList[$x]["QuizTitle"],
-                        $tempQuizList[$x]["Subject"],
-                        $tempQuizList[$x]["Time"],
+                        $tempQuizList[$x]["Title"],
+                        $tempQuizList[$x]["SubjectDesc"],
+                        $tempQuizList[$x]["TimeConstraint"],
                         $tempQuizList[$x]["DateCreated"],
                         $tempQuizList[$x]["QuizNo"]));
         } else {
@@ -32,9 +32,9 @@ class QuizManager extends Manager {
             for($x = 0 ; $x<sizeof($tempQuizList) ; $x++)
                 array_push($quizObjects,
                     new Quiz(
-                        $tempQuizList[$x]["QuizTitle"],
-                        $tempQuizList[$x]["Subject"],
-                        $tempQuizList[$x]["Time"],
+                        $tempQuizList[$x]["Title"],
+                        $tempQuizList[$x]["SubjectDesc"],
+                        $tempQuizList[$x]["TimeConstraint"],
                         $tempQuizList[$x]["DateCreated"],
                         $tempQuizList[$x]["QuizNo"]));
         }
