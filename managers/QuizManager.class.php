@@ -191,5 +191,17 @@ class QuizManager extends Manager {
         }
         return $resultList;
     }
+
+    public function submitAnswer($studentQuizNo, $answer)
+    {
+        $tempAnswerStatus = $this->QC->submitAnswer($studentQuizNo, $answer);
+        return $tempAnswerStatus;
+    }
+
+    public function submitQuiz($userId, $quizNo)
+    {
+        $tempQuizStatus = $this->QC->submitQuiz($userId,$quizNo);
+        return $tempQuizStatus;
+    }
 }
 ?>

@@ -1,5 +1,19 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+
+if(isset($_POST["submit-question"]))
+{
+    $correctCount = 0;
+    $user = unserialize($_SESSION["user"]);
+    $submitQuizNo = $quizManager->submitQuiz($user->getUserNo(), $_SESSION["Temp-QuizID"]);
+    for($i =0; $i<10; $i++)
+    {
+        $correctCount = $correctCount + $_POST["answer$i"];
+        $submitAnswer = $quizManager->submitAnswer($submitQuizNo, $_POST["answer$i"]);
+    }
+    $_SESSION["score"] = $correctCount;
+    header("Location:success-answer.php");
+}
 ?>
 
 
@@ -22,7 +36,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
              <div class="row">
                <div class="col-md-3"></div>
                <div class="col-md-6">
-                   <form action="success-answer.html" method="post">
+                   <form action="" method="post">
                        <h5>Time: </h5>
                        <?php displayQuestion($quizManager); ?>
                        <div class="container-fluid">
