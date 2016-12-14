@@ -1,5 +1,67 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+
+if(isset($_POST["register-quiz"])) {
+    $quizTitle = $_POST["quizTitle"];
+    $subjectCode = $_POST["subjectCode"];
+    $timeConstraint = $_POST["timeConstraint"];
+
+    // temp question obj
+    $questionObj = array();
+    for($x=0 ; $x<10 ; $x++) {
+        $tempQuestionDesc = $_POST["questionDesc(" . $x . ")"];
+
+        // temp ans obj
+        $answerObj = array();
+        // a
+        $answerA = $_POST["answerA($x)"];
+        if(!isset($_POST["trueAnswer(A$x)"]))
+            $answerTrueAnswerA = false;
+        else
+            $answerTrueAnswerA = true;
+        // b
+        $answerB = $_POST["answerB($x)"];
+        if(!isset($_POST["trueAnswer(B$x)"]))
+            $answerTrueAnswerB = false;
+        else
+            $answerTrueAnswerB = true;
+        // c
+        $answerC = $_POST["answerC($x)"];
+        if(!isset($_POST["trueAnswer(C$x)"]))
+            $answerTrueAnswerC = false;
+        else
+            $answerTrueAnswerC = true;
+        // d
+        $answerD = $_POST["answerD($x)"];
+        if(!isset($_POST["trueAnswer(D$x)"]))
+            $answerTrueAnswerD = false;
+        else
+            $answerTrueAnswerD = true;
+
+        $tempAnsA = new Answer(0, $answerA, $answerTrueAnswerA, false);
+        $tempAnsB = new Answer(0, $answerB, $answerTrueAnswerB, false);
+        $tempAnsC = new Answer(0, $answerC, $answerTrueAnswerC, false);
+        $tempAnsD = new Answer(0, $answerD, $answerTrueAnswerD, false);
+
+        array_push($answerObj, $tempAnsA);
+        array_push($answerObj, $tempAnsB);
+        array_push($answerObj, $tempAnsC);
+        array_push($answerObj, $tempAnsD);
+
+        $tempQuestion = new Question($tempQuestionDesc, $answerObj);
+
+        array_push($questionObj, $tempQuestion);
+    }
+
+    // temp quiz obj
+    $newQuiz = new Quiz($quizTitle, $subjectCode, $timeConstraint, null, 0, $questionObj);
+    $insertResult = $quizManager->registerQuiz($newQuiz);
+
+    if($insertResult)
+        echo "Success Insert All.";
+    else
+        echo "Failed Insertion.";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +97,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <form action="create-quiz.php" method="post">
+                    <form action="" method="post">
                         <div class="form-group">
                             <label>Quiz Title:</label>
                             <input type="text" class="form-control" name="quizTitle">
@@ -47,15 +109,14 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Quiz Subject:</label>
-                            <input type="text" class="form-control" name="quizSubject">
-                        </div>
-                        <div class="form-group">
                             <label>Time Constraint:</label>
                             <input type="text" class="form-control" name="timeConstraint">
                         </div>
+
+                        <?php displayQuestionForm(); ?>
+
                         <div>
-                            <input type="submit" class="btn btn-primary" name="submit_quiz" value="Create Quiz">
+                            <input type="submit" class="btn btn-primary" name="register-quiz" value="Create Quiz">
                         </div>
                     </form>
                 </div>
@@ -66,12 +127,72 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
 </html>
 
 <?php
-    function displaySubject($quizManager) {
-        $subjectList = $quizManager->getSubjectList();
+function displaySubject($quizManager) {
+    $subjectList = $quizManager->getSubjectList();
 
-        echo "<option>Select subject</option>";
-        for($x = 0 ; $x<sizeof($subjectList) ; $x++) {
-            echo "<option value='" . $subjectList[$x]->getSubjectNo() . "'>" . $subjectList[$x]->getSubjectCode() . " - " . $subjectList[$x]->getSubjectDesc() . "</option>";
-        }
+    echo "<option>Select subject</option>";
+    for($x = 0 ; $x<sizeof($subjectList) ; $x++) {
+        echo "<option value='" . $subjectList[$x]->getSubjectNo() . "'>" . $subjectList[$x]->getSubjectCode() . " - " . $subjectList[$x]->getSubjectDesc() . "</option>";
     }
+}
+
+function displayQuestionForm() {
+    for($i=0; $i<10; $i++)  {
+        $no =($i+1);
+        echo "
+            <br /><br />
+            <div class='panel panel-default'>
+                <div class='container-fluid'>
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <div class='form-group'>
+                                <label>$no) Question Description</label>
+                                <input class='form-control' type='text' name='questionDesc($i)'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <div class='form-group'>
+                                <label>Answer (A)</label>
+                                <div class='form-inline'>
+                                    <input class='form-control' type='text' name='answerA($i)'>
+                                    <input type='radio' name='trueAnswer(A$i)' value='1'> This is the answer
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-6'>
+                            <div class='form-group'>
+                                <label>Answer (B)</label>
+                                <div class='form-inline'>
+                                    <input class='form-control' type='text' name='answerB($i)'>
+                                    <input type='radio' name='trueAnswer(B$i)' value='1'> This is the answer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <div class='form-group'>
+                                <label>Answer (C)</label>
+                                <div class='form-inline'>
+                                    <input class='form-control' type='text' name='answerC($i)'>
+                                    <input type='radio' name='trueAnswer(C$i)' value='1'> This is the answer
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-6'>
+                            <div class='form-group'>
+                                <label>Answer (D)</label>
+                                <div class='form-inline'>
+                                    <input class='form-control' type='text' name='answerD($i)'>
+                                    <input type='radio' name='trueAnswer(D$i)' value='1'> This is the answer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>";
+    }
+}
 ?>

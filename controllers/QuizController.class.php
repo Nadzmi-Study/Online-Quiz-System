@@ -9,6 +9,51 @@ class QuizController extends Controller {
     }
 
     //
+    public function insertQuiz(Quiz $newQuiz, $userNo) {
+        // register quiz first
+        $newQuizData = array(
+            "Title" => $newQuiz->getTitle(),
+            "TimeConstraint" => $newQuiz->getTime(),
+            "SubjectNo" => $newQuiz->getSubject(),
+            "UserNo" => $userNo,
+        );
+
+        $quizId = $this->registerQuiz($newQuizData);
+        if(isset($quizId)) {
+            // register question
+            for($x=0 ; $x<sizeof($newQuiz->getQuestion()) ; $x++) {
+                $tempQuestion = $newQuiz->getQuestion()[$x];
+
+                $newQuestionData = array(
+                    "QuizID" => $quizId,
+                    "QuestionDesc" => $tempQuestion->getDescription()
+                );
+
+                $questionNo = $this->registerQuestion($newQuestionData);
+                if(isset($questionNo)) {
+                    // register answer
+                    for($y=0 ; $y<sizeof($tempQuestion->getAnswer()) ; $y++) {
+                        $tempAnswer = $tempQuestion->getAnswer()[$y];
+
+                        $newAnswerData = array(
+                            "QuestionID" => $questionNo,
+                            "AnswerDesc" => $tempAnswer->getDescription(),
+                            "TrueAnswer" => $tempAnswer->getTrueAnswer() ? 1:0
+                        );
+
+                        $answerNo = $this->registerAnswer($newAnswerData);
+                        if(!isset($answerNo))
+                            return false;
+                    }
+                } else
+                    return false;
+            }
+        } else
+            return false;
+
+        return true;
+    }
+
     public function retrieveQuiz($userID=null) {
         $result = null;
 
@@ -173,6 +218,7 @@ class QuizController extends Controller {
         $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
 
+        $result = null;
         while($row = $query->fetch_assoc())
             $result = $row["SubmitQuizNo"];
 
@@ -181,33 +227,34 @@ class QuizController extends Controller {
     //
 
     public function registerQuiz($newQuizData) {
-        $sql = "CALL SP_Quiz_Insert('".$newQuizData["Title"]."','".$newQuizData["TimeConstraint"]."','".$newQuizData["SubjectNo"]."', @QuizID,'".$newQuizData["UserNo"]."')";
-        $sql2 = "SELECT @QuizID AS QuizID";
+        $sql = "CALL SP_Quiz_Insert('".$newQuizData["Title"]."','".$newQuizData["TimeConstraint"]."','".$newQuizData["SubjectNo"]."', @QuizID,'".$newQuizData["UserNo"]."');";
+        $sql2 = "SELECT QuizNo FROM quiz ORDER BY QuizNo DESC LIMIT 1;";
 
         $this->conn->query($sql);
         $this->conn->next_result();
         $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
 
+        $result = null;
         while($row = $query->fetch_assoc())
-            $result = $row["QuizID"];
+            $result = $row["QuizNo"];
 
         return $result;
     }
 
     public function registerQuestion($newQuestionData) {
         $sql = "CALL SP_Question_Insert('".$newQuestionData["QuizID"]."','".$newQuestionData["QuestionDesc"]."',@QuestionNo)";
-        $sql2 = "SELECT @QuestionNo AS QuestionNo";
+        $sql2 = "SELECT QuestionNo FROM question ORDER BY QuestionNo DESC LIMIT 1;";
 
         $this->conn->query($sql);
         $this->conn->next_result();
         $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
 
+        $result = null;
         while($row = $query->fetch_assoc())
-        {
             $result = $row["QuestionNo"];
-        }
+
         return $result;
     }
 
@@ -221,10 +268,10 @@ class QuizController extends Controller {
         $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
 
+        $result = null;
         while($row = $query->fetch_assoc())
-        {
             $result = $row["AnswerNo"];
-        }
+
         return $result;
     }
 
@@ -290,9 +337,8 @@ class QuizController extends Controller {
         $this->conn->next_result();
 
         $subjectList = array();
-        while($row = $query->fetch_assoc()) {
+        while($row = $query->fetch_assoc())
             array_push($subjectList, $row);
-        }
 
         return $subjectList;
     }

@@ -13,6 +13,18 @@ class QuizManager extends Manager {
     }
 
     //
+    public function registerQuiz(Quiz $newQuiz) {
+        $tempSubjects = $this->QC->retrieveSubjectList();
+        for($x=0 ; $x<sizeof($tempSubjects) ; $x++)
+            if($tempSubjects[$x]["SubjectDesc"] == $newQuiz->getSubject())
+                $newQuiz->setSubject($tempSubjects["SubjectNo"]);
+
+        $tempUser = unserialize($_SESSION["user"]);
+        $insertResult = $this->QC->insertQuiz($newQuiz, $tempUser->getUserNo());
+
+        return $insertResult;
+    }
+
     public function getQuizList($userId=null) {
         $quizObjects = null;
         if(!isset($userId)) {
@@ -79,28 +91,59 @@ class QuizManager extends Manager {
     }
 
     public function checkQuizDesc(Quiz $quiz) {
-        if(empty($quiz->getTitle()) || empty($quiz->getTime()))
-            return false;
-        else if($quiz->getSubject() == 0)
-            return false;
+        $error = false;
+        $message = "Quiz:<br />";
 
-        return true;
+        if(empty($quiz->getTitle()) || empty($quiz->getTime())) {
+            $error = true;
+            $message .= "--> Please complete the quiz descriptions.<br />";
+        }
+        if(sizeof($quiz->getSubject()) == 0) {
+            $error = true;
+            $message .= "--> Please choose a subject.<br />";
+        }
+
+        if(!$error)
+            $message = "";
+
+        return array(
+            "Error" => $error,
+            "Message" => $message
+        );
     }
 
     public function checkQuestionDesc(Question $question) {
-        if(empty($question->getDescription()))
-            return false;
-        else if($question->getAnswer() == null)
-            return false;
+        $error = false;
+        $message = "Question:<br />";
 
-        return true;
+        if(empty($question->getDescription())) {
+            $error = true;
+            $message .= "--> Please complete the question descriptions.<br />";
+        }
+        if(sizeof($question->getAnswer()) == 0) {
+            $error = true;
+            $message .= "--> Please complete the answer descriptions.<br />";
+        }
+
+        return array(
+            "Error" => $error,
+            "Message" => $message
+        );
     }
 
     public function checkAnswerDesc(Answer $answer) {
-        if(empty($answer->getDescription()) || empty($answer->getTrueAnswer()))
-            return false;
+        $error = false;
+        $message = "Answer:<br />";
 
-        return true;
+        if(empty($answer->getDescription()) || empty($answer->getTrueAnswer())) {
+            $error = true;
+            $message .= "--> Please complete the answer's description.<br />";
+        }
+
+        return array(
+            "Error" => $error,
+            "Message" => $message
+        );
     }
     //
 
@@ -158,7 +201,19 @@ class QuizManager extends Manager {
 
     public function getAnswerByQuestionId($questionNo)
     {
-        $tempAnswerList = $this->QC->getAnswerByQuestionId($questionNo);
+        $tempAnswerList = $this->QC->retrieveAnswer($questionNo);
+        $answerList = array();
+        for($j=0; $j<sizeof($tempAnswerList); $j++)
+        {
+            array_push($answerList, new Answer($tempAnswerList[$j]["AnswerNo"], $tempAnswerList[$j]["AnswerDesc"], $tempAnswerList[$j]["TrueAnswer"]));
+        }
+
+        return $answerList;
+    }
+
+    public function getAnswerByQuizId($quizID)
+    {
+        $tempAnswerList = $this->QC->getAnswerByQuizId($quizID);
         $answerList = array();
         for($j=0; $j<sizeof($tempAnswerList); $j++)
         {
