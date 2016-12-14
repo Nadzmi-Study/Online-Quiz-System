@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2016 at 10:48 AM
+-- Generation Time: Dec 14, 2016 at 10:55 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.9
 
@@ -113,12 +113,11 @@ BEGIN
     WHERE QuestionNo = questionNo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_Delete` (IN `quizNo` INT)  NO SQL
-BEGIN
-	UPDATE quiz
-    SET Active = 0, DateModified = CURRENT_DATE
-    WHERE QuizNo = quizNo;
-END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_Delete` (`quizID` INT(11))  BEGIN
+    UPDATE quiz
+      SET Active = 0, DateModified = CURRENT_DATE
+      WHERE QuizNo LIKE quizID;
+  END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_GetAll` ()  NO SQL
 BEGIN
@@ -340,7 +339,47 @@ INSERT INTO `answer` (`AnswerNo`, `QuestionNo`, `AnswerDesc`, `TrueAnswer`, `Dat
 (145, 53, 'Q10A', 1, '2016-12-09', NULL),
 (146, 53, 'Q10B', 0, '2016-12-09', NULL),
 (147, 53, 'Q10C', 0, '2016-12-09', NULL),
-(148, 53, 'Q10D', 0, '2016-12-09', NULL);
+(148, 53, 'Q10D', 0, '2016-12-09', NULL),
+(271, 88, 'q1a', 1, '2016-12-14', NULL),
+(272, 88, 'q1b', 0, '2016-12-14', NULL),
+(273, 88, 'q1c', 0, '2016-12-14', NULL),
+(274, 88, 'q1d', 0, '2016-12-14', NULL),
+(275, 89, 'q2a', 0, '2016-12-14', NULL),
+(276, 89, 'q2b', 0, '2016-12-14', NULL),
+(277, 89, 'q2c', 1, '2016-12-14', NULL),
+(278, 89, 'q2d', 0, '2016-12-14', NULL),
+(279, 90, 'qa3', 0, '2016-12-14', NULL),
+(280, 90, 'q3b', 0, '2016-12-14', NULL),
+(281, 90, 'q3c', 0, '2016-12-14', NULL),
+(282, 90, 'q3d', 1, '2016-12-14', NULL),
+(283, 91, 'q4a', 0, '2016-12-14', NULL),
+(284, 91, 'q4b', 0, '2016-12-14', NULL),
+(285, 91, 'q4c', 0, '2016-12-14', NULL),
+(286, 91, 'q4d', 1, '2016-12-14', NULL),
+(287, 92, 'q5a', 0, '2016-12-14', NULL),
+(288, 92, 'q5b', 0, '2016-12-14', NULL),
+(289, 92, 'q5c', 1, '2016-12-14', NULL),
+(290, 92, 'q5d', 0, '2016-12-14', NULL),
+(291, 93, 'q6a', 0, '2016-12-14', NULL),
+(292, 93, 'q6b', 1, '2016-12-14', NULL),
+(293, 93, 'q6c', 0, '2016-12-14', NULL),
+(294, 93, 'q6d', 0, '2016-12-14', NULL),
+(295, 94, 'q7a', 1, '2016-12-14', NULL),
+(296, 94, 'q7b', 0, '2016-12-14', NULL),
+(297, 94, 'q7c', 0, '2016-12-14', NULL),
+(298, 94, 'q7d', 0, '2016-12-14', NULL),
+(299, 95, 'q8a', 0, '2016-12-14', NULL),
+(300, 95, 'q8b', 0, '2016-12-14', NULL),
+(301, 95, 'q8c', 1, '2016-12-14', NULL),
+(302, 95, 'q8d', 0, '2016-12-14', NULL),
+(303, 96, 'q9a', 0, '2016-12-14', NULL),
+(304, 96, 'q9b', 0, '2016-12-14', NULL),
+(305, 96, 'q9c', 1, '2016-12-14', NULL),
+(306, 96, 'q9d', 0, '2016-12-14', NULL),
+(307, 97, 'q10a', 0, '2016-12-14', NULL),
+(308, 97, 'q10b', 1, '2016-12-14', NULL),
+(309, 97, 'q10c', 0, '2016-12-14', NULL),
+(310, 97, 'q10d', 0, '2016-12-14', NULL);
 
 -- --------------------------------------------------------
 
@@ -362,7 +401,8 @@ CREATE TABLE `lecturerquiz` (
 INSERT INTO `lecturerquiz` (`LecturerQuizNo`, `QuizNo`, `UserNo`, `CreatedDate`) VALUES
 (1, 5, 10, NULL),
 (2, 6, 10, NULL),
-(3, 10, 10, '2016-12-14');
+(3, 10, 10, '2016-12-14'),
+(49, 62, 10, '2016-12-14');
 
 -- --------------------------------------------------------
 
@@ -444,7 +484,17 @@ INSERT INTO `question` (`QuestionNo`, `QuizNo`, `QuesDesc`, `DateCreated`, `Date
 (50, 6, 'Q7', '2016-12-09', NULL),
 (51, 6, 'Q8', '2016-12-09', NULL),
 (52, 6, 'Q9', '2016-12-09', NULL),
-(53, 6, 'Q10', '2016-12-09', NULL);
+(53, 6, 'Q10', '2016-12-09', NULL),
+(88, 62, 'q1', '2016-12-14', NULL),
+(89, 62, 'q2', '2016-12-14', NULL),
+(90, 62, 'q3', '2016-12-14', NULL),
+(91, 62, 'q4', '2016-12-14', NULL),
+(92, 62, 'q5', '2016-12-14', NULL),
+(93, 62, 'q6', '2016-12-14', NULL),
+(94, 62, 'q7', '2016-12-14', NULL),
+(95, 62, 'q8', '2016-12-14', NULL),
+(96, 62, 'q9', '2016-12-14', NULL),
+(97, 62, 'q10', '2016-12-14', NULL);
 
 -- --------------------------------------------------------
 
@@ -467,9 +517,10 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`QuizNo`, `Title`, `TimeConstraint`, `SubjectNo`, `Active`, `DateCreated`, `DateModified`) VALUES
-(5, 'dummy quiz 1', 60, 1, 1, '2016-12-02', NULL),
-(6, 'dummy quiz 2', 45, 1, 1, '2016-12-09', NULL),
-(10, 'test quiz 4', 60, 1, 1, '2016-12-14', NULL);
+(5, 'dummy quiz 1', 60, 1, 1, '2016-12-02', '2016-12-14'),
+(6, 'dummy quiz 2', 45, 1, 1, '2016-12-09', '2016-12-14'),
+(10, 'test quiz 4', 60, 1, 1, '2016-12-14', '2016-12-14'),
+(62, 'test quiz 1', 60, 1, 1, '2016-12-14', '2016-12-14');
 
 -- --------------------------------------------------------
 
@@ -608,12 +659,12 @@ ALTER TABLE `userdetails`
 -- AUTO_INCREMENT for table `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `AnswerNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=271;
+  MODIFY `AnswerNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
 --
 -- AUTO_INCREMENT for table `lecturerquiz`
 --
 ALTER TABLE `lecturerquiz`
-  MODIFY `LecturerQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `LecturerQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 --
 -- AUTO_INCREMENT for table `lookupsubject`
 --
@@ -628,12 +679,12 @@ ALTER TABLE `lookupusertype`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `QuestionNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `QuestionNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 --
 -- AUTO_INCREMENT for table `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `QuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `QuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 --
 -- AUTO_INCREMENT for table `studentquiz`
 --
