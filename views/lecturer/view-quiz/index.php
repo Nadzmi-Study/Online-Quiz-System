@@ -32,7 +32,7 @@ if(isset($_POST["viewQuiz"])) {
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Lecturer Page</a>
+                    <a class="navbar-brand" href="../index.php">Lecturer Page</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="../view-statistics">View Statistics</a></li>
