@@ -100,6 +100,7 @@ function displayQuestion($quizManager)
                         <div class='col-md-1'></div>
                         <div class='col-md-5'>
                             <div class='radio'>
+                                <!--//try letak hidden input. eg: answer$iA -->
                                 <label><input type='radio' name='answer$element' value='".$randomizeQuestionList[$element]->getAnswer()["ValueA"]."' />A - ".$randomizeQuestionList[$element]->getAnswer()["DescA"]."</label>
                             </div>
                             <div class='radio'>

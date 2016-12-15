@@ -44,13 +44,14 @@ if(isset($_POST["submit"])) {
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">View Answer Quiz</div>
+                    <div class="panel-heading">Quiz Taken History</div>
                     <table class="table">
                         <tr>
                             <th>Quiz No</th>
                             <th>Quiz Title</th>
                             <th>Subject Name</th>
                             <th>Date Created</th>
+                            <th>Score</th>
                         </tr>
                         <?php displayQuiz($quizManager); ?>
                     </table>
@@ -67,8 +68,9 @@ if(isset($_POST["submit"])) {
 <?php
 function displayQuiz($quizManager)
 {
-    $quizList = $quizManager->getQuizList();
-
+    //$quizList = $quizManager->getQuizList();
+    $user = unserialize($_SESSION["user"]);
+    $quizList = $quizManager->getQuizAnsweredList($user->getUserNo());
     for($x=0; $x<sizeof($quizList); $x++)
     {
         $number = $x+1;
@@ -83,6 +85,7 @@ function displayQuiz($quizManager)
                  </td>
                  <td>" . $quizList[$x]->getSubject() . "</td>
                  <td>" . $quizList[$x]->getDateCreated() . "</td>
+                 <td>".$score = $quizManager->getScore($user->getUserNo(),$quizList[$x]->getNo() ) ."/10</td>
              </tr>
              ";
     }
