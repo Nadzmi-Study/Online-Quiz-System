@@ -319,7 +319,7 @@ class QuizController extends Controller {
     }
 
     public function retrieveQuizList() {
-        $sql = "CALL SP_Quiz_GetALL";
+        $sql = "CALL SP_Quiz_GetAll()";
         $query = $this->conn->query($sql) or die(mysqli_error($this->conn));
         $this->conn->next_result();
 

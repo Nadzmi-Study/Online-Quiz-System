@@ -1,22 +1,18 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
 
-if(isset($_POST["delete"])) {
-    $quizID = $_POST["quizID"];
+if(isset($_POST["confirmation"])) {
+    switch($_POST["confirmation"]) {
+        case "confirm":
+            $result = $quizManager->getDeleteConfirmation($_POST["quizNo"]);
 
-    if(isset($_POST["confirmation"])) {
-        switch ($_POST["confirmation"]) {
-            case "confirm":
-                $result = $quizManager->getDeleteConfirmation($quizID);
+            echo "<script> window.location = 'index.php'; </script>";
+            break;
+        case "not-confirm":
+        $url = $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/view/lecturer";
 
-                header("Location: " . $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/lecturer/delete-quiz");
-                break;
-            case "not-confirm":
-                header("Location: " . $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/lecturer/delete-quiz");
-                break;
-        }
-
-        exit();
+            echo "<script> window.location = 'index.php'; </script>";
+            break;
     }
 }
 ?>
@@ -38,7 +34,7 @@ if(isset($_POST["delete"])) {
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Lecturer Page</a>
+                    <a class="navbar-brand" href="../index.php">Lecturer Page</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="../../logout">Logout</a></li>
@@ -54,8 +50,9 @@ if(isset($_POST["delete"])) {
                     <div class="col-md-8">
                         <h2>Are you sure to delete?</h2>
                         <form action="" method="post">
+                            <input type="hidden" name="quizNo" value="<?php echo $_POST["quizID"]; ?>" />
                             <button type="submit" name="confirmation" value="confirm">Confirm</button>
-                            <button type="submit" name="confirmation" value="not-confirm">Not Confirm</button>
+                            <button type="submit" name="confirmation" value="not-confirm">Cancel</button>
                         </form>
                     </div>
                     <div class="col-md-2"></div>
