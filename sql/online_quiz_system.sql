@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2016 at 10:55 AM
+-- Generation Time: Dec 17, 2016 at 02:26 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.9
 
@@ -34,11 +34,10 @@ BEGIN
     AND QZ.QuizNo = quizNo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Answer_GetAnswerByQuestionNo` (IN `questionNo` INT)  NO SQL
-BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Answer_GetAnswerByQuestionNo` (`questNo` INT(11))  BEGIN
 	SELECT AnswerNo, AnswerDesc, TrueAnswer
     FROM answer
-    WHERE QuestionNo = questionNo;
+    WHERE QuestionNo = questNo;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Answer_GetAnswerByQuizNo` (IN `quesNo` INT)  NO SQL
@@ -59,12 +58,13 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_LecturerQuiz_GetDetails` (`userNo` INT(11))  BEGIN
 
- SELECT UD.FullName AS "LECTURER NAME", QZ.Title AS "TITLE", LS.SubjectCode AS "SUBJECT", QZ.TimeConstraint AS "TIME CONSTRAINT", QZ.Active AS "STATUS", QZ.DateCreated AS "DATE CREATED", QZ.QuizNo AS "QUIZ NO"
- FROM userdetails UD, quiz QZ, lecturerquiz LQ, lookupsubject LS 
- WHERE LQ.UserNo = UD.UserDetailNo
- AND LQ.QuizNo = QZ.QuizNo 
- AND QZ.SubjectNo = LS.SubjectNo 
- AND LQ.UserNo = userNo;
+  SELECT UD.FullName AS "LECTURER NAME", QZ.Title AS "TITLE", LS.SubjectCode AS "SUBJECT", QZ.TimeConstraint AS "TIME CONSTRAINT", QZ.Active AS "STATUS", QZ.DateCreated AS "DATE CREATED", QZ.QuizNo AS "QUIZ NO"
+  FROM userdetails UD, quiz QZ, lecturerquiz LQ, lookupsubject LS
+  WHERE LQ.UserNo = UD.UserDetailNo
+    AND LQ.QuizNo = QZ.QuizNo
+    AND QZ.SubjectNo = LS.SubjectNo
+    AND LQ.UserNo = userNo
+    AND QZ.Active = 1;
 
 END$$
 
@@ -402,7 +402,8 @@ INSERT INTO `lecturerquiz` (`LecturerQuizNo`, `QuizNo`, `UserNo`, `CreatedDate`)
 (1, 5, 10, NULL),
 (2, 6, 10, NULL),
 (3, 10, 10, '2016-12-14'),
-(49, 62, 10, '2016-12-14');
+(49, 62, 10, '2016-12-14'),
+(50, 63, 10, '2016-12-17');
 
 -- --------------------------------------------------------
 
@@ -517,10 +518,9 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`QuizNo`, `Title`, `TimeConstraint`, `SubjectNo`, `Active`, `DateCreated`, `DateModified`) VALUES
-(5, 'dummy quiz 1', 60, 1, 1, '2016-12-02', '2016-12-14'),
-(6, 'dummy quiz 2', 45, 1, 1, '2016-12-09', '2016-12-14'),
-(10, 'test quiz 4', 60, 1, 1, '2016-12-14', '2016-12-14'),
-(62, 'test quiz 1', 60, 1, 1, '2016-12-14', '2016-12-14');
+(5, 'dummy quiz 1', 60, 1, 1, '2016-12-02', '2016-12-15'),
+(6, 'dummy quiz 2', 45, 1, 1, '2016-12-09', '2016-12-17'),
+(62, 'test quiz 1', 60, 1, 1, '2016-12-14', '2016-12-17');
 
 -- --------------------------------------------------------
 
@@ -659,12 +659,12 @@ ALTER TABLE `userdetails`
 -- AUTO_INCREMENT for table `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `AnswerNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+  MODIFY `AnswerNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
 --
 -- AUTO_INCREMENT for table `lecturerquiz`
 --
 ALTER TABLE `lecturerquiz`
-  MODIFY `LecturerQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `LecturerQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `lookupsubject`
 --
@@ -679,12 +679,12 @@ ALTER TABLE `lookupusertype`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `QuestionNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `QuestionNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 --
 -- AUTO_INCREMENT for table `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `QuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `QuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT for table `studentquiz`
 --

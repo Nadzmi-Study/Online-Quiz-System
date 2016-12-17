@@ -81,10 +81,6 @@ function displayQuizDesc($quiz) {
     for($x=0 ; $x<sizeof($quiz->getQuestion()) ; $x++) {
         $questionNo = $x + 1;
         $tempQuestion = $quiz->getQuestion()[$x];
-        $answerA = $tempQuestion->getAnswer()[0];
-        $answerB = $tempQuestion->getAnswer()[1];
-        $answerC = $tempQuestion->getAnswer()[2];
-        $answerD = $tempQuestion->getAnswer()[3];
 
         echo "
             <div class='container-fluid'>
@@ -96,46 +92,40 @@ function displayQuizDesc($quiz) {
                         </div>
                     </div>
                 </div>
-                <div class='row'>
-                        <div class='col-md-6'>
-                            <div class='form-group'>
-                                <label>Answer (A)</label>
-                                <div class='form-inline'>
-                                    <input class='form-control' type='text' value='". $answerA->getDescription() . "' readonly/>
-                                    <input type='radio' value='" . $answerA->getTrueAnswer() . "' readonly/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='col-md-6'>
-                            <div class='form-group'>
-                                <label>Answer (B)</label>
-                                <div class='form-inline'>
-                                    <input class='form-control' type='text' value='". $answerB->getDescription() . "' readonly/>
-                                    <input type='radio' value='" . $answerB->getTrueAnswer() . "' readonly/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='row'>
-                            <div class='col-md-6'>
-                                <div class='form-group'>
-                                    <label>Answer (C)</label>
-                                    <div class='form-inline'>
-                                        <input class='form-control' type='text' value='". $answerC->getDescription() . "' readonly/>
-                                        <input type='radio' value='" . $answerC->getTrueAnswer() . "' readonly/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='col-md-6'>
-                                <div class='form-group'>
-                                    <label>Answer (D)</label>
-                                    <div class='form-inline'>
-                                        <input class='form-control' type='text' value='". $answerD->getDescription() . "' readonly/>
-                                        <input type='radio' value='" . $answerD->getTrueAnswer() . "' readonly/>
-                                    </div>
-                                </div>
-                            </div>
+                <div class='row'>";
+
+        for($y=0 ; $y<4 ; $y++) {
+            $answerNo = "A";
+            $tempAnswer = $tempQuestion->getAnswer()[$y];
+
+            switch ($y) {
+                case 0:
+                    $answerNo = "A";
+                    break;
+                case 1:
+                    $answerNo = "B";
+                    break;
+                case 2:
+                    $answerNo = "C";
+                    break;
+                case 4:
+                    $answerNo = "D";
+                    break;
+            }
+
+            echo "
+                <div class='col-md-6'>
+                    <div class='form-group'>
+                        <label>Answer ($answerNo)</label>
+                        <div class='form-inline'>
+                            <input class='form-control' type='text' value='". $tempAnswer->getDescription() . "' readonly/>
+                            <input type='radio' value='" . $tempAnswer->getTrueAnswer() . "' readonly/>
                         </div>
                     </div>
+                </div>";
+        }
+
+        echo "</div>
             </div>";
     }
 }
