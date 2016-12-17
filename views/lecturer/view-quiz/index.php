@@ -94,7 +94,7 @@ function displayQuizDesc($quiz) {
                 </div>
                 <div class='row'>";
 
-        for($y=0 ; $y<4 ; $y++) {
+        for($y=0 ; $y<sizeof($tempQuestion->getAnswer()) ; $y++) {
             $answerNo = "A";
             $tempAnswer = $tempQuestion->getAnswer()[$y];
 
@@ -118,9 +118,14 @@ function displayQuizDesc($quiz) {
                     <div class='form-group'>
                         <label>Answer ($answerNo)</label>
                         <div class='form-inline'>
-                            <input class='form-control' type='text' value='". $tempAnswer->getDescription() . "' readonly/>
-                            <input type='radio' value='" . $tempAnswer->getTrueAnswer() . "' readonly/>
-                        </div>
+                            <input class='form-control' type='text' value='". $tempAnswer->getDescription() . "' readonly/>";
+
+                if($tempAnswer->getTrueAnswer() ? true:false)
+                    echo "<input type='radio' checked='checked' disabled='disabled' />";
+                else
+                    echo "<input type='radio' disabled='disabled' />";
+
+                echo "</div>
                     </div>
                 </div>";
         }
