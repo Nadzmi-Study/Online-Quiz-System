@@ -361,5 +361,40 @@ class QuizController extends Controller {
         $this->conn->next_result();
         return $trueAnswerList;
     }
+
+    public function getQuizAnsweredList($userId)
+    {
+        $sql = "CALL SP_Student_QuizAnsweredList(".$userId.")";
+        $query = $this->conn->query($sql);
+        $this->conn->next_result();
+
+        $quizAnsweredList = array();
+        while($row = $query->fetch_assoc()) {
+            $listResult = array(
+                "QuizNo" => $row["QuizNo"],
+                "Title" => $row["Title"],
+                "SubjectDesc" => $row["SubjectDesc"],
+                "DateAnswered" => $row["DateAnswered"]
+            );
+            array_push($quizAnsweredList, $listResult);
+        }
+
+        $this->conn->next_result();
+        return $quizAnsweredList;
+    }
+
+    public function getScore($userId, $quizId)
+    {
+        $sql = "CALL SP_Quiz_GetScore(".$userId.",".$quizId.")";
+        $query = $this->conn->query($sql);
+        $this->conn->next_result();
+
+        while($row = $query->fetch_assoc()) {
+            $scoreResult = $row["Score"];
+        }
+
+        $this->conn->next_result();
+        return $scoreResult;
+    }
 }
 ?>

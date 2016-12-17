@@ -259,5 +259,24 @@ class QuizManager extends Manager {
         $tempQuizStatus = $this->QC->submitQuiz($userId,$quizNo);
         return $tempQuizStatus;
     }
+
+    public function getQuizAnsweredList($userId)
+    {
+        $tempList = $this->QC->getQuizAnsweredList($userId);
+        $quizList = array();
+        for($i=0; $i<sizeof($tempList); $i++)
+        {
+            array_push($quizList, new Quiz($tempList[$i]["Title"], $tempList[$i]["SubjectDesc"], null, $tempList[$i]["DateAnswered"], $tempList[$i]["QuizNo"], "", 0.0));
+        }
+        return $quizList;
+    }
+
+    public function getScore($userId, $quizId)
+    {
+        $tempScore =  $this->QC->getScore($userId, $quizId);
+        if($tempScore == null)
+            return 0;
+        return $tempScore;
+    }
 }
 ?>
