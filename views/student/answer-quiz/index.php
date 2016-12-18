@@ -26,11 +26,12 @@ if(isset($_POST["submit"])) {
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Student Page</a>
+                    <a class="navbar-brand" href="../index.php">Student Page</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="/Online-Quiz-System/view/student/answer-quiz/index.php">Answer Quiz</a></li>
-                    <li><a href="../logout">Logout</a></li>
+                    <li><a href="">Answer Quiz</a></li>
+                    <li><a href="../view-quiz">View Result</a></li>
+                    <li><a href="../../logout">Logout</a></li>
                 </ul>
             </div>
         </nav>

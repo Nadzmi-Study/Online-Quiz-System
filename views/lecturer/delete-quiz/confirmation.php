@@ -37,6 +37,10 @@ if(isset($_POST["confirmation"])) {
                     <a class="navbar-brand" href="../index.php">Lecturer Page</a>
                 </div>
                 <ul class="nav navbar-nav">
+                    <li><a href="../view-statistics">View Statistics</a></li>
+                    <li><a href="../create-quiz">Create Quiz</a></li>
+                    <li><a href="../delete-quiz">Delete Quiz</a></li>
+                    <li><a href="../update-quiz">Update Quiz</a></li>
                     <li><a href="../../logout">Logout</a></li>
                 </ul>
             </div>
@@ -51,8 +55,8 @@ if(isset($_POST["confirmation"])) {
                         <h2>Are you sure to delete?</h2>
                         <form action="" method="post">
                             <input type="hidden" name="quizNo" value="<?php echo $_POST["quizID"]; ?>" />
-                            <button type="submit" name="confirmation" value="confirm">Confirm</button>
-                            <button type="submit" name="confirmation" value="not-confirm">Cancel</button>
+                            <button type="submit" class='confirm-btn btn btn-primary' name="confirmation" value="confirm">Confirm</button>
+                            <button type="submit" class='cancel-btn btn btn-primary' name="confirmation" value="not-confirm">Cancel</button>
                         </form>
                     </div>
                     <div class="col-md-2"></div>

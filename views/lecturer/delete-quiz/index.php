@@ -16,13 +16,16 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <title>Title</title>
     </head>
-    <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Lecturer Page</a>
+                    <a class="navbar-brand" href="../index.php">Lecturer Page</a>
                 </div>
                 <ul class="nav navbar-nav">
+                    <li><a href="../view-statistics">View Statistics</a></li>
+                    <li><a href="../create-quiz">Create Quiz</a></li>
+                    <li><a href="../delete-quiz">Delete Quiz</a></li>
+                    <li><a href="../update-quiz">Update Quiz</a></li>
                     <li><a href="../../logout">Logout</a></li>
                 </ul>
             </div>
@@ -75,7 +78,7 @@ function displayQuiz($quizManager)
                  <td>
                     <form action='confirmation.php' method='post'>
                          <input type='hidden' name='quizID' value='" . $quizList[$x]->getNo() . "' />
-                         <input type='submit' name='delete' value='Delete' />
+                         <input type='submit' class='btn btn-primary' name='delete' value='Delete' />
                      </form>
                  </td>
              </tr>

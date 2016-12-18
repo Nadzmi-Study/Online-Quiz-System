@@ -81,7 +81,7 @@ function displayQuizes($quizManager) {
                     <td>" . $tempQuizes[$x]->getDateCreated() . "</td> <!-- date created -->
                     <td>
                         <input type='hidden' name='quiz-no' value='" . $tempQuizes[$x]->getNo() . "' />
-                        <input type='submit' name='viewQuiz' value='View' />
+                        <input type='submit' class='btn btn-primary' name='viewQuiz' value='View' />
                     </td>
                 </tr>
             </form>

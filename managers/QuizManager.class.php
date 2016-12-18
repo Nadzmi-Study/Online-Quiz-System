@@ -16,13 +16,39 @@ class QuizManager extends Manager {
     public function registerQuiz(Quiz $newQuiz) {
         $tempSubjects = $this->QC->retrieveSubjectList();
         for($x=0 ; $x<sizeof($tempSubjects) ; $x++)
-            if($tempSubjects[$x]["SubjectDesc"] == $newQuiz->getSubject())
+            if($tempSubjects[$x]["SubjectDesc"] == $newQuiz->getSubject()) {
                 $newQuiz->setSubject($tempSubjects["SubjectNo"]);
+                break;
+            }
 
         $tempUser = unserialize($_SESSION["user"]);
         $insertResult = $this->QC->insertQuiz($newQuiz, $tempUser->getUserNo());
 
         return $insertResult;
+    }
+
+    public function updateQuiz(Quiz $updatedQuiz) {
+        $tempSubjects = $this->QC->retrieveSubjectList();
+        for($x=0 ; $x<sizeof($tempSubjects) ; $x++)
+            if($tempSubjects[$x]["SubjectDesc"] == $updatedQuiz->getSubject()) {
+                $updatedQuiz->setSubject((int) $tempSubjects[$x]["SubjectNo"]);
+                break;
+            }
+
+        $tempQuestion = $updatedQuiz->getQuestion();
+        for($a=0 ; $a<sizeof($tempQuestion) ; $a++) {
+            $tempAns = $tempQuestion[$a]->getAnswer();
+
+            for($x=0 ; $x<sizeof($tempAns) ; $x++)
+                if($tempAns[$x]->getTrueAnswer() == null)
+                    $tempAns[$x]->setTrueAnswer(0);
+                else if($tempAns[$x]->getTrueAnswer())
+                    $tempAns[$x]->setTrueAnswer(1);
+                else
+                    $tempAns[$x]->setTrueAnswer(0);
+        }
+
+        return $this->QC->updateQuiz($updatedQuiz);
     }
 
     public function getQuizList($userId=null) {

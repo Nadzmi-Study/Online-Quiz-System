@@ -59,7 +59,7 @@ class QuizController extends Controller {
 
         if (!isset($userID)) {
             $sql = "CALL SP_Quiz_GetAll;";
-            $query = $this->conn->query($sql);
+            $query = $this->conn->query($sql) or die($this->conn->error);;
             $this->conn->next_result();
 
             $result = array();
@@ -76,7 +76,7 @@ class QuizController extends Controller {
             }
         } else {
             $sql = "CALL SP_LecturerQuiz_GetDetails($userID);";
-            $query = $this->conn->query($sql);
+            $query = $this->conn->query($sql) or die($this->conn->error);;
             $this->conn->next_result();
 
             $result = array();
@@ -148,7 +148,7 @@ class QuizController extends Controller {
 
     public function deleteQuiz($quizID) {
         $sql = "CALL SP_Quiz_Delete($quizID);";
-        $query = $this->conn->query($sql);
+        $query = $this->conn->query($sql) or die($this->conn->error);;
         $this->conn->next_result();
 
         if($query)
@@ -159,8 +159,8 @@ class QuizController extends Controller {
 
     public function updateQuiz(Quiz $quiz) {
         // update quiz desc
-        $sql = "SP_Quiz_Update(" . $quiz->getNo() . ", " . $quiz->getTitle() . ", " . $quiz->getTime() . ", " . $quiz->getSubject()->getSubjectNo() . ")";
-        $query = $this->conn->query($sql);
+        $sql = "CALL SP_Quiz_Update(" . $quiz->getNo() . ", '" . $quiz->getTitle() . "', " . $quiz->getTime() . ", " . $quiz->getSubject() . ");";
+        $query = $this->conn->query($sql) or die($this->conn->error);
         $this->conn->next_result();
 
         // update question desc
@@ -168,20 +168,20 @@ class QuizController extends Controller {
             for($x=0 ; $x<sizeof($quiz->getQuestion()) ; $x++) {
                 $tempQuestion = $quiz->getQuestion()[$x];
 
-                $sql = "SP_Question_Update(" . $tempQuestion->getNo() . ", " . $tempQuestion->getDescription() . ")";
-                $query = $this->conn->query($sql);
+                $sql2 = "CALL SP_Question_Update(" . $tempQuestion->getNo() . ", '" . $tempQuestion->getDescription() . "');";
+                $query2 = $this->conn->query($sql2) or die($this->conn->error);
                 $this->conn->next_result();
 
                 // update answer desc
-                if($query) {
-                    for($y=0 ; $y<sizeof($tempQuestion->getAnswer()) ; $x++) {
+                if($query2) {
+                    for($y=0 ; $y<sizeof($tempQuestion->getAnswer()) ; $y++) {
                         $tempAnswer = $tempQuestion->getAnswer()[$y];
 
-                        $sql = "SP_Answer_Update(" . $tempAnswer->getNo() . ", " . $tempAnswer->getDescription() . ", " . $tempAnswer->getTrueAnswer() . ")";
-                        $query = $this->conn->query($sql);
+                        $sql3 = "CALL SP_Answer_Update(" . $tempAnswer->getNo() . ", '" . $tempAnswer->getDescription() . "', " . $tempAnswer->getTrueAnswer() . ");";
+                        $query3 = $this->conn->query($sql3) or die($this->conn->error);
                         $this->conn->next_result();
 
-                        if(!$query)
+                        if(!$query3)
                             return false;
                     }
                 } else
@@ -197,7 +197,7 @@ class QuizController extends Controller {
         $sql = "CALL SP_Student_SubmitAnswer('".$studentQuizNo."','".$answer."', @qansNo)";
         $sql2 = "SELECT @qansNo  As QuesAnsNo";
 
-        $this->conn->query($sql);
+        $this->conn->query($sql) or die($this->conn->error);;
         $this->conn->next_result();
         $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();
@@ -213,7 +213,7 @@ class QuizController extends Controller {
         $sql = "CALL SP_Student_SubmitQuiz('".$userId."','".$quizNo."', @submitQuizNo)";
         $sql2 = "SELECT @submitQuizNo  As SubmitQuizNo";
 
-        $this->conn->query($sql);
+        $this->conn->query($sql) or die($this->conn->error);;
         $this->conn->next_result();
         $query = $this->conn->query($sql2) or die($this->conn->error);
         $this->conn->next_result();

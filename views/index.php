@@ -8,14 +8,20 @@ if(isset($_SESSION["logged_in"])) {
         switch ($user->getUserType()) {
             case "Student":
                 header("Location: student");
+                exit();
                 break;
             case "Lecturer":
                 header("Location: lecturer");
+                exit();
                 break;
         }
-    } else
+    } else {
         header("Location: login");
-} else
+        exit();
+    }
+} else {
     header("Location: login");
+    exit();
+}
 ?>
 
