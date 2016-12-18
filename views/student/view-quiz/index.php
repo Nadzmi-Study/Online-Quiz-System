@@ -25,14 +25,20 @@ if(isset($_POST["submit"])) {
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Student Page</a>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Hello, <?php echo $user->getName()?></a>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-4">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.php">Answer Quiz</a></li>
+                    <li><a href="../../logout">Logout</a></li>
+                </ul>
+            </div>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a href="/Online-Quiz-System/view/student/answer-quiz/index.php">Answer Quiz</a></li>
-            <li><a href="/Online-Quiz-System/view/student/view-quiz/index.php">View Result</a></li>
-            <li><a href="../logout">Logout</a></li>
-        </ul>
     </div>
 </nav>
 
