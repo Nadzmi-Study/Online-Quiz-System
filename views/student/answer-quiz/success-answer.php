@@ -24,12 +24,22 @@ $score = $_SESSION["score"];
     <title>Register</title>
 </head>
 <body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Hello, <?php echo $user->getName()?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <label>Thank you for answering, your score is</label>
-            <?php echo $score."/10"?>
+            <h3><p class="text-align">Your score is <?php echo $score."/10"?></p></h3>
             <div>
                 <a href="../../student/index.php">Back to Main Menu</a>
             </div>

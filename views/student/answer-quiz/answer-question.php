@@ -56,7 +56,7 @@ if(isset($_POST["submit-question"]))
                <div class="col-md-6">
                    <form action="" method="post">
                        <h2>You may begin</h2>
-                       <h5>Please answer all question and choose the best answer for each question</h5>
+                       <h5>Please answer all questions and choose the best one for each question</h5>
                        <?php displayQuestion($quizManager); ?>
                        <div class="container-fluid">
                            <input type="submit" name="submit-question" value="Submit Answer" class="btn btn-success"/>
