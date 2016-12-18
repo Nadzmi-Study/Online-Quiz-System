@@ -1,8 +1,11 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
-$user = unserialize($_SESSION["user"]);
-$username = $user->getName();
-$userno = $user->getUserNo();
+
+if(isset($_POST["submit"])) {
+    $_SESSION["Temp-QuizID"] = $_POST["quizId"];
+    echo  $_SESSION["Temp-QuizID"];
+    header("Location:answer-question.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,18 +22,14 @@ $userno = $user->getUserNo();
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <title>Title</title>
     </head>
-
     <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Lecturer Page</a>
+                    <a class="navbar-brand" href="#">Student Page</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="view-statistics">View Statistics</a></li>
-                    <li><a href="create-quiz">Create Quiz</a></li>
-                    <li><a href="delete-quiz">Delete Quiz</a></li>
-                    <li><a href="update-quiz">Update Quiz</a></li>
+                    <li><a href="/Online-Quiz-System/view/student/answer-quiz/index.php">Answer Quiz</a></li>
                     <li><a href="../logout">Logout</a></li>
                 </ul>
             </div>
@@ -44,16 +43,15 @@ $userno = $user->getUserNo();
                     <div class="col-md-8">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">Your Quizes</div>
+                            <div class="panel-heading">Available Quiz</div>
                             <table class="table">
                                 <tr>
-                                    <th>No</th>
+                                    <th>Quiz No</th>
                                     <th>Quiz Title</th>
                                     <th>Subject Name</th>
-                                    <th>Time Constraint</th>
                                     <th>Date Created</th>
                                 </tr>
-                                <?php displayQuizes($quizManager); ?>
+                                <?php displayQuiz($quizManager); ?>
                             </table>
                         </div>
                     </div>
@@ -66,27 +64,26 @@ $userno = $user->getUserNo();
 </html>
 
 <?php
-function displayQuizes($quizManager) {
-    $tempUser = unserialize($_SESSION["user"]);
-    $tempQuizes = $quizManager->getQuizList($tempUser->getUserNo());
+function displayQuiz($quizManager)
+{
+    $quizList = $quizManager->getQuizList(null);
 
-    for($x=0 ; $x<sizeof($tempQuizes) ; $x++) {
+    for($x=0; $x<sizeof($quizList); $x++)
+    {
+        $number = $x+1;
         echo "
-            <form action='view-quiz/index.php' method='post'>
-                <tr>
-                    <td>" . ($x + 1) . "</td> <!-- quiz no -->
-                    <td>" . $tempQuizes[$x]->getTitle() . "</td> <!-- quiz title -->
-                    <td>" . $tempQuizes[$x]->getSubject() . "</td> <!-- subject -->
-                    <td>" . $tempQuizes[$x]->getTime() . "</td> <!-- time -->
-                    <td>" . $tempQuizes[$x]->getDateCreated() . "</td> <!-- date created -->
-                    <td>
-                        <input type='hidden' name='quiz-no' value='" . $tempQuizes[$x]->getNo() . "' />
-                        <input type='submit' class='btn btn-primary' name='viewQuiz' value='View' />
-                    </td>
-                </tr>
-            </form>
-        ";
+            <tr>     
+                 <td>$number</td>
+                 <td>
+                     <form action='' method='post'>
+                         <input type='hidden' name='quizId' value='" . $quizList[$x]->getNo() . "' />
+                         <input type='submit' name='submit' value='" . $quizList[$x]->getTitle() . "' />
+                     </form>
+                 </td>
+                 <td>" . $quizList[$x]->getSubject() . "</td>
+                 <td>" . $quizList[$x]->getDateCreated() . "</td>
+             </tr>
+             ";
     }
 }
 ?>
-

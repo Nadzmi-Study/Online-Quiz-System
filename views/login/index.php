@@ -44,19 +44,34 @@ if(isset($_POST["login"])) {
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="../style/style.css"/>
         <title>Login</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Login</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="../register">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+
         <?php $userManager->displayError($loginCheck["message"]); ?>
-        <div class="form">
-            <form class="login-form" action="" method="post">
-                <input type="text" name="username" placeholder="Username" />
-                <input type="password" name="password" placeholder="Password" />
-                <input type="submit" name="login" value="Login"/>
-                <!--<button>login</button>-->
-                <p class="message">Not registered? <a href="../register">Register Here</a></p>
-            </form>
-        </div>
+        <form action="" method="post">
+            <input type="text" name="username" placeholder="Username" />
+            <input type="password" name="password" placeholder="Password" />
+            <input type="submit" class='btn btn-primary' name="login" value="Login" />
+        </form>
     </body>
 </html>

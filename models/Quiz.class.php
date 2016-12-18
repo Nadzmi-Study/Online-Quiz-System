@@ -3,7 +3,7 @@ include_once "Question.class.php";
 
 class Quiz {
     private $no; // int
-    private $title, $subject; // string
+    private $title, $subject; // string;
     private $questions; // Question[]
     private $score; // double
     private $time, $dateCreated, $dateModified; // Date

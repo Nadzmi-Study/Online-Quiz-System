@@ -133,5 +133,7 @@ function displayQuizDesc($quiz) {
         echo "</div>
             </div>";
     }
+
+    echo "<br /><a href='../index.php'><button class='btn btn-primary'>Back</button></a>";
 }
 ?>

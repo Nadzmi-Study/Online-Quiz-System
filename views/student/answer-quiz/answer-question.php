@@ -32,6 +32,19 @@ if(isset($_POST["submit-question"]))
         <title>Register</title>
     </head>
     <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="../index.php">Student Page</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="index.php">Answer Quiz</a></li>
+                    <li><a href="../view-quiz">View Result</a></li>
+                    <li><a href="../../logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
          <div class="container-fluid">
              <div class="row">
                <div class="col-md-3"></div>
@@ -57,10 +70,10 @@ function displayQuestion($quizManager)
     $randomizeQuestionList  =array();
 
     //retrieve questions from database from given quizID
-    $questionList = $quizManager->getQuestionByQuizId( $_SESSION["Temp-QuizID"]);
+    $questionList = $quizManager->getQuestionByQuizId($_SESSION["Temp-QuizID"]);
     for($i=0; $i<sizeof($questionList); $i++)
     {
-      //  echo $questionList[$i]->getNo();
+      // echo $questionList[$i]->getNo();
         $answerList = $quizManager->getAnswerByQuizId($_SESSION["Temp-QuizID"]);
         array_push($randomizeQuestionList, new Question(
             $questionList[$i]->getDescription(),
@@ -79,8 +92,8 @@ function displayQuestion($quizManager)
     }
 
     //randomize question's position
-    $no = range(0,9);
-    shuffle($no);
+    $no = range(0,9); // {0, 1, 2, 3, ...}
+    shuffle($no); // {3, 2, 6, 4, ...}
     foreach($no as $element)
     {
         echo "<div class='panel panel-default'>

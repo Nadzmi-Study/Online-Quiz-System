@@ -57,10 +57,10 @@ if(isset($_POST["register-quiz"])) {
     $newQuiz = new Quiz($quizTitle, $subjectCode, $timeConstraint, null, 0, $questionObj);
     $insertResult = $quizManager->registerQuiz($newQuiz);
 
-    if($insertResult)
-        echo "Success Insert All.";
+    if(isset($insertResult))
+        echo "<script> window.location = '../index.php' </script>";
     else
-        echo "Failed Insertion.";
+        echo "Failed to create question";
 }
 ?>
 <!DOCTYPE html>
@@ -81,7 +81,7 @@ if(isset($_POST["register-quiz"])) {
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Lecturer Page</a>
+                    <a class="navbar-brand" href="../index.php">Lecturer Page</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="../view-statistics">View Statistics</a></li>
@@ -100,7 +100,7 @@ if(isset($_POST["register-quiz"])) {
                     <form action="" method="post">
                         <div class="form-group">
                             <label>Quiz Title:</label>
-                            <input type="text" class="form-control" name="quizTitle">
+                            <input type="text" class="form-control" name="quizTitle" />
                         </div>
                         <div class="form-group"=>
                             <label>Subject:</label>
@@ -110,13 +110,13 @@ if(isset($_POST["register-quiz"])) {
                         </div>
                         <div class="form-group">
                             <label>Time Constraint:</label>
-                            <input type="text" class="form-control" name="timeConstraint">
+                            <input type="text" class="form-control" name="timeConstraint" />
                         </div>
 
                         <?php displayQuestionForm(); ?>
 
                         <div>
-                            <input type="submit" class="btn btn-primary" name="register-quiz" value="Create Quiz">
+                            <input type="submit" class="btn btn-primary" name="register-quiz" value="Create Quiz" />
                         </div>
                     </form>
                 </div>
