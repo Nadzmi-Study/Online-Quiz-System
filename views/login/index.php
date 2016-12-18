@@ -44,15 +44,19 @@ if(isset($_POST["login"])) {
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../style/style.css"/>
         <title>Login</title>
     </head>
     <body>
         <?php $userManager->displayError($loginCheck["message"]); ?>
-        <form action="" method="post">
-            <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" />
-            <input type="submit" name="login" value="Login" />
-        </form>
-        <a href="../register">Register</a>
+        <div class="form">
+            <form class="login-form" action="" method="post">
+                <input type="text" name="username" placeholder="Username" />
+                <input type="password" name="password" placeholder="Password" />
+                <input type="submit" name="login" value="Login"/>
+                <!--<button>login</button>-->
+                <p class="message">Not registered? <a href="../register">Register Here</a></p>
+            </form>
+        </div>
     </body>
 </html>
