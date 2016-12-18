@@ -31,7 +31,7 @@ $score = $_SESSION["score"];
             <label>Thank you for answering, your score is</label>
             <?php echo $score."/10"?>
             <div>
-                <a href="../../student/index.php">Back to Main Menu</a>
+                <a href="../view-quiz/index.php">Back to Main Menu</a>
             </div>
         </div>
         <div class="col-md-3"></div>

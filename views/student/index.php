@@ -1,5 +1,12 @@
 <?php
- //require_once "../../includes/global.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/global.inc.php";
+
+$user = unserialize($_SESSION["user"]);
+if(isset($_POST["submit"])) {
+    $_SESSION["Temp-QuizID"] = $_POST["quizId"];
+    echo  $_SESSION["Temp-QuizID"];
+    header("Location:answer-quiz/answer-question.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +26,20 @@
     <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Student Page</a>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">Hello, <?php echo $user->getName()?></a>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-4">
+                        <ul class="nav navbar-nav">
+                            <li><a href="view-quiz/index.php">View Result</a></li>
+                            <li><a href="../logout">Logout</a></li>
+                         </ul>
+                    </div>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="answer-quiz/">Answer Quiz</a></li>
-                    <li><a href="view-quiz/">View Result</a></li>
-                    <li><a href="../logout">Logout</a></li>
-                </ul>
             </div>
         </nav>
 
@@ -34,14 +47,23 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">Notice</div>
+                            <div class="panel-heading">Available Quiz</div>
+                            <table class="table">
+                                <tr>
+                                    <th>Quiz No</th>
+                                    <th>Quiz Title</th>
+                                    <th>Subject Name</th>
+                                    <th>Date Created</th>
+                                </tr>
+                                <?php displayQuiz($quizManager); ?>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-md-3"></div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
         </div>
@@ -49,5 +71,27 @@
     </body>
 </html>
 
+<?php
+function displayQuiz($quizManager)
+{
+    $quizList = $quizManager->getQuizList(null);
 
-
+    for($x=0; $x<sizeof($quizList); $x++)
+    {
+        $number = $x+1;
+        echo "
+            <tr>     
+                 <td>$number</td>
+                 <td>
+                     <form action='' method='post'>
+                         <input type='hidden' name='quizId' value='" . $quizList[$x]->getNo() . "' />
+                         <input class='btn btn-default' name='submit' value='" . $quizList[$x]->getTitle() . "' />
+                     </form>
+                 </td>
+                 <td>" . $quizList[$x]->getSubject() . "</td>
+                 <td>" . $quizList[$x]->getDateCreated() . "</td>
+             </tr>
+             ";
+    }
+}
+?>
