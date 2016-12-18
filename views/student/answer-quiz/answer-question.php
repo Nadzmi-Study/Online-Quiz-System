@@ -34,14 +34,19 @@ if(isset($_POST["submit-question"]))
     <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="../index.php">Student Page</a>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">Hello, <?php echo $user->getName()?></a>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-4">
+                        <ul class="nav navbar-nav">
+                            <li><a href="../index.php">Back to Quiz Menu</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="index.php">Answer Quiz</a></li>
-                    <li><a href="../view-quiz">View Result</a></li>
-                    <li><a href="../../logout">Logout</a></li>
-                </ul>
             </div>
         </nav>
 
@@ -50,7 +55,8 @@ if(isset($_POST["submit-question"]))
                <div class="col-md-3"></div>
                <div class="col-md-6">
                    <form action="" method="post">
-                       <h5>Time: </h5>
+                       <h2>You may begin</h2>
+                       <h5>Please answer all question and choose the best answer for each question</h5>
                        <?php displayQuestion($quizManager); ?>
                        <div class="container-fluid">
                            <input type="submit" name="submit-question" value="Submit Answer" class="btn btn-success"/>

@@ -85,7 +85,7 @@ function displayQuiz($quizManager)
                  <td>
                      <form action='' method='post'>
                          <input type='hidden' name='quizId' value='" . $quizList[$x]->getNo() . "' />
-                         <input class='btn btn-default' name='submit' value='" . $quizList[$x]->getTitle() . "' />
+                         <input class='btn btn-default' type='submit' name='submit' value='" . $quizList[$x]->getTitle() . "' />
                      </form>
                  </td>
                  <td>" . $quizList[$x]->getSubject() . "</td>
