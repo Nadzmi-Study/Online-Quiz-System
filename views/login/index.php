@@ -67,11 +67,31 @@ if(isset($_POST["login"])) {
             </div>
         </nav>
 
-        <?php $userManager->displayError($loginCheck["message"]); ?>
-        <form action="" method="post">
-            <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" />
-            <input type="submit" class='btn btn-primary' name="login" value="Login" />
-        </form>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <?php $userManager->displayError($loginCheck["message"]); ?>
+                            <form action="" method="post">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <input type="text" name="username" class="form-control" placeholder="Username" />
+                                    </div>
+                                    <div class="row">
+                                        <input type="password" name="password" class="form-control" placeholder="Password" />
+                                    </div>
+                                    <div class="row">
+                                        <input type="submit" class='btn btn-primary' name="login" value="Login" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
     </body>
 </html>

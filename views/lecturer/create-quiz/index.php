@@ -108,11 +108,6 @@ if(isset($_POST["register-quiz"])) {
                                <?php displaySubject($quizManager); ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Time Constraint:</label>
-                            <input type="text" class="form-control" name="timeConstraint" />
-                        </div>
-
                         <?php displayQuestionForm(); ?>
 
                         <div>
