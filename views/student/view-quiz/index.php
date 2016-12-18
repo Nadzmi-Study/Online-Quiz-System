@@ -77,12 +77,7 @@ function displayQuiz($quizManager)
         echo "
             <tr>     
                  <td>$number</td>
-                 <td>
-                     <form action='' method='post'>
-                         <input type='hidden' name='quizId' value='" . $quizList[$x]->getNo() . "' />
-                         <input type='submit' name='submit' value='" . $quizList[$x]->getTitle() . "' />
-                     </form>
-                 </td>
+                 <td>". $quizList[$x]->getTitle() ."</td>
                  <td>" . $quizList[$x]->getSubject() . "</td>
                  <td>" . $quizList[$x]->getDateCreated() . "</td>
                  <td>".$score = $quizManager->getScore($user->getUserNo(),$quizList[$x]->getNo() ) ."/10</td>
