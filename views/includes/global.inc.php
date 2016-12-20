@@ -15,7 +15,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/Statis
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/UserManager.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/UserTypeManager.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/QuizManager.class.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/StatisticManager.class.php";
 
 //temporary path
 $tempDocumentRoot = "D:/xampp/htdocs";
@@ -31,7 +30,6 @@ $statisticController = new StatisticController($conn);
 $userManager = new UserManager($userController);
 $userTypeManager = new UserTypeManager($userTypeController);
 $quizManager = new QuizManager($quizController);
-$statisticManager = new StatisticManager($statisticController);
 
 // refresh user session
 if(isset($_SESSION["logged_in"]))
