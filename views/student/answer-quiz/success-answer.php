@@ -6,8 +6,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
  * Date: 11/12/2016
  * Time: 11:44 PM
  */
-$score = $_SESSION["score"];
+$user = unserialize($_SESSION["user"]);
+$quizID = $_SESSION["Temp-QuizID"];
 
+$score = $quizManager->getScore($user->getUserNo(), $quizID);
 ?>
 <!DOCTYPE html>
 <html lang="en">

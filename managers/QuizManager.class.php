@@ -304,5 +304,13 @@ class QuizManager extends Manager {
             return 0;
         return $tempScore;
     }
+
+    public function generateRandomPosition()
+    {
+        //randomize question's position
+        $no = range(0,9); // {0, 1, 2, 3, ...}
+        shuffle($no); // {3, 2, 6, 4, ...}
+        return $no;
+    }
 }
 ?>

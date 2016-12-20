@@ -8,10 +8,8 @@ if(isset($_POST["submit-question"]))
     $submitQuizNo = $quizManager->submitQuiz($user->getUserNo(), $_SESSION["Temp-QuizID"]);
     for($i =0; $i<10; $i++)
     {
-        $correctCount = $correctCount + $_POST["answer$i"];
         $submitAnswer = $quizManager->submitAnswer($submitQuizNo, $_POST["answer$i"]);
     }
-    $_SESSION["score"] = $correctCount;
     header("Location:success-answer.php");
 }
 ?>
@@ -73,7 +71,7 @@ if(isset($_POST["submit-question"]))
 function displayQuestion($quizManager)
 {
     $numberOfAnswer = 0;
-    $randomizeQuestionList  =array();
+    $randomizeQuestionList = array();
 
     //retrieve questions from database from given quizID
     $questionList = $quizManager->getQuestionByQuizId($_SESSION["Temp-QuizID"]);
@@ -97,10 +95,8 @@ function displayQuestion($quizManager)
         $numberOfAnswer = $numberOfAnswer +4;
     }
 
-    //randomize question's position
-    $no = range(0,9); // {0, 1, 2, 3, ...}
-    shuffle($no); // {3, 2, 6, 4, ...}
-    foreach($no as $element)
+    $randomPosition = $quizManager->generateRandomPosition();
+    foreach($randomPosition as $element)
     {
         echo "<div class='panel panel-default'>
                 <!-- Default panel contents -->
