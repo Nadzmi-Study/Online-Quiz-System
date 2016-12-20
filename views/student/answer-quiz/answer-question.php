@@ -3,6 +3,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
 
 if(isset($_POST["submit-question"]))
 {
+   // for($i=0; $i<10; $i++)
+   // {
+   //     if(isset($_POST["checkbox$i"]))
+   //         echo "Question($i) still unanswered";
+   // }
     $correctCount = 0;
     $user = unserialize($_SESSION["user"]);
     $submitQuizNo = $quizManager->submitQuiz($user->getUserNo(), $_SESSION["Temp-QuizID"]);
@@ -70,6 +75,7 @@ if(isset($_POST["submit-question"]))
 <?php
 function displayQuestion($quizManager)
 {
+    $num = 1;
     $numberOfAnswer = 0;
     $randomizeQuestionList = array();
 
@@ -104,7 +110,7 @@ function displayQuestion($quizManager)
                     <div class='row'>
                         <div class='col-md-1'>
                             <div class='checkbox'>
-                                <label><input type='checkbox' value=''></label>
+                                <label><input type='checkbox' value='' name='checkbox$num'></label>
                             </div>
                         </div>
                         <div class='col-md-11'>
@@ -133,6 +139,7 @@ function displayQuestion($quizManager)
                     </div>
                 </div>
             </div>";
+        $num++;
         $numberOfAnswer = $numberOfAnswer + 4;
     }
 }

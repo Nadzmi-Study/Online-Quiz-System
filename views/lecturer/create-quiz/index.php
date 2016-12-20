@@ -78,20 +78,26 @@ if(isset($_POST["register-quiz"])) {
         <title>Register</title>
     </head>
     <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="../index.php">Lecturer Page</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="../index.php">Hello, <?php echo $user->getName()?></a>
+                    </div>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="../view-statistics">View Statistics</a></li>
-                    <li><a href="../create-quiz">Create Quiz</a></li>
-                    <li><a href="../delete-quiz">Delete Quiz</a></li>
-                    <li><a href="../update-quiz">Update Quiz</a></li>
-                    <li><a href="../../logout">Logout</a></li>
-                </ul>
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    <ul class="nav navbar-nav">
+                        <li><a href="../create-quiz">Create Quiz</a></li>
+                        <li><a href="../delete-quiz">Delete Quiz</a></li>
+                        <li><a href="../update-quiz">Update Quiz</a></li>
+                        <li><a href="../logout">Logout</a></li>
+                    </ul>
+                </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
         <div class="container-fluid">
             <div class="row">

@@ -16,20 +16,26 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
         <title>Register</title>
     </head>
     <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="../index.php">Lecturer Page</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="../index.php">Hello, <?php echo $user->getName()?></a>
+                    </div>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="../view-statistics">View Statistics</a></li>
-                    <li><a href="../create-quiz">Create Quiz</a></li>
-                    <li><a href="../delete-quiz">Delete Quiz</a></li>
-                    <li><a href="../update-quiz">Update Quiz</a></li>
-                    <li><a href="../../logout">Logout</a></li>
-                </ul>
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    <ul class="nav navbar-nav">
+                        <li><a href="../create-quiz">Create Quiz</a></li>
+                        <li><a href="../delete-quiz">Delete Quiz</a></li>
+                        <li><a href="../update-quiz">Update Quiz</a></li>
+                        <li><a href="../logout">Logout</a></li>
+                    </ul>
+                </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
         <header></header>
         <div class="content">
@@ -45,7 +51,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                                     <th>No</th>
                                     <th>Quiz Title</th>
                                     <th>Subject Name</th>
-                                    <th>Time Constraint</th>
                                     <th>Date Created</th>
                                 </tr>
                                 <?php displayQuizes($quizManager); ?>
@@ -72,7 +77,6 @@ function displayQuizes($quizManager) {
                     <td>" . ($x + 1) . "</td> <!-- quiz no -->
                     <td>" . $tempQuizes[$x]->getTitle() . "</td> <!-- quiz title -->
                     <td>" . $tempQuizes[$x]->getSubject() . "</td> <!-- subject -->
-                    <td>" . $tempQuizes[$x]->getTime() . "</td> <!-- time -->
                     <td>" . $tempQuizes[$x]->getDateCreated() . "</td> <!-- date created -->
                     <td>
                         <input type='hidden' name='quiz-no' value='" . $tempQuizes[$x]->getNo() . "' />
