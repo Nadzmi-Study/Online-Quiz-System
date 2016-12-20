@@ -73,7 +73,7 @@ if(isset($_POST["login"])) {
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <?php $userManager->displayError($loginCheck["message"]); ?>
+                            <?php echo $loginCheck["message"]; ?>
                             <form action="" method="post">
                                 <div class="container-fluid">
                                     <div class="row">

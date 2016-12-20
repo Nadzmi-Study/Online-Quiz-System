@@ -71,7 +71,7 @@ if(isset($_POST["register"])) {
             </div>
         </nav>
 
-        <?php $userManager->displayError($errorMessage["message"])?> <!-- display error message if any. -->
+        <?php echo $errorMessage["message"]; ?> <!-- display error message if any. -->
         <form action="" method="post">
             <select name="userType">
                 <?php displayUserType($userTypeManager); ?> <!-- display the drop-down for user types -->

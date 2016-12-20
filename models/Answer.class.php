@@ -2,7 +2,7 @@
 class Answer {
     private $no; // int
     private $description; // string
-    private $trueAnswer, $studentAnswer; // boolean
+    private $trueAnswer; // boolean
 
     /**
      * Answer constructor.
@@ -10,25 +10,21 @@ class Answer {
      * @param int $no
      * @param string $description
      * @param boolean $trueAnswer
-     * @param boolean $studentAnswer
      */
-    public function __construct($no=0, $description="", $trueAnswer=false, $studentAnswer=false) {
+    public function __construct($no=0, $description="", $trueAnswer=false) {
         $this->no = $no;
         $this->description = $description;
         $this->trueAnswer = $trueAnswer;
-        $this->studentAnswer = $studentAnswer;
     }
 
     // getter
     public function getNo() { return $this->no; }
     public function getDescription() { return $this->description; }
     public function getTrueAnswer() { return $this->trueAnswer; }
-    public function getStudentAnswer() { return $this->studentAnswer; }
 
     // setter
     public function setNo($no) { $this->no = $no; }
     public function setDescription($description) { $this->description = $description; }
     public function setTrueAnswer($trueAnswer) { $this->trueAnswer = $trueAnswer; }
-    public function setStudentAnswer($studentAnswer) { $this->studentAnswer = $studentAnswer; }
 }
 ?>

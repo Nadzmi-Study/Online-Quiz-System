@@ -1,10 +1,8 @@
 <?php
-require_once "Manager.class.php";
-
 /**
  * Class QuizManager
  */
-class QuizManager extends Manager {
+class QuizManager {
     private $QC; // quiz controller
     private $form; // form
 
