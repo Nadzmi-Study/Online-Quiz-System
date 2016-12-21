@@ -17,7 +17,6 @@ if(isset($_POST["update"])) {
     $quizID = $_POST["quiz-id"];
     $updatedQuizTitle = $_POST["quiz-title"];
     $updatedQuizSubject = $_POST["quiz-subject"];
-    $updatedQuizTime = $_POST["quiz-time"];
 
     // temp question obj
     $updatedQuestions = array();
@@ -66,7 +65,7 @@ if(isset($_POST["update"])) {
         array_push($updatedQuestions, $tempQuestion);
     }
 
-    $updatedQuiz = new Quiz($updatedQuizTitle, $updatedQuizSubject, $updatedQuizTime, null, $quizID, $updatedQuestions);
+    $updatedQuiz = new Quiz($updatedQuizTitle, $updatedQuizSubject, null, $quizID, $updatedQuestions);
     $result = $quizManager->updateQuiz($updatedQuiz);
 
     if($result)
@@ -104,7 +103,7 @@ if(isset($_POST["update"])) {
                         <li><a href="../create-quiz">Create Quiz</a></li>
                         <li><a href="../delete-quiz">Delete Quiz</a></li>
                         <li><a href="../update-quiz">Update Quiz</a></li>
-                        <li><a href="../logout">Logout</a></li>
+                        <li><a href="../../logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

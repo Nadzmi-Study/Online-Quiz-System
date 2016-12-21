@@ -30,7 +30,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
                         <li><a href="../create-quiz">Create Quiz</a></li>
                         <li><a href="../delete-quiz">Delete Quiz</a></li>
                         <li><a href="../update-quiz">Update Quiz</a></li>
-                        <li><a href="../logout">Logout</a></li>
+                        <li><a href="../../logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

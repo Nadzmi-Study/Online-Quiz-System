@@ -1,9 +1,4 @@
 <?php
-/**
- * Class UserManager
- *
- * @todo implement other UserManager's methods
- */
 class UserManager {
     private $UC; // user controller
 

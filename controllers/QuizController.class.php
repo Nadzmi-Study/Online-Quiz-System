@@ -1,11 +1,13 @@
 <?php
-require_once "Controller.php";
 /**
  * Class QuizController
  */
-class QuizController extends Controller {
-    public function __construct($conn) {
-        parent::__construct($conn);
+class QuizController {
+    protected $conn; // connection variables
+
+    public function __construct($conn)
+    {
+        $this->conn = $conn;
     }
 
     //
@@ -13,7 +15,6 @@ class QuizController extends Controller {
         // register quiz first
         $newQuizData = array(
             "Title" => $newQuiz->getTitle(),
-            "TimeConstraint" => $newQuiz->getTime(),
             "SubjectNo" => $newQuiz->getSubject(),
             "UserNo" => $userNo,
         );
@@ -67,7 +68,6 @@ class QuizController extends Controller {
                 $tempResult = array(
                     "QuizTitle" => $row["Title"],
                     "Subject" => $row["SubjectDesc"],
-                    "Time" => $row["TimeConstraint"],
                     "DateCreated" => $row["DateCreated"],
                     "QuizNo" => $row["QuizNo"]
                 );
@@ -85,7 +85,6 @@ class QuizController extends Controller {
                     "LecturerName" => $row["LECTURER NAME"],
                     "QuizTitle" => $row["TITLE"],
                     "Subject" => $row["SUBJECT"],
-                    "Time" => $row["TIME CONSTRAINT"],
                     "DateCreated" => $row["DATE CREATED"],
                     "QuizNo" => $row["QUIZ NO"]
                 );
@@ -159,7 +158,7 @@ class QuizController extends Controller {
 
     public function updateQuiz(Quiz $quiz) {
         // update quiz desc
-        $sql = "CALL SP_Quiz_Update(" . $quiz->getNo() . ", '" . $quiz->getTitle() . "', " . $quiz->getTime() . ", " . $quiz->getSubject() . ");";
+        $sql = "CALL SP_Quiz_Update(" . $quiz->getNo() . ", '" . $quiz->getTitle() . "', " . $quiz->getSubject() . ");";
         $query = $this->conn->query($sql) or die($this->conn->error);
         $this->conn->next_result();
 
@@ -227,7 +226,7 @@ class QuizController extends Controller {
     //
 
     public function registerQuiz($newQuizData) {
-        $sql = "CALL SP_Quiz_Insert('".$newQuizData["Title"]."','".$newQuizData["TimeConstraint"]."','".$newQuizData["SubjectNo"]."', @QuizID,'".$newQuizData["UserNo"]."');";
+        $sql = "CALL SP_Quiz_Insert('".$newQuizData["Title"]."', ".$newQuizData["SubjectNo"].", @quizNo, ".$newQuizData["UserNo"].");";
         $sql2 = "SELECT QuizNo FROM quiz ORDER BY QuizNo DESC LIMIT 1;";
 
         $this->conn->query($sql);

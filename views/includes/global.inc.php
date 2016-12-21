@@ -10,7 +10,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/models/UserType.cl
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/UserController.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/UserTypeController.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/QuizController.class.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/controllers/StatisticController.class.php";
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/UserManager.class.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/managers/UserTypeManager.class.php";
@@ -24,7 +23,6 @@ session_start(); // start session
 $userController = new UserController($conn);
 $userTypeController = new UserTypeController($conn);
 $quizController = new QuizController($conn);
-$statisticController = new StatisticController($conn);
 
 // initialize managers
 $userManager = new UserManager($userController);

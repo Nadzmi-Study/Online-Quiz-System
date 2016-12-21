@@ -1,11 +1,11 @@
 <?php
-require_once "Controller.php";
-
-class UserTypeController extends Controller
+class UserTypeController
 {
+    protected $conn; // connection variables
+
     public function __construct($conn)
     {
-        parent::__construct($conn);
+        $this->conn = $conn;
     }
 
     public function getUserType() // return the user types as associative array

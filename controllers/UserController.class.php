@@ -1,10 +1,10 @@
 <?php
-require_once "Controller.php";
+class UserController {
+    protected $conn; // connection variables
 
-
-class UserController extends Controller {
-    public function __construct($conn) {
-        parent::__construct($conn);
+    public function __construct($conn)
+    {
+        $this->conn = $conn;
     }
 
     /**

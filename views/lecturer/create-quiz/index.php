@@ -4,7 +4,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/Online-Quiz-System/views/includes/glo
 if(isset($_POST["register-quiz"])) {
     $quizTitle = $_POST["quizTitle"];
     $subjectCode = $_POST["subjectCode"];
-    $timeConstraint = $_POST["timeConstraint"];
 
     // temp question obj
     $questionObj = array();
@@ -54,7 +53,7 @@ if(isset($_POST["register-quiz"])) {
     }
 
     // temp quiz obj
-    $newQuiz = new Quiz($quizTitle, $subjectCode, $timeConstraint, null, 0, $questionObj);
+    $newQuiz = new Quiz($quizTitle, $subjectCode, null, 0, $questionObj);
     $insertResult = $quizManager->registerQuiz($newQuiz);
 
     if(isset($insertResult))
@@ -92,7 +91,7 @@ if(isset($_POST["register-quiz"])) {
                         <li><a href="../create-quiz">Create Quiz</a></li>
                         <li><a href="../delete-quiz">Delete Quiz</a></li>
                         <li><a href="../update-quiz">Update Quiz</a></li>
-                        <li><a href="../logout">Logout</a></li>
+                        <li><a href="../../logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

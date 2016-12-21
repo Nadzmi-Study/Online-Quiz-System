@@ -4,7 +4,6 @@
  */
 class QuizManager {
     private $QC; // quiz controller
-    private $form; // form
 
     public function __construct(QuizController $QC=null) {
         $this->QC = $QC;
@@ -60,7 +59,6 @@ class QuizManager {
                     new Quiz(
                         $tempQuizList[$x]["QuizTitle"],
                         $tempQuizList[$x]["Subject"],
-                        $tempQuizList[$x]["Time"],
                         $tempQuizList[$x]["DateCreated"],
                         $tempQuizList[$x]["QuizNo"]));
         } else {
@@ -72,7 +70,6 @@ class QuizManager {
                     new Quiz(
                         $tempQuizList[$x]["QuizTitle"],
                         $tempQuizList[$x]["Subject"],
-                        $tempQuizList[$x]["Time"],
                         $tempQuizList[$x]["DateCreated"],
                         $tempQuizList[$x]["QuizNo"]));
         }
@@ -112,62 +109,6 @@ class QuizManager {
             return true;
         else
             return false;
-    }
-
-    public function checkQuizDesc(Quiz $quiz) {
-        $error = false;
-        $message = "Quiz:<br />";
-
-        if(empty($quiz->getTitle()) || empty($quiz->getTime())) {
-            $error = true;
-            $message .= "--> Please complete the quiz descriptions.<br />";
-        }
-        if(sizeof($quiz->getSubject()) == 0) {
-            $error = true;
-            $message .= "--> Please choose a subject.<br />";
-        }
-
-        if(!$error)
-            $message = "";
-
-        return array(
-            "Error" => $error,
-            "Message" => $message
-        );
-    }
-
-    public function checkQuestionDesc(Question $question) {
-        $error = false;
-        $message = "Question:<br />";
-
-        if(empty($question->getDescription())) {
-            $error = true;
-            $message .= "--> Please complete the question descriptions.<br />";
-        }
-        if(sizeof($question->getAnswer()) == 0) {
-            $error = true;
-            $message .= "--> Please complete the answer descriptions.<br />";
-        }
-
-        return array(
-            "Error" => $error,
-            "Message" => $message
-        );
-    }
-
-    public function checkAnswerDesc(Answer $answer) {
-        $error = false;
-        $message = "Answer:<br />";
-
-        if(empty($answer->getDescription()) || empty($answer->getTrueAnswer())) {
-            $error = true;
-            $message .= "--> Please complete the answer's description.<br />";
-        }
-
-        return array(
-            "Error" => $error,
-            "Message" => $message
-        );
     }
     //
 

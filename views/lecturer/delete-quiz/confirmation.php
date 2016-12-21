@@ -42,10 +42,10 @@ if(isset($_POST["confirmation"])) {
                 <div class="col-md-2"></div>
                 <div class="col-md-5">
                     <ul class="nav navbar-nav">
-                        <li><a href="../lecturer/create-quiz">Create Quiz</a></li>
-                        <li><a href="../lecturer/delete-quiz">Delete Quiz</a></li>
-                        <li><a href="../lecturer/update-quiz">Update Quiz</a></li>
-                        <li><a href="../logout">Logout</a></li>
+                        <li><a href="../create-quiz">Create Quiz</a></li>
+                        <li><a href="../delete-quiz">Delete Quiz</a></li>
+                        <li><a href="../update-quiz">Update Quiz</a></li>
+                        <li><a href="../../logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
