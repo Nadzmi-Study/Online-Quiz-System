@@ -231,7 +231,7 @@ class QuizManager {
         $quizList = array();
         for($i=0; $i<sizeof($tempList); $i++)
         {
-            array_push($quizList, new Quiz($tempList[$i]["Title"], $tempList[$i]["SubjectDesc"], null, $tempList[$i]["DateAnswered"], $tempList[$i]["QuizNo"], "", 0.0));
+            array_push($quizList, new Quiz($tempList[$i]["Title"], $tempList[$i]["SubjectDesc"], $tempList[$i]["DateAnswered"], $tempList[$i]["QuizNo"], "", 0.0));
         }
         return $quizList;
     }
