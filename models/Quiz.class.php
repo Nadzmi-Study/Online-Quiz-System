@@ -16,7 +16,7 @@ class Quiz {
      * @param int $no
      * @param Question[] $questions
      */
-    public function __construct($title="", $subject=null, $dateCreated=null, int $no=0, $questions=array()) {
+    public function __construct($title="", $subject=null, $dateCreated=null, $no=0, $questions=array()) {
         $this->title = $title;
         $this->subject = $subject;
         $this->dateCreated = $dateCreated;

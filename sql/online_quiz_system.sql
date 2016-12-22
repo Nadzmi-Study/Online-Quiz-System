@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2016 at 11:10 AM
+-- Generation Time: Dec 22, 2016 at 01:03 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.9
 
@@ -64,7 +64,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Answer_Update` (`ansNo` INT(11),
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_LecturerQuiz_GetDetails` (`userNo` INT(11))  BEGIN
 
-  SELECT UD.FullName AS "LECTURER NAME", QZ.Title AS "TITLE", LS.SubjectCode AS "SUBJECT", QZ.TimeConstraint AS "TIME CONSTRAINT", QZ.Active AS "STATUS", QZ.DateCreated AS "DATE CREATED", QZ.QuizNo AS "QUIZ NO"
+  SELECT UD.FullName AS "LECTURER NAME", QZ.Title AS "TITLE", LS.SubjectCode AS "SUBJECT", QZ.Active AS "STATUS", QZ.DateCreated AS "DATE CREATED", QZ.QuizNo AS "QUIZ NO"
   FROM userdetails UD, quiz QZ, lecturerquiz LQ, lookupsubject LS
   WHERE LQ.UserNo = UD.UserDetailNo
     AND LQ.QuizNo = QZ.QuizNo
@@ -124,9 +124,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_Delete` (`quizID` INT(11)) 
       WHERE QuizNo LIKE quizID;
   END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_GetAll` ()  NO SQL
-BEGIN
-	SELECT qz.Title, sbj.SubjectDesc, qz.TimeConstraint, qz.DateCreated, qz.QuizNo 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_GetAll` ()  BEGIN
+	SELECT qz.Title, sbj.SubjectDesc, qz.DateCreated, qz.QuizNo
     FROM quiz qz, LookupSubject sbj
     WHERE qz.SubjectNo = sbj.SubjectNo
     AND qz.Active = 1;
@@ -148,21 +147,29 @@ BEGIN
     AND SQ.QuizNo = quizNo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_Insert` (IN `title` VARCHAR(255), IN `timeconstraint` DOUBLE, IN `subjectno` INT, OUT `quizNo` INT, IN `userNo` INT)  NO SQL
-BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_Insert` (`title` VARCHAR(255), `subjectno` INT(11), OUT `quizNo` INT(11), `userNo` INT(11))  BEGIN
  INSERT INTO quiz
- VALUES (null, title, timeconstraint, subjectno, 1, CURRENT_DATE, null );
- 
- SET quizNo = LAST_INSERT_ID();
+ VALUES (null, title, subjectno, 1, CURRENT_DATE, null );
+    
+    SET quizNo = LAST_INSERT_ID();
  
  INSERT INTO lecturerquiz
  VALUES(null, quizNo, userNo, CURRENT_DATE);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_Update` (`qNo` INT(11), `qTitle` VARCHAR(100), `qTime` DOUBLE, `qSubjectNo` INT(11))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Quiz_Update` (`qNo` INT(11), `qTitle` VARCHAR(100), `qSubjectNo` INT(11))  BEGIN
 	UPDATE quiz
-    SET Title = qTitle, TimeConstraint = qTime, SubjectNo = qSubjectNo, DateModified = CURRENT_DATE
+    SET Title = qTitle, SubjectNo = qSubjectNo, DateModified = CURRENT_DATE
     WHERE QuizNo = qNo;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Student_QuizAnsweredList` (IN `userNo` INT)  NO SQL
+BEGIN
+ SELECT QZ.QuizNo AS "QuizNo", QZ.Title AS "Title", LS.SubjectDesc AS "SubjectDesc", SQ.DateCreated AS "DateAnswered"
+ FROM studentquiz SQ, quiz QZ, lookupsubject LS
+ WHERE SQ.QuizNo = QZ.QuizNo
+ AND QZ.SubjectNo = LS.SubjectNo
+ AND SQ.UserNo = userNo;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_Student_SubmitAnswer` (IN `studentQuizNo` INT, IN `answer` INT, OUT `qansNo` INT)  NO SQL
@@ -264,166 +271,85 @@ CREATE TABLE `answer` (
 --
 
 INSERT INTO `answer` (`AnswerNo`, `QuestionNo`, `AnswerDesc`, `TrueAnswer`, `DateCreated`, `DateModified`) VALUES
-(69, 34, 'bla bla', 1, '2016-12-02', NULL),
-(70, 34, 'dummy answer 1b', 1, '2016-12-02', NULL),
-(71, 34, 'dummy answer 1c', 0, '2016-12-02', NULL),
-(72, 34, 'dummy answer 1d', 0, '2016-12-02', NULL),
-(73, 35, 'dummy question 2a', 0, '2016-12-02', NULL),
-(74, 35, 'dummy question 2b', 0, '2016-12-02', NULL),
-(75, 35, 'dummy question 2c', 1, '2016-12-02', NULL),
-(76, 35, 'dummy question 2d', 0, '2016-12-02', NULL),
-(77, 36, 'dummy question 3a', 1, '2016-12-02', NULL),
-(78, 36, 'dummy question 3b', 0, '2016-12-02', NULL),
-(79, 36, 'dummy question 3c', 0, '2016-12-02', NULL),
-(80, 36, 'dummy question 3d', 0, '2016-12-02', NULL),
-(81, 37, 'dummy question 4a', 0, '2016-12-02', NULL),
-(82, 37, 'dummy question 4b', 0, '2016-12-02', NULL),
-(83, 37, 'dummy question 4c', 1, '2016-12-02', NULL),
-(84, 37, 'dummy question 4d', 0, '2016-12-02', NULL),
-(85, 38, 'dummy question 5a', 0, '2016-12-02', NULL),
-(86, 38, 'dummy question 5b', 1, '2016-12-02', NULL),
-(87, 38, 'dummy question 5c', 0, '2016-12-02', NULL),
-(88, 38, 'dummy question 5d', 0, '2016-12-02', NULL),
-(89, 39, 'dummy question 6a', 0, '2016-12-02', NULL),
-(90, 39, 'dummy question 6b', 0, '2016-12-02', NULL),
-(91, 39, 'dummy question 6c', 1, '2016-12-02', NULL),
-(92, 39, 'dummy question 6d', 0, '2016-12-02', NULL),
-(93, 40, 'dummy question 7a', 0, '2016-12-02', NULL),
-(94, 40, 'dummy question 7b', 0, '2016-12-02', NULL),
-(95, 40, 'dummy question 7c', 0, '2016-12-02', NULL),
-(96, 40, 'dummy question 7d', 1, '2016-12-02', NULL),
-(97, 41, 'dummy question 8a', 0, '2016-12-02', NULL),
-(98, 41, 'dummy question 8b', 0, '2016-12-02', NULL),
-(99, 41, 'dummy question 8c', 0, '2016-12-02', NULL),
-(100, 41, 'dummy question 8d', 1, '2016-12-02', NULL),
-(101, 42, 'dummy question 9a', 0, '2016-12-02', NULL),
-(102, 42, 'dummy question 9b', 1, '2016-12-02', NULL),
-(103, 42, 'dummy question 9c', 0, '2016-12-02', NULL),
-(104, 42, 'dummy question 9d', 0, '2016-12-02', NULL),
-(105, 43, 'dummy question 10a', 1, '2016-12-02', NULL),
-(106, 43, 'dummy question 10b', 0, '2016-12-02', NULL),
-(107, 43, 'dummy question 10c', 0, '2016-12-02', NULL),
-(108, 43, 'dummy question 10d', 0, '2016-12-02', NULL),
-(109, 44, 'Q1A', 1, '2016-12-09', NULL),
-(110, 44, 'Q1B', 0, '2016-12-09', NULL),
-(111, 44, 'Q1C', 0, '2016-12-09', NULL),
-(112, 44, 'Q1D', 0, '2016-12-09', NULL),
-(113, 45, 'Q2A', 0, '2016-12-09', NULL),
-(114, 45, 'Q2B', 1, '2016-12-09', NULL),
-(115, 45, 'Q2C', 0, '2016-12-09', NULL),
-(116, 45, 'Q2D', 0, '2016-12-09', NULL),
-(117, 46, 'Q3A', 0, '2016-12-09', NULL),
-(118, 46, 'Q3B', 0, '2016-12-09', NULL),
-(119, 46, 'Q3C', 0, '2016-12-09', NULL),
-(120, 46, 'Q3D', 1, '2016-12-09', NULL),
-(121, 47, 'Q4A', 0, '2016-12-09', NULL),
-(122, 47, 'Q4B', 1, '2016-12-09', NULL),
-(123, 47, 'Q4C', 0, '2016-12-09', NULL),
-(124, 47, 'Q4D', 0, '2016-12-09', NULL),
-(125, 48, 'Q5A', 0, '2016-12-09', NULL),
-(126, 48, 'Q5B', 0, '2016-12-09', NULL),
-(127, 48, 'Q5C', 0, '2016-12-09', NULL),
-(128, 48, 'Q5D', 1, '2016-12-09', NULL),
-(129, 49, 'Q6A', 1, '2016-12-09', NULL),
-(130, 49, 'Q6B', 0, '2016-12-09', NULL),
-(131, 49, 'Q6C', 0, '2016-12-09', NULL),
-(132, 49, 'Q6D', 0, '2016-12-09', NULL),
-(133, 50, 'Q7A', 0, '2016-12-09', NULL),
-(134, 50, 'Q7B', 1, '2016-12-09', NULL),
-(135, 50, 'Q7C', 0, '2016-12-09', NULL),
-(136, 50, 'Q7D', 0, '2016-12-09', NULL),
-(137, 51, 'Q8A', 0, '2016-12-09', NULL),
-(138, 51, 'Q8B', 0, '2016-12-09', NULL),
-(139, 51, 'Q8C', 1, '2016-12-09', NULL),
-(140, 51, 'Q8D', 0, '2016-12-09', NULL),
-(141, 52, 'Q9A', 0, '2016-12-09', NULL),
-(142, 52, 'Q9B', 1, '2016-12-09', NULL),
-(143, 52, 'Q9C', 0, '2016-12-09', NULL),
-(144, 52, 'Q9D', 0, '2016-12-09', NULL),
-(145, 53, 'Q10A', 1, '2016-12-09', NULL),
-(146, 53, 'Q10B', 0, '2016-12-09', NULL),
-(147, 53, 'Q10C', 0, '2016-12-09', NULL),
-(148, 53, 'Q10D', 0, '2016-12-09', NULL),
-(271, 88, 'q1a', 1, '2016-12-14', NULL),
-(272, 88, 'q1b', 0, '2016-12-14', NULL),
-(273, 88, 'q1c', 0, '2016-12-14', NULL),
-(274, 88, 'q1d', 0, '2016-12-14', NULL),
-(275, 89, 'q2a', 0, '2016-12-14', NULL),
-(276, 89, 'q2b', 0, '2016-12-14', NULL),
-(277, 89, 'q2c', 1, '2016-12-14', NULL),
-(278, 89, 'q2d', 0, '2016-12-14', NULL),
-(279, 90, 'qa3', 0, '2016-12-14', NULL),
-(280, 90, 'q3b', 0, '2016-12-14', NULL),
-(281, 90, 'q3c', 0, '2016-12-14', NULL),
-(282, 90, 'q3d', 1, '2016-12-14', NULL),
-(283, 91, 'q4a', 0, '2016-12-14', NULL),
-(284, 91, 'q4b', 0, '2016-12-14', NULL),
-(285, 91, 'q4c', 0, '2016-12-14', NULL),
-(286, 91, 'q4d', 1, '2016-12-14', NULL),
-(287, 92, 'q5a', 0, '2016-12-14', NULL),
-(288, 92, 'q5b', 0, '2016-12-14', NULL),
-(289, 92, 'q5c', 1, '2016-12-14', NULL),
-(290, 92, 'q5d', 0, '2016-12-14', NULL),
-(291, 93, 'q6a', 0, '2016-12-14', NULL),
-(292, 93, 'q6b', 1, '2016-12-14', NULL),
-(293, 93, 'q6c', 0, '2016-12-14', NULL),
-(294, 93, 'q6d', 0, '2016-12-14', NULL),
-(295, 94, 'q7a', 1, '2016-12-14', NULL),
-(296, 94, 'q7b', 0, '2016-12-14', NULL),
-(297, 94, 'q7c', 0, '2016-12-14', NULL),
-(298, 94, 'q7d', 0, '2016-12-14', NULL),
-(299, 95, 'q8a', 0, '2016-12-14', NULL),
-(300, 95, 'q8b', 0, '2016-12-14', NULL),
-(301, 95, 'q8c', 1, '2016-12-14', NULL),
-(302, 95, 'q8d', 0, '2016-12-14', NULL),
-(303, 96, 'q9a', 0, '2016-12-14', NULL),
-(304, 96, 'q9b', 0, '2016-12-14', NULL),
-(305, 96, 'q9c', 1, '2016-12-14', NULL),
-(306, 96, 'q9d', 0, '2016-12-14', NULL),
-(307, 97, 'q10a', 0, '2016-12-14', NULL),
-(308, 97, 'q10b', 1, '2016-12-14', NULL),
-(309, 97, 'q10c', 0, '2016-12-14', NULL),
-(310, 97, 'q10d', 0, '2016-12-14', NULL),
-(391, 118, 'q1a', 1, '2016-12-18', NULL),
-(392, 118, 'q1b', 0, '2016-12-18', NULL),
-(393, 118, 'q1c', 0, '2016-12-18', NULL),
-(394, 118, 'q1d', 0, '2016-12-18', NULL),
-(395, 119, 'qa2', 0, '2016-12-18', NULL),
-(396, 119, 'q2b', 0, '2016-12-18', NULL),
-(397, 119, 'q2c', 1, '2016-12-18', NULL),
-(398, 119, 'qd2', 0, '2016-12-18', NULL),
-(399, 120, 'q3a', 0, '2016-12-18', NULL),
-(400, 120, 'q3b', 1, '2016-12-18', NULL),
-(401, 120, 'q3c', 0, '2016-12-18', NULL),
-(402, 120, 'q3d', 0, '2016-12-18', NULL),
-(403, 121, 'q4a', 1, '2016-12-18', NULL),
-(404, 121, 'q4b', 0, '2016-12-18', NULL),
-(405, 121, 'q4c', 0, '2016-12-18', NULL),
-(406, 121, 'q4d', 0, '2016-12-18', NULL),
-(407, 122, 'q5a', 0, '2016-12-18', NULL),
-(408, 122, 'q5b', 0, '2016-12-18', NULL),
-(409, 122, 'q5c', 0, '2016-12-18', NULL),
-(410, 122, 'q5d', 1, '2016-12-18', NULL),
-(411, 123, 'q6a', 0, '2016-12-18', NULL),
-(412, 123, 'qb6', 0, '2016-12-18', NULL),
-(413, 123, 'q6c', 1, '2016-12-18', NULL),
-(414, 123, 'q6d', 0, '2016-12-18', NULL),
-(415, 124, 'q7a', 0, '2016-12-18', NULL),
-(416, 124, 'q7b', 0, '2016-12-18', NULL),
-(417, 124, 'q7c', 0, '2016-12-18', NULL),
-(418, 124, 'q7d', 1, '2016-12-18', NULL),
-(419, 125, 'q8a', 0, '2016-12-18', NULL),
-(420, 125, 'q8b', 0, '2016-12-18', NULL),
-(421, 125, 'q8c', 1, '2016-12-18', NULL),
-(422, 125, 'q8d', 0, '2016-12-18', NULL),
-(423, 126, 'q9a', 0, '2016-12-18', NULL),
-(424, 126, 'q9b', 1, '2016-12-18', NULL),
-(425, 126, 'q9c', 0, '2016-12-18', NULL),
-(426, 126, 'q9d', 0, '2016-12-18', NULL),
-(427, 127, 'q10a', 1, '2016-12-18', NULL),
-(428, 127, 'q10b', 0, '2016-12-18', NULL),
-(429, 127, 'q10c', 0, '2016-12-18', NULL),
-(430, 127, 'q10d', 0, '2016-12-18', NULL);
+(311, 98, 'Laser-light projection system', 0, '2016-12-21', NULL),
+(312, 98, 'Dot-matrix printer', 0, '2016-12-21', NULL),
+(313, 98, 'Random-scan monitors', 1, '2016-12-21', NULL),
+(314, 98, 'Pen-based plotter', 0, '2016-12-21', NULL),
+(315, 99, '2', 0, '2016-12-21', NULL),
+(316, 99, '3', 1, '2016-12-21', NULL),
+(317, 99, '4', 0, '2016-12-21', NULL),
+(318, 99, '5', 0, '2016-12-21', NULL),
+(319, 100, 'Rotation', 1, '2016-12-21', NULL),
+(320, 100, 'Translation', 0, '2016-12-21', NULL),
+(321, 100, 'Shearing', 0, '2016-12-21', NULL),
+(322, 100, 'Scaling', 0, '2016-12-21', NULL),
+(323, 101, '25 bytes', 0, '2016-12-21', NULL),
+(324, 101, '50 bytes', 0, '2016-12-21', NULL),
+(325, 101, '100 bytes', 1, '2016-12-21', NULL),
+(326, 101, '200 bytes', 0, '2016-12-21', NULL),
+(327, 102, 'A polygon with all internal angles smaller than 180 degrees', 0, '2016-12-21', NULL),
+(328, 102, 'A polygon that has more than three vertices and those vertices do not lie in the same place', 0, '2016-12-21', NULL),
+(329, 102, 'A polygon that has duplicate vertices or less than three vertices', 0, '2016-12-21', NULL),
+(330, 102, 'A polygon with every line segment between two vertices of the polygon does not go exterior to the polygon', 1, '2016-12-21', NULL),
+(331, 103, 'Simple to implement. ', 0, '2016-12-21', NULL),
+(332, 103, 'Available in hardware', 0, '2016-12-21', NULL),
+(333, 103, 'Can be applied to all objects in the model.', 0, '2016-12-21', NULL),
+(334, 104, ' Add variations of black to spectral color. ', 0, '2016-12-21', NULL),
+(335, 104, 'Add variations of white to spectral color', 1, '2016-12-21', NULL),
+(336, 104, 'Add variations of black and white to spectral color', 0, '2016-12-21', NULL),
+(337, 104, 'Add another spectral color to the existing spectral color', 0, '2016-12-21', NULL),
+(338, 105, ' Keyframe animation ', 1, '2016-12-21', NULL),
+(339, 105, 'Double buffering ', 0, '2016-12-21', NULL),
+(340, 105, 'Motion capture ', 0, '2016-12-21', NULL),
+(341, 105, 'Procedural animation', 0, '2016-12-21', NULL),
+(342, 106, 'First ', 0, '2016-12-21', NULL),
+(343, 106, 'Second ', 1, '2016-12-21', NULL),
+(344, 106, ' First and second ', 0, '2016-12-21', NULL),
+(345, 106, ' None of the vertex', 0, '2016-12-21', NULL),
+(346, 107, 'Pixel E ', 0, '2016-12-21', NULL),
+(347, 107, 'Pixel SE ', 0, '2016-12-21', NULL),
+(348, 107, 'Pixel P', 0, '2016-12-21', NULL),
+(349, 107, 'None of the above', 1, '2016-12-21', NULL),
+(350, 108, 'A1', 0, '2016-12-21', NULL),
+(351, 108, 'B1', 1, '2016-12-21', NULL),
+(352, 108, 'C1', 0, '2016-12-21', NULL),
+(353, 108, 'D1', 0, '2016-12-21', NULL),
+(354, 109, 'A2', 0, '2016-12-21', NULL),
+(355, 109, 'B2', 0, '2016-12-21', NULL),
+(356, 109, 'C2', 1, '2016-12-21', NULL),
+(357, 109, 'D2', 0, '2016-12-21', NULL),
+(358, 110, 'A3', 1, '2016-12-21', NULL),
+(359, 110, 'B3', 0, '2016-12-21', NULL),
+(360, 110, 'C3', 0, '2016-12-21', NULL),
+(361, 110, 'D3', 0, '2016-12-21', NULL),
+(362, 111, 'A4', 0, '2016-12-21', NULL),
+(363, 111, 'B4', 0, '2016-12-21', NULL),
+(364, 111, 'C4', 0, '2016-12-21', NULL),
+(365, 111, 'D4', 1, '2016-12-21', NULL),
+(366, 112, 'A5', 0, '2016-12-21', NULL),
+(367, 112, 'B5', 1, '2016-12-21', NULL),
+(368, 112, 'C5', 0, '2016-12-21', NULL),
+(369, 112, 'D5', 0, '2016-12-21', NULL),
+(370, 113, 'A6', 0, '2016-12-21', NULL),
+(371, 113, 'B6', 0, '2016-12-21', NULL),
+(372, 113, 'C6', 1, '2016-12-21', NULL),
+(373, 113, 'D6', 0, '2016-12-21', NULL),
+(374, 114, 'A7', 1, '2016-12-21', NULL),
+(375, 114, 'B7', 0, '2016-12-21', NULL),
+(376, 114, 'C7', 0, '2016-12-21', NULL),
+(377, 114, 'D7', 0, '2016-12-21', NULL),
+(378, 115, 'A8', 0, '2016-12-21', NULL),
+(379, 115, 'B8', 0, '2016-12-21', NULL),
+(380, 115, 'C8', 0, '2016-12-21', NULL),
+(381, 115, 'D8', 1, '2016-12-21', NULL),
+(382, 116, 'A9', 0, '2016-12-21', NULL),
+(383, 116, 'B9', 0, '2016-12-21', NULL),
+(384, 116, 'C9', 1, '2016-12-21', NULL),
+(385, 116, 'D9', 0, '2016-12-21', NULL),
+(386, 117, 'A10', 0, '2016-12-21', NULL),
+(387, 117, 'B10', 1, '2016-12-21', NULL),
+(388, 117, 'C10', 0, '2016-12-21', NULL),
+(389, 117, 'D10', 0, '2016-12-21', NULL);
 
 -- --------------------------------------------------------
 
@@ -443,16 +369,8 @@ CREATE TABLE `lecturerquiz` (
 --
 
 INSERT INTO `lecturerquiz` (`LecturerQuizNo`, `QuizNo`, `UserNo`, `CreatedDate`) VALUES
-(1, 5, 10, NULL),
-(2, 6, 10, NULL),
-(3, 10, 10, '2016-12-14'),
-(49, 62, 10, '2016-12-14'),
-(50, 63, 10, '2016-12-17'),
-(51, 64, 10, '2016-12-17'),
-(52, 65, 10, '2016-12-18'),
-(53, 66, 10, '2016-12-18'),
-(54, 67, 10, '2016-12-18'),
-(55, 68, 10, '2016-12-18');
+(62, 63, 14, NULL),
+(63, 64, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -472,9 +390,12 @@ CREATE TABLE `lookupsubject` (
 --
 
 INSERT INTO `lookupsubject` (`SubjectNo`, `SubjectCode`, `SubjectDesc`, `DateCreated`) VALUES
-(1, 'CSC569', 'Compiler', '2016-11-15'),
-(2, 'CSC480', 'Parallel', '2016-11-15'),
-(3, 'CSC438', 'Data Structure', '2016-11-15');
+(1, 'CSC569', 'Principles of Compilers', '2016-11-15'),
+(2, 'CSC580', 'Parallel Processing', '2016-11-15'),
+(3, 'CSC438', 'Fundamental of Data Structure', '2016-11-15'),
+(4, 'CSC658', 'Computer Graphics', '2016-12-21'),
+(5, 'ELC550', 'English for Academic Writting', '2016-12-21'),
+(6, 'CSC658', 'Computer Graphics', '2016-12-21');
 
 -- --------------------------------------------------------
 
@@ -515,36 +436,26 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`QuestionNo`, `QuizNo`, `QuesDesc`, `DateCreated`, `DateModified`) VALUES
-(34, 5, 'dummy quest', '2016-12-02', '2016-12-18'),
-(35, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(36, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(37, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(38, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(39, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(40, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(41, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(42, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(43, 5, 'Test quest', '2016-12-02', '2016-12-18'),
-(44, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(45, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(46, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(47, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(48, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(49, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(50, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(51, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(52, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(53, 6, 'Test quest', '2016-12-09', '2016-12-18'),
-(88, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(89, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(90, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(91, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(92, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(93, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(94, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(95, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(96, 62, 'Test quest', '2016-12-14', '2016-12-18'),
-(97, 62, 'Test quest', '2016-12-14', '2016-12-18');
+(98, 63, 'Which of the following is NOT an example of vector graphic device?', '2016-12-21', NULL),
+(99, 63, 'If a color image uses 16 different color values, what is the minimum bit depth required for each pixel?', '2016-12-21', NULL),
+(100, 63, 'Which of the following is a rigid-body transformation that moves an object without deformation?', '2016-12-21', NULL),
+(101, 63, 'What is the size of a frame buffer (in bytes) needed for a monitor that needs 2 bits per pixel and with a resolution of 10 x 20?', '2016-12-21', NULL),
+(102, 63, 'Which of the following statement best describes degenerative polygon?', '2016-12-21', NULL),
+(103, 63, 'Which of the following is NOT an advantage of Z-buffer rendering method?', '2016-12-21', NULL),
+(104, 63, '. How are color tones produced when using the HSV model?', '2016-12-21', NULL),
+(105, 63, ' If an animation is produced using a set or equations or rules, what type of animation is this called?', '2016-12-21', NULL),
+(106, 63, '. If both vertices of a polygon are inside the clip window, which vertex is kept in the vertex list of the Sutherland-Hodgman polygon clipping algorithm?', '2016-12-21', NULL),
+(107, 63, 'In a situation shown in Figure 2, which pixel will be plotted next? ', '2016-12-21', NULL),
+(108, 64, 'Q1', '2016-12-21', NULL),
+(109, 64, 'Q2', '2016-12-21', NULL),
+(110, 64, 'Q3', '2016-12-21', NULL),
+(111, 64, 'Q4', '2016-12-21', NULL),
+(112, 64, 'Q5', '2016-12-21', NULL),
+(113, 64, 'Q6', '2016-12-21', NULL),
+(114, 64, 'Q7', '2016-12-21', NULL),
+(115, 64, 'Q8', '2016-12-21', NULL),
+(116, 64, 'Q9', '2016-12-21', NULL),
+(117, 64, 'Q10', '2016-12-21', NULL);
 
 -- --------------------------------------------------------
 
@@ -555,7 +466,6 @@ INSERT INTO `question` (`QuestionNo`, `QuizNo`, `QuesDesc`, `DateCreated`, `Date
 CREATE TABLE `quiz` (
   `QuizNo` int(11) NOT NULL,
   `Title` varchar(255) NOT NULL,
-  `TimeConstraint` double NOT NULL,
   `SubjectNo` int(4) NOT NULL,
   `Active` int(11) NOT NULL DEFAULT '1',
   `DateCreated` date NOT NULL,
@@ -566,10 +476,9 @@ CREATE TABLE `quiz` (
 -- Dumping data for table `quiz`
 --
 
-INSERT INTO `quiz` (`QuizNo`, `Title`, `TimeConstraint`, `SubjectNo`, `Active`, `DateCreated`, `DateModified`) VALUES
-(5, 'qwer', 60, 3, 1, '2016-12-02', '2016-12-18'),
-(6, 'test', 60, 2, 1, '2016-12-09', '2016-12-18'),
-(62, 'testing', 60, 3, 1, '2016-12-14', '2016-12-18');
+INSERT INTO `quiz` (`QuizNo`, `Title`, `SubjectNo`, `Active`, `DateCreated`, `DateModified`) VALUES
+(63, 'Sample Quiz 1 ', 4, 0, '2016-12-21', '2016-12-21'),
+(64, 'Sample Quiz 2', 1, 1, '2016-12-21', NULL);
 
 -- --------------------------------------------------------
 
@@ -589,11 +498,36 @@ CREATE TABLE `studentquiz` (
 --
 
 INSERT INTO `studentquiz` (`StudentQuizNo`, `UserNo`, `QuizNo`, `DateCreated`) VALUES
-(7, 11, 5, '2016-12-11'),
-(8, 11, 5, '2016-12-14'),
-(9, 11, 5, '2016-12-14'),
-(10, 11, 6, '2016-12-18'),
-(11, 11, 6, '2016-12-18');
+(14, 13, 64, '2016-12-21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `studentquizanswer`
+--
+
+CREATE TABLE `studentquizanswer` (
+  `StudentQuizAnswerNo` int(11) NOT NULL,
+  `StudentQuizNo` int(11) NOT NULL,
+  `AnswerSubmit` int(11) NOT NULL,
+  `DateCreated` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `studentquizanswer`
+--
+
+INSERT INTO `studentquizanswer` (`StudentQuizAnswerNo`, `StudentQuizNo`, `AnswerSubmit`, `DateCreated`) VALUES
+(1, 14, 0, '2016-11-27'),
+(2, 14, 0, '2016-11-27'),
+(3, 14, 0, '2016-11-27'),
+(4, 14, 1, '2016-11-27'),
+(5, 14, 0, '2016-11-27'),
+(6, 14, 0, '2016-11-27'),
+(7, 14, 0, '2016-11-27'),
+(8, 14, 0, '2016-11-27'),
+(9, 14, 0, '2016-11-27'),
+(10, 14, 0, '2016-11-27');
 
 -- --------------------------------------------------------
 
@@ -616,8 +550,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserNo`, `Username`, `Password`, `UserDetailNo`, `Active`, `DateCreated`, `DateModified`) VALUES
-(10, 'lecturer', 'test', 10, 1, '2016-12-02', NULL),
-(11, 'student', 'test', 11, 1, '2016-12-02', NULL);
+(13, 'alifzulkafli', 'alif', 13, 1, '2016-12-21', NULL),
+(14, 'aina', 'aina', 14, 1, '2016-12-21', NULL);
 
 -- --------------------------------------------------------
 
@@ -641,8 +575,8 @@ CREATE TABLE `userdetails` (
 --
 
 INSERT INTO `userdetails` (`UserDetailNo`, `FullName`, `IC`, `Email`, `UserTypeNo`, `ContactNo`, `DateCreated`, `DateModified`) VALUES
-(10, 'test lecturer', '000000112222', 'testLecturer@email.com', 1, '0001112222', '2016-12-02', NULL),
-(11, 'test student', '000000112222', 'testStudent@email.com', 2, '0001112222', '2016-12-02', NULL);
+(13, 'Muhammad Alif Bin Zulkafli', '940105105037', 'alifzulkafli94@gmail.com', 2, '0172470107', '2016-12-21', NULL),
+(14, 'Aina Afifah Bt Norizan', '954020105044', 'aina@email.com', 1, '0198876754', '2016-12-21', NULL);
 
 --
 -- Indexes for dumped tables
@@ -691,6 +625,12 @@ ALTER TABLE `studentquiz`
   ADD PRIMARY KEY (`StudentQuizNo`);
 
 --
+-- Indexes for table `studentquizanswer`
+--
+ALTER TABLE `studentquizanswer`
+  ADD PRIMARY KEY (`StudentQuizAnswerNo`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -710,17 +650,17 @@ ALTER TABLE `userdetails`
 -- AUTO_INCREMENT for table `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `AnswerNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=551;
+  MODIFY `AnswerNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=751;
 --
 -- AUTO_INCREMENT for table `lecturerquiz`
 --
 ALTER TABLE `lecturerquiz`
-  MODIFY `LecturerQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `LecturerQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT for table `lookupsubject`
 --
 ALTER TABLE `lookupsubject`
-  MODIFY `SubjectNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `SubjectNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `lookupusertype`
 --
@@ -730,27 +670,32 @@ ALTER TABLE `lookupusertype`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `QuestionNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `QuestionNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
 --
 -- AUTO_INCREMENT for table `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `QuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `QuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT for table `studentquiz`
 --
 ALTER TABLE `studentquiz`
-  MODIFY `StudentQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `StudentQuizNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `studentquizanswer`
+--
+ALTER TABLE `studentquizanswer`
+  MODIFY `StudentQuizAnswerNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `UserNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `userdetails`
 --
 ALTER TABLE `userdetails`
-  MODIFY `UserDetailNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `UserDetailNo` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
